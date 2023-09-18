@@ -27,6 +27,14 @@ class TaskSet:
         '''
         ag.click()
 
+    def drag(self,vert,horiz,duration,button):
+
+        if button=='l':
+            button='left'
+        if button=='r':
+            button='right'
+        ag.dragTo(vert, horiz, button=button,duration=duration)
+
     def pressKeys(self,holdKey,secondKey):
 
         '''
@@ -48,12 +56,6 @@ class TaskSet:
 
         if enter == 'y':
             ag.press('enter')
-
-
-# funcList = [moveMouse(706,1052,1,'y')]
-#
-# for func in funcList:
-#     func
 
 def main():
 
