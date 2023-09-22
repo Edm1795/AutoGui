@@ -69,7 +69,7 @@ def main():
     taskSet1.moveMouse(985, 241, 6, 'y')  # open calendar
 
     for num in range(1,8): # switcher for days of the week from Sun to Sat.
-    taskSet1.pressKeys('ctrl',str(num)) # hot key for changing days of week
+        taskSet1.pressKeys('ctrl',str(num)) # hot key for changing days of week
 
 main()
 
