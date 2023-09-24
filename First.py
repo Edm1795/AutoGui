@@ -27,13 +27,13 @@ class TaskSet:
         '''
         ag.click()
 
-    def drag(self,vert,horiz,duration,button):
+    def drag(self,horiz,vert,duration,button):
 
         if button=='l':
             button='left'
         if button=='r':
             button='right'
-        ag.dragTo(vert, horiz, button=button,duration=duration)
+        ag.dragTo(horiz,vert, button=button,duration=duration)
 
     def pressKeys(self,holdKey,secondKey):
 
