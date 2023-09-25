@@ -23,7 +23,7 @@ class TaskSet:
             pass
 
     def timeSteps(self,desiredTime):
-        
+
         '''
         method returns the number of time steps between basetime (8am) and desired time
         input: desiredTime int, the time you want to go to
@@ -32,8 +32,7 @@ class TaskSet:
         '''
 
         baseTime=8
-        desiredTime=time
-        
+
         return (desiredTime-baseTime)*2
 
     def moveMouseNEW(self,time,shift,duration=1):
@@ -43,12 +42,13 @@ class TaskSet:
 
         timeUnit=38 #number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
 
-        if time==8:
-            horiz=tBase
+        timeSteps=self.timeSteps(time) # number of time steps from base (8am) to desired time
+
+
         if shift==1:
             vert=sBase
-        if time==830:
-            horiz=tBase+(1*timeUnit)
+
+        horiz=tBase+(timeSteps*timeUnit)
 
 
         ag.moveTo(horiz,vert,duration)
@@ -121,8 +121,8 @@ def main():
     # ag.moveTo(400,400)
     # ag.drag(100, 200, 2,button='left')
 
-    taskSet1.moveMouseNEW(8,1)
-    taskSet1.moveMouseNEW(830,1)
+    taskSet1.moveMouseNEW(9,1)
+    taskSet1.moveMouseNEW(10,1)
 
 main()
 
