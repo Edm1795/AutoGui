@@ -31,7 +31,7 @@ class TaskSet:
         eg: 9 am is two time steps forward from basetime (8am) (two half hour units)
         '''
 
-        if desiredTime>0 and desiredTime<8:
+        if desiredTime>0 and desiredTime<8: # If any time is between 1 and 7 add 12 hours. Eg 1 --> 13; 13 = 1 pm
             desiredTime=desiredTime+12
 
         baseTime=8
@@ -113,3 +113,67 @@ class TaskSet:
 
         if enter == 'y':
             ag.press('enter')
+
+
+# funcList = [moveMouse(706,1052,1,'y')]
+#
+# for func in funcList:
+#     func
+
+def main():
+
+    taskSet1=TaskSet()
+    # taskSet1.moveMouse(967,91,1,'n')
+    # taskSet1.drag(820,91,2,'l')
+    # taskSet1.moveMouse(706,1052,1,'y')
+    # taskSet1.pressKeys('ctrl', 't')  # open new tab
+    # taskSet1.type('dayforcehcm.com', 'y')  # Go to site
+    # taskSet1.moveMouse(1315, 917, 3, 'y')  # click login
+    # taskSet1.moveMouse(315, 432, 8, 'y')  # go to schedule
+    # taskSet1.moveMouse(985, 241, 6, 'y')  # open calendar
+
+    # taskSet1.moveMouse(589,243,1,'y')
+    # for num in range(1,8):
+    #     taskSet1.pressKeys('ctrl',str(num))
+    #     time.sleep(1)
+    #     taskSet1.moveMouse(589, 243, 1, 'y')
+    # taskSet1.moveMouse(600,474,0.5,'y')
+    #
+    # taskSet1.moveMouse(655,474,0.5,'n')
+    # taskSet1.drag(767,474,2,'l')
+    #
+    # ag.dragTo(100, 200, 2,button='left')
+    # ag.moveTo(400,400)
+    # ag.drag(100, 200, 2,button='left')
+
+    # taskSet1.moveMouseNEW(8,1)
+    # taskSet1.moveMouseNEW(9,1)
+    # taskSet1.moveMouseNEW(8,2)
+    # taskSet1.moveMouseNEW(9,2)
+    # taskSet1.moveMouseNEW(9, 3)
+    # taskSet1.moveMouseNEW(9, 4)
+    # taskSet1.moveMouseNEW(10,4)
+    #
+    # # taskSet1.moveMouseNEW(11,5)
+    # taskSet1.moveMouseNEW(1,1)
+    # taskSet1.moveMouseNEW(2, 1)
+    # taskSet1.moveMouseNEW(3, 1)
+    # taskSet1.moveMouseNEW(4, 2)
+    # taskSet1.moveMouseNEW(5, 1)
+    # taskSet1.moveMouseNEW(6, 1)
+    # taskSet1.moveMouseNEW(7, 1)
+    # taskSet1.moveMouseNEW(8, 1)
+
+    taskSet1.moveMouseNEW(2,6)
+    taskSet1.dragNEW(3,6,'l')
+
+    taskSet1.moveMouseNEW(3, 2)
+    taskSet1.dragNEW(4, 2, 'l')
+
+    taskSet1.moveMouseNEW(4, 3)
+    taskSet1.dragNEW(5, 3, 'l')
+
+
+
+
+main()
