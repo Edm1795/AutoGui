@@ -173,6 +173,14 @@ def main():
     # taskSet1.moveMouseNEW(4, 3)
     # taskSet1.dragNEW(5, 3, 'l')
 
+
+    # taskSet1.moveMouseNEW(10,2)
+    # taskSet1.dragNEW(11,2,'l')
+
+    # taskSet1.moveMouseNEW(10,3)
+    # taskSet1.dragNEW(11,3,'l')
+
+
 ### Set up desktop for scheduling  ###
     taskSet1=TaskSet() # Scheduling for LA and Pages
     taskSet2=TaskSet() # Sharepoint calendar
