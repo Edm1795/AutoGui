@@ -29,6 +29,8 @@ class TaskSet:
         input: desiredTime int, the time you want to go to
         output: int, number of units from basetime (8am) to desired time measured in 30 min incr.
         eg: 9 am is two time steps forward from basetime (8am) (two half hour units)
+        
+        note: this does not yet handle 30 minute incs. eg: 9:30am
         '''
 
         if desiredTime>0 and desiredTime<8: # If any time is between 1 and 7 add 12 hours. Eg 1 --> 13; 13 = 1 pm
