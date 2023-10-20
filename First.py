@@ -64,7 +64,10 @@ class TaskSet:
         ag.click()
 
     def dragNEW(self,time,shift,button,duration=1):
-
+        '''
+        This version of drag can take a direct time value (eg 9 am) and a shift number (eg: 1, for first shift on screen)
+        '''
+        
         if button=='l':
             button='left'
         if button=='r':
