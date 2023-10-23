@@ -187,6 +187,9 @@ def main():
 
 
 ### Set up desktop for scheduling  ###
+    
+    print('Ensure bookmarks bar is on')
+
     taskSet1=TaskSet() # Scheduling for LA and Pages
     taskSet2=TaskSet() # Sharepoint calendar
     taskSet3=TaskSet() # Calendar for week of scheduling
@@ -197,29 +200,29 @@ def main():
     # taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet1.type('dayforcehcm.com', 'y')  # Go to site
     taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet1.moveMouse(1226, 737, 1, 'y')  # go to Login
+    taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
     taskSet1.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet1.moveMouse(1007, 660, 1, 'y')  # click next (on small box)
+    taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
     taskSet1.moveMouse(246,223,6,'y') # click Filter button
     taskSet1.moveMouse(376,261,0.5,'y') # click filter input bar
     taskSet1.moveMouse(410,310,0.5,'y') # select LA
-    taskSet1.moveMouse(1629,301,0.5,'y') # click Apply button
-    taskSet1.moveMouse(1087, 188, 1, 'y')  # open calendar
+    taskSet1.moveMouse(1629,301,0.2,'y') # click Apply button
+    taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
 
     # Open a second instance of Dayforce
     taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet1.type('dayforcehcm.com', 'y')  # Go to site
     taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet1.moveMouse(1226, 737, 1, 'y')  # go to Login
+    taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
     taskSet1.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded)
-    taskSet1.moveMouse(1007, 660, 1, 'y')  # click next (on small box)
+    taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 2, 'y')  # click schedule (main button to load sched)
     taskSet1.moveMouse(246, 223, 5, 'y')  # click Filter button
     taskSet1.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
     taskSet1.moveMouse(396, 390, 0.5, 'y')  # select Page
-    taskSet1.moveMouse(1629, 301, 0.5, 'y')  # click Apply button
-    taskSet1.moveMouse(1087, 188, 1, 'y')  # open calendar
+    taskSet1.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
+    taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
 
     # Open Sharepoint
     taskSet2.pressKeys('ctrl', 't')  # open new tab
@@ -240,19 +243,19 @@ def main():
     taskSet3.drag(-1107,18,1,'l') # drag calendar to left screen
 
     # Open last instance of Dayforce for current day
-    taskSet4.moveMouse(173,68,1,'y')
+    taskSet4.moveMouse(173, 68, 1, 'y')  # click on blank area of browser to focus the browser
     taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet4.type('dayforcehcm.com', 'y')  # Go to site
     taskSet4.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet4.moveMouse(1226, 737, 1, 'y')  # go to Login
+    taskSet4.moveMouse(1226, 737, 0.2, 'y')  # go to Login
     taskSet4.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded)
-    taskSet4.moveMouse(1007, 660, 1, 'y')  # click next (on small box)
+    taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet4.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
     taskSet4.moveMouse(246, 223, 6, 'y')  # click Filter button
     taskSet4.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
     taskSet4.moveMouse(410, 310, 0.5, 'y')  # select LA
-    taskSet4.moveMouse(1629, 301, 0.5, 'y')  # click Apply button
-    taskSet4.moveMouse(1087, 188, 1, 'y')  # open calendar
+    taskSet4.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
+    taskSet4.moveMouse(1087, 188, 0.5, 'y')  # open calendar
 
 
 
