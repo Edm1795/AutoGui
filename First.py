@@ -45,18 +45,24 @@ class TaskSet:
 
     def moveMouseNEW(self,time,shift,duration=1):
 
-        tBase=720 # base value for time which is 8 am (horizontal axis)
-        sBase=481 # base value for shift which is the top shift showing on screen (vertical axis)
+        # Start values for home com
+        # tBase=720 # base value for time which is 8 am (horizontal axis)
+        # sBase=481 # base value for shift which is the top shift showing on screen (vertical axis)
+        # timeUnit = 38  # number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
+        # shiftUnit = 32  # Number of pixels between adjacent shifts (top shift and next one below)
 
-        timeUnit=38 #number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
-        shiftUnit=32 # Number of pixels between adjacent shifts (top shift and next one below)
+        tBase = 524  # base value for time which is 8 am (horizontal axis)
+        sBase = 380  # base value for shift which is the top shift showing on screen (vertical axis)
+
+        timeUnit=30 #number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
+        shiftUnit=51 # Number of pixels between adjacent shifts (top shift and next one below)
         timeSteps=self.timeSteps(time) # number of time steps from base (8am) to desired time
 
 
         if shift==1: # if targeting first shift set vert to base value
             vert=sBase
         else: # if target is any other shift set to base * the number of shifts down
-            vert=sBase + (shiftUnit * shift)
+            vert=sBase + (shiftUnit * (shift-1))
 
         horiz=tBase+(timeSteps*timeUnit) # Set hoirz to time base * number of hours forward
         # eg: 8am+(2 timesteps*38pixels) Note: one time step = 30 mins not 1 hour.
@@ -134,9 +140,8 @@ def main():
 
     taskSet1.moveMouseNEW(8,1)
     time.sleep(0.3)
-    taskSet1.moveMouseNEW(10,1)
+    taskSet1.moveMouseNEW(8,2)
     time.sleep(0.3)
     taskSet1.moveMouseNEW(9,2)
 
 main()
-
