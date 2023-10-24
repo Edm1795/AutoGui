@@ -76,12 +76,42 @@ class TaskSet:
         '''
         ag.click()
 
-    def drag(self,vert,horiz,duration,button):
+    def drag(self,vert,horiz,duration=1,button='l'):
 
         if button=='l':
             button='left'
         if button=='r':
             button='right'
+        ag.dragTo(vert, horiz, button=button,duration=duration)
+
+    def dragNEW(self,time,shift,duration,button):
+        # Start values for home com
+        # tBase=720 # base value for time which is 8 am (horizontal axis)
+        # sBase=481 # base value for shift which is the top shift showing on screen (vertical axis)
+        # timeUnit = 38  # number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
+        # shiftUnit = 32  # Number of pixels between adjacent shifts (top shift and next one below)
+
+        tBase = 524  # base value for time which is 8 am (horizontal axis)
+        sBase = 380  # base value for shift which is the top shift showing on screen (vertical axis)
+
+        timeUnit=30 #number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
+        shiftUnit=51 # Number of pixels between adjacent shifts (top shift and next one below)
+        timeSteps=self.timeSteps(time) # number of time steps from base (8am) to desired time
+
+        if button=='l':
+            button='left'
+        if button=='r':
+            button='right'
+
+        if shift==1: # if targeting first shift set vert to base value
+            vert=sBase
+        else: # if target is any other shift set to base * the number of shifts down
+            vert=sBase + (shiftUnit * (shift-1))
+
+        horiz=tBase+(timeSteps*timeUnit) # Set hoirz to time base * number of hours forward
+        # eg: 8am+(2 timesteps*38pixels) Note: one time step = 30 mins not 1 hour.
+
+
         ag.dragTo(vert, horiz, button=button,duration=duration)
 
     def pressKeys(self,holdKey,secondKey):
@@ -115,33 +145,21 @@ class TaskSet:
 def main():
 
     taskSet1=TaskSet()
-    # taskSet1.moveMouse(967,91,1,'n')
-    # taskSet1.drag(820,91,2,'l')
-    # taskSet1.moveMouse(706,1052,1,'y')
-    # taskSet1.pressKeys('ctrl', 't')  # open new tab
-    # taskSet1.type('dayforcehcm.com', 'y')  # Go to site
-    # taskSet1.moveMouse(1315, 917, 3, 'y')  # click login
-    # taskSet1.moveMouse(315, 432, 8, 'y')  # go to schedule
-    # taskSet1.moveMouse(985, 241, 6, 'y')  # open calendar
 
-    # taskSet1.moveMouse(589,243,1,'y')
-    # for num in range(1,8):
-    #     taskSet1.pressKeys('ctrl',str(num))
-    #     time.sleep(1)
-    #     taskSet1.moveMouse(589, 243, 1, 'y')
-    # taskSet1.moveMouse(600,474,0.5,'y')
-    #
-    # taskSet1.moveMouse(655,474,0.5,'n')
-    # taskSet1.drag(767,474,2,'l')
-    #
-    # ag.dragTo(100, 200, 2,button='left')
-    # ag.moveTo(400,400)
-    # ag.drag(100, 200, 2,button='left')
+    # taskSet1.moveMouse(29, 463, 0.5, 'y')  # click activity button, left side pane
+    # taskSet1.moveMouse(80, 792, 1, 'y')  # click 'Lists'
+    taskSet1.moveMouse(985,654,1,'y')
+    for num in range(1, 2):
+        taskSet1.pressKeys('ctrl', str(num))
 
-    taskSet1.moveMouseNEW(8,1)
-    time.sleep(0.3)
-    taskSet1.moveMouseNEW(8,2)
-    time.sleep(0.3)
-    taskSet1.moveMouseNEW(9,2)
+        taskSet1.moveMouseNEW(1,3)
+        taskSet1.dragNEW(2,3,'l')  # drag lists to 9:30 am
+
+
+    # taskSet1.moveMouseNEW(8,1)
+    # time.sleep(0.3)
+    # taskSet1.moveMouseNEW(8,2)
+    # time.sleep(0.3)
+    # taskSet1.moveMouseNEW(9,2)
 
 main()
