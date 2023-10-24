@@ -29,32 +29,37 @@ class TaskSet:
         input: desiredTime int, the time you want to go to
         output: int, number of units from basetime (8am) to desired time measured in 30 min incr.
         eg: 9 am is two time steps forward from basetime (8am) (two half hour units)
-        
-        note: this does not yet handle 30 minute incs. eg: 9:30am
         '''
-
-        if desiredTime>0 and desiredTime<8: # If any time is between 1 and 7 add 12 hours. Eg 1 --> 13; 13 = 1 pm
-            desiredTime=desiredTime+12
 
         baseTime=8
 
-        return (desiredTime-baseTime)*2
+        # Handling the case for 9pm input (an exception) Note: can not mix int and string in inputs
+        # if str(desiredTime[1]).lower()=='p':
+        #     return ((desiredTime - baseTime)+13) * 2
+        # else:
+        if len(str(desiredTime))<3: # if input into function is 8,9,10,11,12; anything without a half hour (eg,830)
+            return (desiredTime-baseTime)*2 # Returns number of 30 min blocks from baseTime
+        else:
+            return ((desiredTime-baseTime)*2)+1 # Returns number of 30 min blocks if a half hour is desired (eg 9:30)
+
 
     def moveMouseNEW(self,time,shift,duration=1):
 
-        #Vertical pixel difference between shifts: 50px
+        tBase=720 # base value for time which is 8 am (horizontal axis)
+        sBase=481 # base value for shift which is the top shift showing on screen (vertical axis)
 
-        shift = shift-1 # decrement by one to get correct results
-        shiftDiff=52 # pixel distance between shifts (adjust this if mouse is not accurante
-        tBase=524 # base value for time which is 8 am (horizontal axis)
-        sBase=351 # base value for shift which is the top shift showing on screen (vertical axis)
-
-        timeUnit=30 #number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
-
+        timeUnit=38 #number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
+        shiftUnit=32 # Number of pixels between adjacent shifts (top shift and next one below)
         timeSteps=self.timeSteps(time) # number of time steps from base (8am) to desired time
 
-        vert=sBase+(shift*shiftDiff) # get shift pixel value multiply base value with number of shifts downwards on screen
-        horiz=tBase+(timeSteps*timeUnit)
+
+        if shift==1: # if targeting first shift set vert to base value
+            vert=sBase
+        else: # if target is any other shift set to base * the number of shifts down
+            vert=sBase + (shiftUnit * shift)
+
+        horiz=tBase+(timeSteps*timeUnit) # Set hoirz to time base * number of hours forward
+        # eg: 8am+(2 timesteps*38pixels) Note: one time step = 30 mins not 1 hour.
 
 
         ag.moveTo(horiz,vert,duration)
@@ -64,30 +69,6 @@ class TaskSet:
         Clicks the mouse
         '''
         ag.click()
-
-    def dragNEW(self,time,shift,button,duration=1):
-        '''
-        This version of drag can take a direct time value (eg 9 am) and a shift number (eg: 1, for first shift on screen)
-        '''
-        
-        if button=='l':
-            button='left'
-        if button=='r':
-            button='right'
-
-        shift = shift - 1  # decrement by one to get correct results
-        shiftDiff = 52  # pixel distance between shifts (adjust this if mouse is not accurante
-        tBase = 524  # base value for time which is 8 am (horizontal axis)
-        sBase = 351  # base value for shift which is the top shift showing on screen (vertical axis)
-
-        timeUnit = 30  # number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
-
-        timeSteps = self.timeSteps(time)  # number of time steps from base (8am) to desired time
-
-        vert = sBase + (shift * shiftDiff)  # get shift pixel value multiply base value with number of shifts downwards on screen
-        horiz = tBase + (timeSteps * timeUnit)
-
-        ag.dragTo(horiz,vert, button=button,duration=duration)
 
     def drag(self,vert,horiz,duration,button):
 
@@ -127,7 +108,7 @@ class TaskSet:
 
 def main():
 
-    # taskSet1=TaskSet()
+    taskSet1=TaskSet()
     # taskSet1.moveMouse(967,91,1,'n')
     # taskSet1.drag(820,91,2,'l')
     # taskSet1.moveMouse(706,1052,1,'y')
@@ -151,113 +132,11 @@ def main():
     # ag.moveTo(400,400)
     # ag.drag(100, 200, 2,button='left')
 
-    # taskSet1.moveMouseNEW(8,1)
-    # taskSet1.moveMouseNEW(9,1)
-    # taskSet1.moveMouseNEW(8,2)
-    # taskSet1.moveMouseNEW(9,2)
-    # taskSet1.moveMouseNEW(9, 3)
-    # taskSet1.moveMouseNEW(9, 4)
-    # taskSet1.moveMouseNEW(10,4)
-    #
-    # # taskSet1.moveMouseNEW(11,5)
-    # taskSet1.moveMouseNEW(1,1)
-    # taskSet1.moveMouseNEW(2, 1)
-    # taskSet1.moveMouseNEW(3, 1)
-    # taskSet1.moveMouseNEW(4, 2)
-    # taskSet1.moveMouseNEW(5, 1)
-    # taskSet1.moveMouseNEW(6, 1)
-    # taskSet1.moveMouseNEW(7, 1)
-    # taskSet1.moveMouseNEW(8, 1)
-
-    # taskSet1.moveMouseNEW(2,6)
-    # taskSet1.dragNEW(3,6,'l')
-
-    # taskSet1.moveMouseNEW(3, 2)
-    # taskSet1.dragNEW(4, 2, 'l')
-
-    # taskSet1.moveMouseNEW(4, 3)
-    # taskSet1.dragNEW(5, 3, 'l')
-
-
-    # taskSet1.moveMouseNEW(10,2)
-    # taskSet1.dragNEW(11,2,'l')
-
-    # taskSet1.moveMouseNEW(10,3)
-    # taskSet1.dragNEW(11,3,'l')
-
-
-### Set up desktop for scheduling  ###
-    
-    print('Ensure bookmarks bar is on')
-
-    taskSet1=TaskSet() # Scheduling for LA and Pages
-    taskSet2=TaskSet() # Sharepoint calendar
-    taskSet3=TaskSet() # Calendar for week of scheduling
-    taskSet4=TaskSet() # Dayforce for current day
-
-    taskSet1.moveMouse(605, 1056, 1, 'y')  # go to Firefox
-    time.sleep(2) # delay for first case scenerio; more time needed to open Firefox
-    # taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
-    taskSet1.type('dayforcehcm.com', 'y')  # Go to site
-    taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    taskSet1.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
-    taskSet1.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
-    taskSet1.moveMouse(246,223,6,'y') # click Filter button
-    taskSet1.moveMouse(376,261,0.5,'y') # click filter input bar
-    taskSet1.moveMouse(410,310,0.5,'y') # select LA
-    taskSet1.moveMouse(1629,301,0.2,'y') # click Apply button
-    taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
-
-    # Open a second instance of Dayforce
-    taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
-    taskSet1.type('dayforcehcm.com', 'y')  # Go to site
-    taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    taskSet1.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded)
-    taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
-    taskSet1.moveMouse(1056, 337, 2, 'y')  # click schedule (main button to load sched)
-    taskSet1.moveMouse(246, 223, 5, 'y')  # click Filter button
-    taskSet1.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
-    taskSet1.moveMouse(396, 390, 0.5, 'y')  # select Page
-    taskSet1.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
-    taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
-
-    # Open Sharepoint
-    taskSet2.pressKeys('ctrl', 't')  # open new tab
-    taskSet2.moveMouse(53, 97, 1, 'y')  # click Sharepoint
-    taskSet2.moveMouse(21, 134, 5, 'y')  # click Sharepoint menu button (left side)
-    taskSet2.moveMouse(88, 447, 2, 'y')  # open calendar
-    taskSet2.moveMouse(702,20,1,'y')
-
-    # Open Sharepoint
-    taskSet3.pressKeys('ctrl', 't')  # open new tab
-    taskSet3.moveMouse(53, 97, 1, 'y')  # click Sharepoint
-    taskSet3.moveMouse(21, 134, 1, 'y')  # click outlook menu button (left side)
-    taskSet3.moveMouse(88, 447, 2, 'y')  # open calendar
-    taskSet3.moveMouse(572, 269, 1, 'y')  # open date selection calendar
-    taskSet3.moveMouse(926, 22, 1, 'y')  # open calendar
-
-    taskSet3.moveMouse(828, 22, 1, 'y')  # open calendar
-    taskSet3.drag(-1107,18,1,'l') # drag calendar to left screen
-
-    # Open last instance of Dayforce for current day
-    taskSet4.moveMouse(173, 68, 1, 'y')  # click on blank area of browser to focus the browser
-    taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
-    taskSet4.type('dayforcehcm.com', 'y')  # Go to site
-    taskSet4.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet4.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    taskSet4.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded)
-    taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
-    taskSet4.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
-    taskSet4.moveMouse(246, 223, 6, 'y')  # click Filter button
-    taskSet4.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
-    taskSet4.moveMouse(410, 310, 0.5, 'y')  # select LA
-    taskSet4.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
-    taskSet4.moveMouse(1087, 188, 0.5, 'y')  # open calendar
-
-
-
+    taskSet1.moveMouseNEW(8,1)
+    time.sleep(0.3)
+    taskSet1.moveMouseNEW(10,1)
+    time.sleep(0.3)
+    taskSet1.moveMouseNEW(9,2)
 
 main()
+
