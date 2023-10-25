@@ -120,7 +120,7 @@ class TaskSet:
         # eg: 8am+(2 timesteps*38pixels) Note: one time step = 30 mins not 1 hour.
 
 
-        ag.dragTo(vert, horiz, button=button,duration=duration)
+        ag.dragTo(horiz,vert,button=button,duration=duration) # horiz 1st arg, then verti.
 
     def pressKeys(self,holdKey,secondKey):
 
