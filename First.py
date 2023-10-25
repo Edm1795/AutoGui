@@ -22,10 +22,12 @@ class TaskSet:
         else:
             pass
 
-    def timeSteps(self,desiredTime):
+        def timeSteps(self,desiredTime):
 
         '''
-        method returns the number of time steps between basetime (8am) and desired time
+        Method returns the number of time steps between basetime (8am) and desired time. This is
+        intuitive human time module. It takes inputs as a person normally thinks of time at work. 
+        Ie.: 8=8am,12=noon,1=1pm,2=2pm....
         input: desiredTime int, the time you want to go to
         output: int, number of units from basetime (8am) to desired time measured in 30 min incr.
         eg: 9 am is two time steps forward from basetime (8am) (two half hour units)
@@ -37,10 +39,16 @@ class TaskSet:
         # if str(desiredTime[1]).lower()=='p':
         #     return ((desiredTime - baseTime)+13) * 2
         # else:
+        
+        # This is the human time module which takes time as a normal person thinks of it.
         if len(str(desiredTime))<3: # if input into function is 8,9,10,11,12; anything without a half hour (eg,830)
-            return (desiredTime-baseTime)*2 # Returns number of 30 min blocks from baseTime
+            if desiredTime > 7 and desiredTime < 13 :
+                return (desiredTime-baseTime)*2 # Returns number of 30 min blocks from baseTime
+            else:
+                return ((desiredTime+12)-baseTime)*2 # Returns value for times: 1pm,2pm,3,...8pm
         else:
             return ((desiredTime-baseTime)*2)+1 # Returns number of 30 min blocks if a half hour is desired (eg 9:30)
+
 
 
     def moveMouseNEW(self,time,shift,duration=1):
