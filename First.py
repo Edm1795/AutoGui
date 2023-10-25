@@ -22,7 +22,7 @@ class TaskSet:
         else:
             pass
 
-        def timeSteps(self,desiredTime):
+    def timeSteps(self,desiredTime):
 
         '''
         Method returns the number of time steps between basetime (8am) and desired time. This is
