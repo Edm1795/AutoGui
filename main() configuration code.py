@@ -1,4 +1,13 @@
- print('\nEnsure bookmarks bar is on')
+# Contents #
+
+# 1. calls for a full setup of desktop
+# 2. calls for a single instance of DF 
+
+
+
+#### 1. Below is the main list of calls for running a full setup for scheduling ####
+
+print('\nEnsure bookmarks bar is on')
 
     taskSet1=TaskSet() # Scheduling for LA and Pages
     taskSet2=TaskSet() # Sharepoint calendar
@@ -73,3 +82,25 @@
     taskSet5.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
     taskSet5.moveMouse(21, 134, 5, 'y')  # click Sharepoint menu button (left side)
     taskSet5.moveMouse(83, 254, 2, 'y')  # open email (Outlook)
+
+
+
+#### 2. Below is the config code for running DfQuickCheck.py; this opens one instance of schedule
+
+taskSet4=TaskSet()
+
+    taskSet4.moveMouse(1002,164,1,'y') #focus screen
+    taskSet4.type('dayforcehcm.com', 'y')  # Go to site (consider adding click to addre. bar to ensure cursor)
+    taskSet4.moveMouse(173, 68, 1, 'y')  # click on blank area of browser to focus the browser
+    taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
+    taskSet4.type('dayforcehcm.com', 'y')  # Go to site
+    taskSet4.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
+    taskSet4.moveMouse(1226, 737, 0.2, 'y')  # go to Login
+    taskSet4.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded)
+    taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
+    taskSet4.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
+    taskSet4.moveMouse(246, 223, 6, 'y')  # click Filter button
+    taskSet4.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
+    taskSet4.moveMouse(410, 310, 0.5, 'y')  # select LA
+    taskSet4.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
+    taskSet4.moveMouse(1087, 188, 0.5, 'y')  # open calendar
