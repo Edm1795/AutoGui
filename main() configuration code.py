@@ -15,8 +15,9 @@ print('\nEnsure bookmarks bar is on')
     taskSet4=TaskSet() # Dayforce for current day
     taskSet5=TaskSet() # Open Email
 
-    taskSet1.moveMouse(605, 1056, 1, 'y')  # go to Firefox
+    taskSet1.moveMouse(605, 1056, 1, 'y')  # go to Firefox (5 position on taskbar)
     time.sleep(2) # delay for first case scenerio; more time needed to open Firefox
+    taskSet1.moveMouse(305, 64, 0.2, 'y')  # click to focus address bar (incase not focused)
     # taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet1.type('dayforcehcm.com', 'y')  # Go to site (consider adding click to addre. bar to ensure cursor)
     taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
