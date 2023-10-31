@@ -96,6 +96,12 @@ class TaskSet:
 
     def confirmElement(self,image):
 
+        '''
+        Confirms if a given element is present on the screen.
+        input: str of image to search for in the screen ('image.png')
+        output: True if and when the element (the image sent in) is found
+        '''
+
         loop = True
         while loop:
 
