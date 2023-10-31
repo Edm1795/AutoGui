@@ -94,15 +94,17 @@ class TaskSet:
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
 
-    def confirmElement(self,):
+    def confirmElement(self,image):
 
-        return ag.locateOnScreen('SelectRole.png')
+        loop = True
+        while loop:
 
+            if ag.locateOnScreen(image) == None:
+                continue
+            else:
+                loop = False
 
-
-
-
-
+        return True
 
 # funcList = [moveMouse(706,1052,1,'y')]
 #
@@ -127,15 +129,8 @@ def main():
     taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
 
-    loop = True
-    while loop:
-
-        if taskSet1.confirmElement() == None:
-            time.sleep(0.5)
-        else:
-            loop = False
-
-    taskSet1.moveMouse(915, 548, 0.5, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
+    if taskSet1.confirmElement('SelectRole.png')==True:
+        taskSet1.moveMouse(915, 548, 0.5, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
     taskSet1.moveMouse(246,223,6,'y') # click Filter button
