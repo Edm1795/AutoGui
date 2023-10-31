@@ -94,23 +94,26 @@ class TaskSet:
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
 
-    def confirmElement(self,image):
+    def confirmElement(self,image,sector):
 
-        '''
-        Confirms if a given element is present on the screen.
-        input: str of image to search for in the screen ('image.png')
-        output: True if and when the element (the image sent in) is found
-        '''
+    '''
+    Confirms if a given element is present on the screen.
+    input: str of image to search for in the screen ('image.png')
+    output: True if and when the element (the image sent in) is found
+    '''
 
-        loop = True
-        while loop:
+    if sector == 'c': # set screenshot region for small box in centre of the screen
+        regValues = (756, 410, 400, 400)
 
-            if ag.locateOnScreen(image) == None:
-                continue
-            else:
-                loop = False
+    loop = True
+    while loop:
 
-        return True
+        if ag.locateOnScreen(image,region=regValues) == None:
+            continue
+        else:
+            loop = False
+
+    return True
 
 # funcList = [moveMouse(706,1052,1,'y')]
 #
@@ -135,7 +138,7 @@ def main():
     taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
 
-    if taskSet1.confirmElement('SelectRole.png')==True:
+    if taskSet1.confirmElement('SelectRole.png','c')==True: # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available
         taskSet1.moveMouse(915, 548, 0.5, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
