@@ -93,28 +93,40 @@ class TaskSet:
         self.moveMouse(24,427,0.5,'y') #open activity pane
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
+    def confirmElement(self, image, sector):
 
-    def confirmElement(self,image,sector):
+        '''
+        Confirms if a given element is present on the screen.
+        input: image: str of image to search for in the screen ('image.png')
+        input: sector: str defining which sector of screen to search for desired element
+        output: True if and when the element (the image sent in) is found
+        '''
 
-    '''
-    Confirms if a given element is present on the screen.
-    input: str of image to search for in the screen ('image.png')
-    output: True if and when the element (the image sent in) is found
-    '''
+        if sector == 'c':  # Centre Section: set screenshot region for small box in centre of the screen
+            regValues = (756, 410, 400, 400)
 
-    if sector == 'c': # set screenshot region for small box in centre of the screen
-        regValues = (756, 410, 400, 400)
+        loop = True
+        while loop:
 
-    loop = True
-    while loop:
+            if ag.locateOnScreen(image, region=regValues) == None:
+                continue
+            else:
+                loop = False
 
-        if ag.locateOnScreen(image,region=regValues) == None:
-            continue
-        else:
-            loop = False
+        return True
+    def confirmElementCol(self):
 
-    return True
+        loop = True
+        while loop:
+            # use eyedroper in Firefox browser options to get colour then convert to rgb
+            if ag.pixelMatchesColor(215, 133, (56, 00, 00)) == False:
+                continue
+            else:
+                loop = False
 
+        return True
+
+        
 # funcList = [moveMouse(706,1052,1,'y')]
 #
 # for func in funcList:
@@ -138,7 +150,7 @@ def main():
     taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
 
-    if taskSet1.confirmElement('SelectRole.png','c')==True: # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available
+    if taskSet1.confirmElement('SelectRole.png','c')==True:
         taskSet1.moveMouse(915, 548, 0.5, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
@@ -153,7 +165,8 @@ def main():
     taskSet1.type('dayforcehcm.com', 'y')  # Go to site
     taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    taskSet1.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded)
+    if taskSet1.confirmElement('SelectRole.png', 'c') == True:
+        taskSet1.moveMouse(915, 548, 0.5,'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 2, 'y')  # click schedule (main button to load sched)
     taskSet1.moveMouse(246, 223, 5, 'y')  # click Filter button
@@ -165,7 +178,8 @@ def main():
     # Open Sharepoint
     taskSet2.pressKeys('ctrl', 't')  # open new tab
     taskSet2.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
-    taskSet2.moveMouse(21, 134, 5, 'y')  # click Sharepoint menu button (left side)
+    if taskSet2.confirmElementCol()==True:
+        taskSet2.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
     taskSet2.moveMouse(88, 447, 2, 'y')  # open calendar
     taskSet2.moveMouse(702,20,1,'y')
 
