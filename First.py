@@ -127,7 +127,7 @@ class TaskSet:
         loop = True
         while loop:
             # use eyedroper in Firefox browser options to get colour then convert to rgb
-            if ag.pixelMatchesColor(x,y, colour) == False:
+            if ag.pixelMatchesColor(x,y, colour) == False: # colour must be sent as tuple (r,g,b)
                 continue
             else:
                 loop = False
@@ -155,11 +155,11 @@ def main():
     taskSet1.moveMouse(305, 64, 0.2, 'y')  # click to focus address bar (incase not focused)
     # taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet1.type('dayforcehcm.com', 'y')  # Go to site (consider adding click to addre. bar to ensure cursor)
-    if taskSet1.confirmElementCol(665, 575, (48, 103, 219)) == True:
+    if taskSet1.confirmElementCol(665, 575, (48, 103, 219)):
         taskSet1.moveMouse(1226, 640, 0.25, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
 
-    if taskSet1.confirmElement('SelectRole.png','c')==True:
+    if taskSet1.confirmElement('SelectRole.png','c'):
         taskSet1.moveMouse(915, 548, 0.5, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
@@ -172,9 +172,10 @@ def main():
     # Open a second instance of Dayforce
     taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet1.type('dayforcehcm.com', 'y')  # Go to site
-    taskSet1.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
+    if taskSet1.confirmElementCol(665, 575, (48, 103, 219)):
+        taskSet1.moveMouse(1226, 640, 0.25, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    if taskSet1.confirmElement('SelectRole.png', 'c') == True:
+    if taskSet1.confirmElement('SelectRole.png', 'c'):
         taskSet1.moveMouse(915, 548, 0.5,'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet1.moveMouse(1056, 337, 2, 'y')  # click schedule (main button to load sched)
@@ -187,7 +188,7 @@ def main():
     # Open Sharepoint
     taskSet2.pressKeys('ctrl', 't')  # open new tab
     taskSet2.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
-    if taskSet2.confirmElementCol(215, 133, (56, 00, 00))==True:
+    if taskSet2.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet2.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
     taskSet2.moveMouse(88, 447, 2, 'y')  # open calendar
     taskSet2.moveMouse(702,20,1,'y')
@@ -195,7 +196,7 @@ def main():
     # Open Sharepoint
     taskSet3.pressKeys('ctrl', 't')  # open new tab
     taskSet3.moveMouse(53, 97, 1, 'y')  # click Sharepoint
-    if taskSet3.confirmElementCol(215, 133, (56, 00, 00)) == True:
+    if taskSet3.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet3.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
     taskSet3.moveMouse(88, 447, 2, 'y')  # open calendar
     taskSet3.moveMouse(572, 269, 1, 'y')  # open date selection calendar
@@ -208,11 +209,11 @@ def main():
     taskSet4.moveMouse(173, 68, 1, 'y')  # click on blank area of browser to focus the browser
     taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet4.type('dayforcehcm.com', 'y')  # Go to site
-    taskSet4.moveMouse(1226, 640, 3, 'y')  # go to autofill user name; Firefox should auto pop this up
+    if taskSet1.confirmElementCol(665, 575, (48, 103, 219)):
+        taskSet4.moveMouse(1226, 640, 0.25, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet4.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    if taskSet4.confirmElement('SelectRole.png', 'c') == True:
+    if taskSet4.confirmElement('SelectRole.png', 'c'):
         taskSet4.moveMouse(915, 548, 0.5,'y')  # select Daily Scheduler (small box before sched
-    taskSet4.moveMouse(915, 548, 7, 'y')  # select Daily Scheduler (small box before sched loaded)
     taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet4.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
     taskSet4.moveMouse(246, 223, 6, 'y')  # click Filter button
@@ -224,7 +225,7 @@ def main():
     # Open Email
     taskSet5.pressKeys('ctrl', 't')  # open new tab
     taskSet5.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
-    if taskSet5.confirmElementCol(215, 133, (56, 00, 00)) == True:
+    if taskSet5.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet5.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
     taskSet5.moveMouse(83, 254, 2, 'y')  # open email (Outlook)
 
