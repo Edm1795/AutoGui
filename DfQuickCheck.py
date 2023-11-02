@@ -138,7 +138,7 @@ class TaskSet:
         return True
 
 
-# Open last instance of Dayforce for current day
+
 
 def main():
 
@@ -149,10 +149,10 @@ def main():
     taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet4.type('dayforcehcm.com', 'y')  # Go to site
     # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-    if taskSet4.confirmElementCol(665,575, (48,103,219))==True:
+    if taskSet4.confirmElementCol(665,575, (48,103,219)):
         taskSet4.moveMouse(1226, 640, 0.25, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet4.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    if taskSet4.confirmElement('SelectRole.png','c') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
+    if taskSet4.confirmElement('SelectRole.png','c'): # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
         taskSet4.moveMouse(915, 548, 0.5,'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     taskSet4.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
