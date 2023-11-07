@@ -131,7 +131,7 @@ class TaskSet:
                 continue
             else:
                 loop = False
-
+        time.sleep(0.3) # Add a delay to compensate for web lag
         return True
 
 
