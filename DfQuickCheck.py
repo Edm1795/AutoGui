@@ -94,12 +94,13 @@ class TaskSet:
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
 
-    def confirmElement(self,image,sector):
+    def confirmElement(self,image,sector,topLeftx=0,topLefty=0,bottomRightx=0,bottomRighty=0):
 
         '''
         Confirms if a given element is present on the screen.
         input: image: str of image to search for in the screen ('image.png')
-        input: sector: str defining which sector of screen to search for desired element
+        inputs: sector: str defining which sector of screen to search for desired element
+            Exact values of box to check for element (if not using a general sector of the screen
         output: True if and when the element (the image sent in) is found
         '''
 
@@ -107,6 +108,8 @@ class TaskSet:
             regValues = (756, 410, 400, 400)
         if sector == 'cr':
             regValues = (1000, 380, 500, 500)
+        if sector == 'n': # If no sector is used, load in exact values of box to check for element
+            regValues = (topLeftx,topLefty,bottomRightx,bottomRighty)
 
         loop = True
         while loop:
@@ -134,11 +137,11 @@ class TaskSet:
                 continue
             else:
                 loop = False
-
+        time.sleep(0.1)
         return True
 
 
-
+# Open last instance of Dayforce for current day
 
 def main():
 
@@ -155,7 +158,8 @@ def main():
     if taskSet4.confirmElement('SelectRole.png','c'): # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
         taskSet4.moveMouse(915, 548, 0.5,'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
-    taskSet4.moveMouse(1056, 337, 3, 'y')  # click schedule (main button to load sched)
+    if taskSet4.confirmElement('Schedules.png','n',1007,370,1113,397):
+        taskSet4.moveMouse(1056, 337, 0.5, 'y')  # click schedule (main button to load sched)
     taskSet4.moveMouse(246, 223, 6, 'y')  # click Filter button
     taskSet4.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
     taskSet4.moveMouse(410, 310, 0.5, 'y')  # select LA
