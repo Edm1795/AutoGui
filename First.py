@@ -198,7 +198,7 @@ def main():
     if taskSet2.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet2.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
     if taskSet2.confirmElement('Calendar.png', 'n', 25, 428, 65, 467):
-        taskSet2.moveMouse(88, 447, 2, 'y')  # open calendar
+        taskSet2.moveMouse(88, 447, 0.5, 'y')  # open calendar
     taskSet2.moveMouse(702,20,1,'y')
 
     # Open Sharepoint
@@ -206,7 +206,8 @@ def main():
     taskSet3.moveMouse(53, 97, 1, 'y')  # click Sharepoint
     if taskSet3.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet3.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
-    taskSet3.moveMouse(88, 447, 2, 'y')  # open calendar
+    if taskSet3.confirmElement('Calendar.png', 'n', 25, 428, 65, 467):
+        taskSet3.moveMouse(88, 447, 0.5, 'y')  # open calendar
     taskSet3.moveMouse(572, 269, 1, 'y')  # open date selection calendar
     taskSet3.moveMouse(926, 22, 1, 'y')  # open calendar
 
@@ -236,7 +237,9 @@ def main():
     taskSet5.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
     if taskSet5.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet5.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
-    taskSet5.moveMouse(83, 254, 2, 'y')  # open email (Outlook)
+    if taskSet5.confirmElement('Calendar.png', 'n', 25, 428, 65, 467):
+        taskSet5.moveMouse(83, 254, 0.5, 'y')  # open email (Outlook)
+
 
 
 main()
