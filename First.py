@@ -155,7 +155,7 @@ def main():
     taskSet4=TaskSet() # Dayforce for current day
     taskSet5=TaskSet() # Open Email
 
-    taskSet1.moveMouse(605, 1056, 1, 'y')  # go to Firefox (5 position on taskbar)
+    taskSet1.moveMouse(605, 1056, 0.5, 'y')  # go to Firefox (5 position on taskbar)
     time.sleep(2) # delay for first case scenerio; more time needed to open Firefox
     taskSet1.moveMouse(305, 64, 0.2, 'y')  # click to focus address bar (incase not focused)
     # taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
@@ -197,7 +197,8 @@ def main():
     taskSet2.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
     if taskSet2.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet2.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
-    taskSet2.moveMouse(88, 447, 2, 'y')  # open calendar
+    if taskSet2.confirmElement('Calendar.png', 'n', 25, 428, 65, 467):
+        taskSet2.moveMouse(88, 447, 2, 'y')  # open calendar
     taskSet2.moveMouse(702,20,1,'y')
 
     # Open Sharepoint
@@ -236,13 +237,6 @@ def main():
     if taskSet5.confirmElementCol(215, 133, (56, 00, 00)):
         taskSet5.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
     taskSet5.moveMouse(83, 254, 2, 'y')  # open email (Outlook)
-
-
-
-
-
-
-
 
 
 main()
