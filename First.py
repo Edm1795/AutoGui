@@ -149,7 +149,7 @@ def main():
 
     print('\nEnsure bookmarks bar is on')
 
-    taskSet1=TaskSet() # Scheduling for LA and Pages (two pages under one taskset)
+    taskSet1=TaskSet() # Scheduling for LA and Pages
     taskSet2=TaskSet() # Sharepoint calendar
     taskSet3=TaskSet() # Calendar for week of scheduling
     taskSet4=TaskSet() # Dayforce for current day
@@ -169,7 +169,8 @@ def main():
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     if taskSet4.confirmElement('Schedules.png', 'n', 1007, 370, 1113, 397):
         taskSet1.moveMouse(1056, 337, 0.5, 'y')  # click schedule (main button to load sched)
-    taskSet1.moveMouse(246,223,6,'y') # click Filter button
+    if taskSet1.confirmElementCol(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
+        taskSet1.moveMouse(246, 223, 0.2, 'y')  # click Filter button
     taskSet1.moveMouse(376,261,0.5,'y') # click filter input bar
     taskSet1.moveMouse(410,310,0.2,'y') # select LA
     taskSet1.moveMouse(1629,301,0.2,'y') # click Apply button
@@ -186,7 +187,8 @@ def main():
     taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     if taskSet4.confirmElement('Schedules.png', 'n', 1007, 370, 1113, 397):
         taskSet1.moveMouse(1056, 337, 0.5, 'y')  # click schedule (main button to load sched)
-    taskSet1.moveMouse(246, 223, 5, 'y')  # click Filter button
+    if taskSet1.confirmElementCol(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
+        taskSet1.moveMouse(246, 223, 0.2, 'y')  # click Filter button
     taskSet1.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
     taskSet1.moveMouse(396, 390, 0.2, 'y')  # select Page
     taskSet1.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
@@ -226,7 +228,8 @@ def main():
     taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     if taskSet4.confirmElement('Schedules.png', 'n', 1007, 370, 1113, 397):
         taskSet1.moveMouse(1056, 337, 0.5, 'y')  # click schedule (main button to load sched)
-    taskSet4.moveMouse(246, 223, 6, 'y')  # click Filter button
+    if taskSet4.confirmElementCol(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
+        taskSet4.moveMouse(246, 223, 0.2, 'y')  # click Filter button
     taskSet4.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
     taskSet4.moveMouse(410, 310, 0.5, 'y')  # select LA
     taskSet4.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
