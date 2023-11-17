@@ -149,7 +149,7 @@ def main():
 
     print('\nEnsure bookmarks bar is on')
 
-    taskSet1=TaskSet() # Scheduling for LA and Pages
+    taskSet1=TaskSet() # Scheduling for LA and Pages (two pages under one taskset)
     taskSet2=TaskSet() # Sharepoint calendar
     taskSet3=TaskSet() # Calendar for week of scheduling
     taskSet4=TaskSet() # Dayforce for current day
