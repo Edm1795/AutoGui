@@ -160,7 +160,7 @@ def main():
     taskSet4.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
     if taskSet4.confirmElement('Schedules.png','n',1007,370,1113,397):
         taskSet4.moveMouse(1056, 337, 0.5, 'y')  # click schedule (main button to load sched)
-    if taskSet4.confirmElementCol(227, 223, (28, 68, 156)):
+    if taskSet4.confirmElementCol(227, 223, (28, 68, 156)): # Check for filter button by colour of icon
         taskSet4.moveMouse(246, 223, 0.2, 'y')  # click Filter button
     taskSet4.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
     taskSet4.moveMouse(410, 310, 0.5, 'y')  # select LA
