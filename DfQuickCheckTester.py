@@ -158,7 +158,7 @@ class CheckForElem:
 
         if sector == 'c':  # Centre Section: set screenshot region for small box in centre of the screen
             regValues = (756, 410, 400, 400)
-        if sector == 'cr':
+        if sector == 'cr': # Screenshot for centre right
             regValues = (1000, 380, 500, 500)
         if sector == 'n':  # If no sector is used, load in exact values of box to check for element
             regValues = (topLeftx, topLefty, bottomRightx, bottomRighty)
