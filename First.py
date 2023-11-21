@@ -95,6 +95,11 @@ class TaskSet:
 
 class CheckForElem:
 
+    '''
+    Class for checking given elements are present on the screen. For example checks if a certain word is present 
+    or a certain colour of pixel
+    '''
+
     def __init__(self):
         pass
 
