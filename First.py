@@ -8,7 +8,8 @@ class TaskSet:
     '''
     def __init__(self):
 
-        pass
+        self.progressDict={} # Dictionary logging the status of individual steps of the automation process. Eg: {'Element Colour': True}
+        
     def moveMouse(self,horiz,vert,time,click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
@@ -93,6 +94,15 @@ class TaskSet:
         self.moveMouse(24,427,0.5,'y') #open activity pane
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
+    def logProgress(self,action,value):
+        '''
+        Logs the status of certain steps in the automation process such as finding elements on the screen
+        Inputs: Action: string of the name of the action to log, eg element colour
+        Value: str (or int) of key. Eg, True, complete
+        '''
+        action=str(action)
+        self.progressDict[action]=value
+        
 class CheckForElem:
 
     '''
