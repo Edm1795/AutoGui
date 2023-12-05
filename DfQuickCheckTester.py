@@ -8,7 +8,8 @@ class TaskSet:
     '''
     def __init__(self):
 
-        pass
+        self.progressDict={} # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
+
     def moveMouse(self,horiz,vert,time,click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
@@ -101,12 +102,15 @@ class TaskSet:
         '''
         action=str(action)
         self.progressDict[action]=value
+        print(self.progressDict.items())
+        
 
 
 class CheckForElem:
 
-    def __init__(self):
-        pass
+    def __init__(self,taskSet):
+
+        self.taskSet=taskSet # Take in a given taskSet so as to run functions from taskSet ie logProgress()
 
     def confirmImage(self, image, sector, topLeftx=0, topLefty=0, bottomRightx=0, bottomRighty=0):
 
@@ -152,6 +156,7 @@ class CheckForElem:
                 continue
             else:
                 loop = False
+        self.taskSet.logProgress('colour','true')
         time.sleep(0.1)
         return True
 
@@ -161,7 +166,7 @@ class CheckForElem:
 def main():
 
     taskSet4=TaskSet()
-    checkForElem=CheckForElem()
+    checkForElem=CheckForElem(taskSet4)
 
 
     taskSet4.moveMouse(173, 68, 0.5, 'y')  # click on blank area of browser to focus the browser
