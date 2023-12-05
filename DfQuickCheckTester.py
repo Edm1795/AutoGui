@@ -93,52 +93,14 @@ class TaskSet:
         self.moveMouse(24,427,0.5,'y') #open activity pane
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
-
-    def confirmElement(self,image,sector,topLeftx=0,topLefty=0,bottomRightx=0,bottomRighty=0):
-
+    def logProgress(self,action,value):
         '''
-        Confirms if a given element is present on the screen.
-        input: image: str of image to search for in the screen ('image.png')
-        inputs: sector: str defining which sector of screen to search for desired element
-            Exact values of box to check for element (if not using a general sector of the screen
-        output: True if and when the element (the image sent in) is found
+        Logs the status of certain steps in the automation process such as finding elements on the screen
+        Inputs: Action: string of the name of the action to log, eg element colour
+        Value: str (or int) of key. Eg, True, complete
         '''
-
-        if sector == 'c': # Centre Section: set screenshot region for small box in centre of the screen
-            regValues = (756, 410, 400, 400)
-        if sector == 'cr':
-            regValues = (1000, 380, 500, 500)
-        if sector == 'n': # If no sector is used, load in exact values of box to check for element
-            regValues = (topLeftx,topLefty,bottomRightx,bottomRighty)
-
-        loop = True
-        while loop:
-
-            if ag.locateOnScreen(image,region=regValues) == None:
-                continue
-            else:
-                loop = False
-
-        return True
-    def confirmElementCol(self,x,y,colour):
-
-        '''
-        Confirms an element is present by matching a colour expected to a colour on the screen
-        :param x: x coordinate of position of colour
-        :param y: y coordinate of position of colour
-        :param colour: a tuple (r,g,b) given in parantheses
-        :return: True once the colour is detected
-        '''
-
-        loop = True
-        while loop:
-            # use eyedroper in Firefox browser options to get colour then convert to rgb
-            if ag.pixelMatchesColor(x,y, colour) == False:
-                continue
-            else:
-                loop = False
-        time.sleep(0.1)
-        return True
+        action=str(action)
+        self.progressDict[action]=value
 
 
 class CheckForElem:
