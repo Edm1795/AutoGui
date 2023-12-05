@@ -8,7 +8,8 @@ class TaskSet:
     '''
     def __init__(self):
 
-        pass
+        self.progressDict={} # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
+
     def moveMouse(self,horiz,vert,time,click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
@@ -93,58 +94,23 @@ class TaskSet:
         self.moveMouse(24,427,0.5,'y') #open activity pane
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
-
-    def confirmElement(self,image,sector,topLeftx=0,topLefty=0,bottomRightx=0,bottomRighty=0):
-
+    def logProgress(self,action,value):
         '''
-        Confirms if a given element is present on the screen.
-        input: image: str of image to search for in the screen ('image.png')
-        inputs: sector: str defining which sector of screen to search for desired element
-            Exact values of box to check for element (if not using a general sector of the screen
-        output: True if and when the element (the image sent in) is found
+        Logs the status of certain steps in the automation process such as finding elements on the screen
+        Inputs: Action: string of the name of the action to log, eg element colour
+        Value: str (or int) of key. Eg, True, complete
         '''
-
-        if sector == 'c': # Centre Section: set screenshot region for small box in centre of the screen
-            regValues = (756, 410, 400, 400)
-        if sector == 'cr':
-            regValues = (1000, 380, 500, 500)
-        if sector == 'n': # If no sector is used, load in exact values of box to check for element
-            regValues = (topLeftx,topLefty,bottomRightx,bottomRighty)
-
-        loop = True
-        while loop:
-
-            if ag.locateOnScreen(image,region=regValues) == None:
-                continue
-            else:
-                loop = False
-
-        return True
-    def confirmElementCol(self,x,y,colour):
-
-        '''
-        Confirms an element is present by matching a colour expected to a colour on the screen
-        :param x: x coordinate of position of colour
-        :param y: y coordinate of position of colour
-        :param colour: a tuple (r,g,b) given in parantheses
-        :return: True once the colour is detected
-        '''
-
-        loop = True
-        while loop:
-            # use eyedroper in Firefox browser options to get colour then convert to rgb
-            if ag.pixelMatchesColor(x,y, colour) == False:
-                continue
-            else:
-                loop = False
-        time.sleep(0.1)
-        return True
+        action=str(action)
+        self.progressDict[action]=value
+        print(self.progressDict.items())
+        
 
 
 class CheckForElem:
 
-    def __init__(self):
-        pass
+    def __init__(self,taskSet):
+
+        self.taskSet=taskSet # Take in a given taskSet so as to run functions from taskSet ie logProgress()
 
     def confirmImage(self, image, sector, topLeftx=0, topLefty=0, bottomRightx=0, bottomRighty=0):
 
@@ -190,6 +156,7 @@ class CheckForElem:
                 continue
             else:
                 loop = False
+        self.taskSet.logProgress('colour','true')
         time.sleep(0.1)
         return True
 
@@ -199,20 +166,21 @@ class CheckForElem:
 def main():
 
     taskSet4=TaskSet()
-    checkForElem=CheckForElem()
-
+    checkForElem=CheckForElem(taskSet4)
 
     taskSet4.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
     taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet4.type('dayforcehcm.com', 'y')  # Go to site
     # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-    if checkForElem.confirmColour(665,575, (48,103,219)):
+    if checkForElem.confirmColour(665, 575, (48, 103, 219)):
         taskSet4.moveMouse(1226, 640, 0.25, 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet4.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    if checkForElem.confirmImage('SelectRole.png','c'): # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-        taskSet4.moveMouse(915, 548, 0.2,'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
+    if checkForElem.confirmImage('SelectRole.png',
+                                 'c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
+        taskSet4.moveMouse(915, 548, 0.2,
+                           'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet4.moveMouse(1007, 660, 0.1, 'y')  # click next (on small box)
-    if checkForElem.confirmImage('Schedules.png','n',1007,370,1113,397):
+    if checkForElem.confirmImage('Schedules.png', 'n', 1007, 370, 1113, 397):
         taskSet4.moveMouse(1056, 337, 0.2, 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet4.moveMouse(246, 223, 0.2, 'y')  # click Filter button
@@ -221,6 +189,8 @@ def main():
     taskSet4.moveMouse(1629, 301, 0.1, 'y')  # click Apply button
     taskSet4.moveMouse(1087, 188, 0.2, 'y')  # open calendar
 
-    print(ag.pixelMatchesColor(215, 133, (56, 00, 00))) # use eyedroper in Firefox browser options to get colour then convert to rgb
+    print(ag.pixelMatchesColor(215, 133, (
+    56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
+
 
 main()
