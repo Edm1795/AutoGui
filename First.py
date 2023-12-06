@@ -8,8 +8,7 @@ class TaskSet:
     '''
     def __init__(self):
 
-        self.progressDict={} # Dictionary logging the status of individual steps of the automation process. Eg: {'Element Colour': True}
-        
+        pass
     def moveMouse(self,horiz,vert,time,click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
@@ -94,19 +93,10 @@ class TaskSet:
         self.moveMouse(24,427,0.5,'y') #open activity pane
         self.moveMouse(66,813,0.5,'y') # select otf from list
 
-    def logProgress(self,action,value):
-        '''
-        Logs the status of certain steps in the automation process such as finding elements on the screen
-        Inputs: Action: string of the name of the action to log, eg element colour
-        Value: str (or int) of key. Eg, True, complete
-        '''
-        action=str(action)
-        self.progressDict[action]=value
-        
 class CheckForElem:
 
     '''
-    Class for checking given elements are present on the screen. For example checks if a certain word is present 
+    Class for checking given elements are present on the screen. For example checks if a certain word is present
     or a certain colour of pixel
     '''
 
@@ -191,7 +181,7 @@ def main():
         taskSet1.moveMouse(1056, 337, 0.25, 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet1.moveMouse(246, 223, 0.2, 'y')  # click Filter button
-    taskSet1.moveMouse(376,261,0.5,'y') # click filter input bar
+    taskSet1.moveMouse(376,261,0.2,'y') # click filter input bar
     taskSet1.moveMouse(410,310,0.2,'y') # select LA
     taskSet1.moveMouse(1629,301,0.2,'y') # click Apply button
     taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
@@ -209,32 +199,32 @@ def main():
         taskSet1.moveMouse(1056, 337, 0.25, 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet1.moveMouse(246, 223, 0.2, 'y')  # click Filter button
-    taskSet1.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
+    taskSet1.moveMouse(376, 261, 0.2, 'y')  # click filter input bar
     taskSet1.moveMouse(396, 390, 0.2, 'y')  # select Page
     taskSet1.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
     taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
 
     # Open Sharepoint
     taskSet2.pressKeys('ctrl', 't')  # open new tab
-    taskSet2.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
+    taskSet2.moveMouse(53, 97, 0.2, 'y')  # click Sharepoint (on bookmarks tab)
     if checkForElem.confirmColour(215, 133, (56, 00, 00)):
-        taskSet2.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
+        taskSet2.moveMouse(21, 134, 0.2, 'y')  # click Sharepoint menu button (left side)
     if checkForElem.confirmImage('Calendar.png', 'n', 25, 428, 65, 467):
-        taskSet2.moveMouse(88, 447, 0.5, 'y')  # open calendar
+        taskSet2.moveMouse(88, 447, 0.2, 'y')  # open calendar
     taskSet2.moveMouse(702,20,1,'y')
 
     # Open Sharepoint
     taskSet3.pressKeys('ctrl', 't')  # open new tab
-    taskSet3.moveMouse(53, 97, 1, 'y')  # click Sharepoint
+    taskSet3.moveMouse(53, 97, 0.2, 'y')  # click Sharepoint
     if checkForElem.confirmColour(215, 133, (56, 00, 00)):
-        taskSet3.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
+        taskSet3.moveMouse(21, 134, 0.2, 'y')  # click Sharepoint menu button (left side)
     if checkForElem.confirmImage('Calendar.png', 'n', 25, 428, 65, 467):
-        taskSet3.moveMouse(88, 447, 0.5, 'y')  # open calendar
+        taskSet3.moveMouse(88, 447, 0.2, 'y')  # open calendar
     taskSet3.moveMouse(572, 269, 1, 'y')  # open date selection calendar
     taskSet3.moveMouse(926, 22, 1, 'y')  # open calendar
 
     taskSet3.moveMouse(828, 22, 1, 'y')  # open calendar
-    taskSet3.drag(-1107,18,1,'l') # drag calendar to left screen
+    taskSet3.drag(-1107,18,0.5,'l') # drag calendar to left screen
 
     # Open last instance of Dayforce for current day
     taskSet4.moveMouse(173, 68, 1, 'y')  # click on blank area of browser to focus the browser
@@ -250,8 +240,8 @@ def main():
         taskSet4.moveMouse(1056, 337, 0.25, 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet4.moveMouse(246, 223, 0.2, 'y')  # click Filter button
-    taskSet4.moveMouse(376, 261, 0.5, 'y')  # click filter input bar
-    taskSet4.moveMouse(410, 310, 0.5, 'y')  # select LA
+    taskSet4.moveMouse(376, 261, 0.2, 'y')  # click filter input bar
+    taskSet4.moveMouse(410, 310, 0.2, 'y')  # select LA
     taskSet4.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
     taskSet4.moveMouse(1087, 188, 0.5, 'y')  # open calendar
 
@@ -259,9 +249,9 @@ def main():
     taskSet5.pressKeys('ctrl', 't')  # open new tab
     taskSet5.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
     if checkForElem.confirmColour(215, 133, (56, 00, 00)):
-        taskSet5.moveMouse(21, 134, 0.5, 'y')  # click Sharepoint menu button (left side)
+        taskSet5.moveMouse(21, 134, 0.2, 'y')  # click Sharepoint menu button (left side)
     if checkForElem.confirmImage('Calendar.png', 'n', 25, 428, 65, 467):
-        taskSet5.moveMouse(83, 254, 0.5, 'y')  # open email (Outlook)
+        taskSet5.moveMouse(83, 254, 0.2, 'y')  # open email (Outlook)
 
     print('Complete.')
 
