@@ -168,6 +168,9 @@ class TimeValues:
     This standardizes the timings for automation and allows for easy alteration of timings across
     the whole program. Upon instantiation you can choose a speed range such as 'f' for fast where all
     values are set to shorter (and thus faster) timings.
+    
+    Note: Values have to be calibrated carefully so as to be quick but also not too fast otherwise websites can't handle the speed.
+    
     Inputs: str: 'f' gives all fastest values; 'm' gives medium values; 's' gives slow values
     '''
 
