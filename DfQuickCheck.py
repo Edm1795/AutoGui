@@ -1,16 +1,18 @@
-#opens a single instance of dayforce for quick check
+# opens a single instance of dayforce for quick check
 import pyautogui as ag
 import time
+
 
 class TaskSet:
     '''
     Class for a single unified set of automated GUI movements and actions
     '''
+
     def __init__(self):
 
-        self.progressDict={} # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
+        self.progressDict = {}  # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
 
-    def moveMouse(self,horiz,vert,time,click):
+    def moveMouse(self, horiz, vert, time, click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
         Time: int: mount of time to take to get pointer to its position
@@ -29,15 +31,15 @@ class TaskSet:
         '''
         ag.click()
 
-    def drag(self,horiz,vert,duration,button):
+    def drag(self, horiz, vert, duration, button):
 
-        if button=='l':
-            button='left'
-        if button=='r':
-            button='right'
-        ag.dragTo(horiz,vert, button=button,duration=duration)
+        if button == 'l':
+            button = 'left'
+        if button == 'r':
+            button = 'right'
+        ag.dragTo(horiz, vert, button=button, duration=duration)
 
-    def pressKeys(self,holdKey,secondKey):
+    def pressKeys(self, holdKey, secondKey):
 
         '''
         Double key press function: eg, ctrl + a
@@ -48,7 +50,7 @@ class TaskSet:
         ag.press(secondKey)  # press the left arrow key
         ag.keyUp(holdKey)
 
-    def type(self,letters,enter):
+    def type(self, letters, enter):
         '''
         Types keyboard input to the cursor.
         Inputs: letters: a sequence of strings to be typed
@@ -61,7 +63,7 @@ class TaskSet:
 
     def moveMouseNEW(self, time, shift, duration=1):
         # This cool function simple takes the time (time of day eg, 3 pm) and the shift (eg: 1st shift) and
-             # duration of mouse move, and the mouse will go to that spot. No more need to specify pixels
+        # duration of mouse move, and the mouse will go to that spot. No more need to specify pixels
         # Vertical pixel difference between shifts: 50px
 
         shift = shift - 1  # decrement by one to get correct results
@@ -74,7 +76,7 @@ class TaskSet:
         timeSteps = self.timeSteps(time)  # number of time steps from base (8am) to desired time
 
         vert = sBase + (
-                    shift * shiftDiff)  # get shift pixel value multiply base value with number of shifts downwards on screen
+                shift * shiftDiff)  # get shift pixel value multiply base value with number of shifts downwards on screen
         horiz = tBase + (timeSteps * timeUnit)
 
         ag.moveTo(horiz, vert, duration)
@@ -84,33 +86,32 @@ class TaskSet:
         select the eraser function from side pane
         inputs: none
         '''
-        self.moveMouse(22,462,0.5,'y') # click eraser selection button
+        self.moveMouse(22, 462, 0.5, 'y')  # click eraser selection button
 
     def otf(self):
         '''
         select the otf activity function from side pane
         inputs: none
         '''
-        self.moveMouse(24,427,0.5,'y') #open activity pane
-        self.moveMouse(66,813,0.5,'y') # select otf from list
+        self.moveMouse(24, 427, 0.5, 'y')  # open activity pane
+        self.moveMouse(66, 813, 0.5, 'y')  # select otf from list
 
-    def logProgress(self,action,value):
+    def logProgress(self, action, value):
         '''
         Logs the status of certain steps in the automation process such as finding elements on the screen
         Inputs: Action: string of the name of the action to log, eg element colour
         Value: str (or int) of key. Eg, True, complete
         '''
-        action=str(action)
-        self.progressDict[action]=value
+        action = str(action)
+        self.progressDict[action] = value
         print(self.progressDict.items())
-        
 
 
 class CheckForElem:
 
-    def __init__(self,taskSet):
+    def __init__(self, taskSet):
 
-        self.taskSet=taskSet # Take in a given taskSet so as to run functions from taskSet ie logProgress()
+        self.taskSet = taskSet  # Take in a given taskSet so as to run functions from taskSet ie logProgress()
 
     def confirmImage(self, image, sector, topLeftx=0, topLefty=0, bottomRightx=0, bottomRighty=0):
 
@@ -124,7 +125,7 @@ class CheckForElem:
 
         if sector == 'c':  # Centre Section: set screenshot region for small box in centre of the screen
             regValues = (756, 410, 400, 400)
-        if sector == 'cr': # Screenshot for centre right
+        if sector == 'cr':  # Screenshot for centre right
             regValues = (1000, 380, 500, 500)
         if sector == 'n':  # If no sector is used, load in exact values of box to check for element
             regValues = (topLeftx, topLefty, bottomRightx, bottomRighty)
@@ -156,41 +157,63 @@ class CheckForElem:
                 continue
             else:
                 loop = False
-        self.taskSet.logProgress('colour','true')
+        self.taskSet.logProgress('colour', 'true')
         time.sleep(0.1)
         return True
 
 
+class TimeValues:
+    '''
+    A class which holds a variety of time values to use for moving the mouse accross the screen.
+    This standardizes the timings for automation and allows for easy alteration of timings across
+    the whole program. Upon instantiation you can choose a speed range such as 'f' for fast where all
+    values are set to shorter (and thus faster) timings.
+    Inputs: str: 'f' gives all fastest values; 'm' gives medium values; 's' gives slow values
+    '''
+
+    def __init__(self, speed):
+        if speed == 'f':
+            self.fast = 0.1
+            self.med = 0.2
+            self.slow = 0.3
+
+    def getFast(self):
+        return self.fast
+
+    def getMed(self):
+        return self.med
+
+    def getSlow(self):
+        return self.slow
+
 # Open last instance of Dayforce for current day
 
 def main():
-
-    taskSet4=TaskSet()
-    checkForElem=CheckForElem(taskSet4)
+    taskSet4 = TaskSet()
+    checkForElem = CheckForElem(taskSet4)
+    timeVal=TimeValues('f') # Instantiate times to fast values
 
     taskSet4.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
     taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet4.type('dayforcehcm.com', 'y')  # Go to site
     # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
     if checkForElem.confirmColour(665, 575, (48, 103, 219)):
-        taskSet4.moveMouse(1226, 640, 0.25, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet4.moveMouse(1226, 737, 0.2, 'y')  # go to Login
-    if checkForElem.confirmImage('SelectRole.png',
-                                 'c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-        taskSet4.moveMouse(915, 548, 0.2,
-                           'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet4.moveMouse(1007, 660, 0.1, 'y')  # click next (on small box)
+        taskSet4.moveMouse(1226, 640, timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
+    taskSet4.moveMouse(1226, 737, timeVal.getMed(), 'y')  # go to Login
+    if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
+        taskSet4.moveMouse(915, 548, timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
+    taskSet4.moveMouse(1007, 660, timeVal.getMed(), 'y')  # click next (on small box)
     if checkForElem.confirmImage('Schedules.png', 'n', 1007, 370, 1113, 397):
-        taskSet4.moveMouse(1056, 337, 0.2, 'y')  # click schedule (main button to load sched)
+        taskSet4.moveMouse(1056, 337, timeVal.getMed(), 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
-        taskSet4.moveMouse(246, 223, 0.2, 'y')  # click Filter button
-    taskSet4.moveMouse(376, 261, 0.2, 'y')  # click filter input bar
-    taskSet4.moveMouse(410, 310, 0.1, 'y')  # select LA
-    taskSet4.moveMouse(1629, 301, 0.1, 'y')  # click Apply button
-    taskSet4.moveMouse(1087, 188, 0.2, 'y')  # open calendar
+        taskSet4.moveMouse(246, 223, timeVal.getFast(), 'y')  # click Filter button
+    taskSet4.moveMouse(376, 261, timeVal.getMed(), 'y')  # click filter input bar
+    taskSet4.moveMouse(410, 310, timeVal.getMed(), 'y')  # select LA
+    taskSet4.moveMouse(1629, 301, timeVal.getFast(), 'y')  # click Apply button
+    taskSet4.moveMouse(1087, 188, timeVal.getMed(), 'y')  # open calendar
 
     print(ag.pixelMatchesColor(215, 133, (
-    56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
+        56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
 
 
 main()
