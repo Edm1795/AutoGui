@@ -1,3 +1,5 @@
+# Change timings to variables, also possibly make global function controlling timings which can set the whole programs
+
 import pyautogui as ag
 
 import time
@@ -150,6 +152,38 @@ class CheckForElem:
         time.sleep(0.1)
         return True
 
+
+class TimeValues:
+    '''
+    A class which holds a variety of time values to use for moving the mouse accross the screen.
+    This standardizes the timings for automation and allows for easy alteration of timings across
+    the whole program. Upon instantiation you can choose a speed range such as 'f' for fast where all
+    values are set to shorter (and thus faster) timings.
+
+    Note: Values have to be calibrated carefully so as to be quick but also not too fast otherwise websites can't handle the speed.
+
+    Inputs: str: 'f' gives all fastest values; 'm' gives medium values; 's' gives slow values
+    '''
+
+    def __init__(self, speed):
+        if speed == 'f':
+            self.fast = 0.1
+            self.med = 0.2
+            self.slow = 0.3
+        if speed == 'm':
+            self.fast = 0.2
+            self.med = 0.3
+            self.slow = 0.4
+
+    def getFast(self):
+        return self.fast
+
+    def getMed(self):
+        return self.med
+
+    def getSlow(self):
+        return self.slow
+
 # funcList = [moveMouse(706,1052,1,'y')]
 #
 # for func in funcList:
@@ -165,26 +199,27 @@ def main():
     taskSet4=TaskSet() # Dayforce for current day
     taskSet5=TaskSet() # Open Email
     checkForElem = CheckForElem()
+    timeVal=TimeValues('f') # Instantiate TimeValues to fast
 
     taskSet1.moveMouse(605, 1056, 0.5, 'y')  # go to Firefox (5 position on taskbar)
     time.sleep(2) # delay for first case scenerio; more time needed to open Firefox
-    taskSet1.moveMouse(305, 64, 0.2, 'y')  # click to focus address bar (incase not focused)
+    taskSet1.moveMouse(305, 64, timeVal.getFast(), 'y')  # click to focus address bar (incase not focused)
     # taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet1.type('dayforcehcm.com', 'y')  # Go to site (consider adding click to addre. bar to ensure cursor)
     if checkForElem.confirmColour(665,575, (48,103,219)):
-        taskSet1.moveMouse(1226, 640, 0.25, 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet1.moveMouse(1226, 737, 0.2, 'y')  # go to Login
+        taskSet1.moveMouse(1226, 640, timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
+    taskSet1.moveMouse(1226, 737, timeVal.getMed(), 'y')  # go to Login
     if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-        taskSet1.moveMouse(915, 548, 0.2, 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet1.moveMouse(1007, 660, 0.2, 'y')  # click next (on small box)
+        taskSet1.moveMouse(915, 548, timeVal.getMed(), 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
+    taskSet1.moveMouse(1007, 660, timeVal.getFast(), 'y')  # click next (on small box)
     if checkForElem.confirmImage('Schedules.png','n',1007,370,1113,397):
-        taskSet1.moveMouse(1056, 337, 0.25, 'y')  # click schedule (main button to load sched)
+        taskSet1.moveMouse(1056, 337, timeVal.getMed(), 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
-        taskSet1.moveMouse(246, 223, 0.2, 'y')  # click Filter button
-    taskSet1.moveMouse(376,261,0.2,'y') # click filter input bar
-    taskSet1.moveMouse(410,310,0.2,'y') # select LA
-    taskSet1.moveMouse(1629,301,0.2,'y') # click Apply button
-    taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
+        taskSet1.moveMouse(246, 223, timeVal.getMed(), 'y')  # click Filter button
+    taskSet1.moveMouse(376,261,timeVal.getFast(),'y') # click filter input bar
+    taskSet1.moveMouse(410,310,timeVal.getFast(),'y') # select LA
+    taskSet1.moveMouse(1629,301,timeVal.getFast(),'y') # click Apply button
+    taskSet1.moveMouse(1087, 188, timeVal.getSlow(), 'y')  # open calendar
 
     # Open a second instance of Dayforce
     taskSet1.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
@@ -247,7 +282,7 @@ def main():
 
     # Open Email
     taskSet5.pressKeys('ctrl', 't')  # open new tab
-    taskSet5.moveMouse(53, 97, 1, 'y')  # click Sharepoint (on bookmarks tab)
+    taskSet5.moveMouse(53, 97, timeVal.getFast(), 'y')  # click Sharepoint (on bookmarks tab)
     if checkForElem.confirmColour(215, 133, (56, 00, 00)):
         taskSet5.moveMouse(21, 134, 0.2, 'y')  # click Sharepoint menu button (left side)
     if checkForElem.confirmImage('Calendar.png', 'n', 25, 428, 65, 467):
