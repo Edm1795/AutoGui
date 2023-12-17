@@ -42,3 +42,38 @@ def clickDate():
     ag.moveTo(x,y)
 
 clickDate()
+
+
+
+
+
+# This one gives correct week in month but is not flexible for taking different days
+
+import datetime
+import calendar
+
+def week(date=datetime.date.today().day, year=datetime.date.today().year, month=datetime.date.today().month):
+    # Set Sunday as the first day of the week
+    calendar.setfirstweekday(calendar.SUNDAY)
+
+    # Create a date object
+    dateObj = datetime.date(year, month, date)
+
+    # Calculate the week number within the month where Sunday is the first day of the week
+    first_day_of_month = datetime.date(year, month, 1)
+    first_weekday = first_day_of_month.weekday()
+
+    if first_weekday == 6:  # If the first day of the month is Sunday
+        week_number_in_month = (date - 1) // 7 + 1
+    else:
+        first_sunday = 7 - first_weekday
+        if date <= first_sunday:
+            week_number_in_month = 1
+        else:
+            week_number_in_month = (date - first_sunday) // 7 + 2
+
+    return week_number_in_month
+
+# Test the function
+week_number = week()
+print("Week number in the month:", week_number)
