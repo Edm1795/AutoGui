@@ -5,8 +5,9 @@ import datetime
     def clickDate(self):
 
         '''
-        This function gets the current date and then calculates the position of that date on the calendar and clicks it.
-        It contains a helper function called week() which gathers the week number a certain date is in, ex week 1, week 2
+        This function gets the current date and then calculates the position of that date on the drop down calendar and clicks it.
+        It contains the helper functions called week() which gathers the week number a certain date is in, ex week 1, week 2
+        and another called weekdayConver() which converts pythons .weekday() function to the needed values for this program
         '''
 
         def weekdayConver(curDate):
