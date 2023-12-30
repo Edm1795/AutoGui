@@ -315,7 +315,7 @@ def main():
     # Open Sharepoint
     taskSet2.pressKeys('ctrl', 't')  # open new tab
     taskSet2.moveMouse(53, 97, 0.2, 'y')  # click Sharepoint (on bookmarks tab)
-    if checkForElem.confirmColour(215, 133, (56, 00, 00)):
+    if checkForElem.confirmColour(215, 133, (56, 00, 00)): # Original vals: (215, 133, (56, 00, 00)); consider using hover colour on menu button instead new vals (37, 133, (30, 00, 1))
         taskSet2.moveMouse(21, 134, 0.2, 'y')  # click Sharepoint menu button (left side)
     if checkForElem.confirmImage('Calendar.png', 'n', 25, 428, 65, 467):
         taskSet2.moveMouse(88, 447, 0.2, 'y')  # open calendar
