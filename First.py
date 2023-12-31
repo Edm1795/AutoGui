@@ -284,7 +284,7 @@ def main():
     taskSet1.moveMouse(1226, 737, timeVal.getMed(), 'y')  # go to Login
     if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
         taskSet1.moveMouse(915, 548, timeVal.getMed(), 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet1.moveMouse(1007, 660, timeVal.getFast(), 'y')  # click next (on small box)
+    taskSet1.moveMouse(1007, 660, timeVal.getMed(), 'y')  # click next (on small box)
     if checkForElem.confirmImage('Schedules.png','n',1007,370,1113,397):
         taskSet1.moveMouse(1056, 337, timeVal.getMed(), 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
