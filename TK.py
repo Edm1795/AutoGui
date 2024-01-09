@@ -19,6 +19,8 @@ class MainWindow:
         screenWidth = self.master.winfo_screenwidth()
         screenHeight = self.master.winfo_screenheight()
 
+        self.master.attributes("-topmost", True)
+
         # Instantiate frames
         self.frame0 = Frame(self.master, bd=5, padx=5, bg='#606266')  # Top long row
         self.frame1 = Frame(self.master, bd=5, padx=5, bg='#2a2b2b')  # Side Column
@@ -54,9 +56,9 @@ class MainWindow:
 
         self.button = Button(self.frame1, text="Schedule", width=12, command=self.schedule)
         self.button.pack()
-        #
-        # self.addItemButton = Button(self.frame1, text="Add Item", width=12, command=addItem)
-        # self.addItemButton.pack()
+
+        self.addItemButton = Button(self.frame1, text="Create New", width=12, command=self.createNew)
+        self.addItemButton.pack()
         #
         # self.clearFramesButton = Button(self.frame1, text="Clear Frames", width=12,
         #                                 command=self.clearSpeedoFrame)  # Clears frame2, the speedometer frame of all widgets
@@ -69,8 +71,18 @@ class MainWindow:
     def schedule(self):
         DFQuickCheck.main()
 
-    def yes(self):
-        pass
+    def createNew(self):
+
+        text = Text(self.frame2, height=1)
+        text.pack()
+
+        text.insert('1.0', 'Set up click or text?')
+
+        self.button = Button(self.frame2, text="Click", width=12, command=self.schedule)
+        self.button.pack()
+
+        self.addItemButton = Button(self.frame2, text="Text", width=12, command=self.createNew)
+        self.addItemButton.pack()
 
 def main():
     global mainWin  # Global mainWin so as to access the mainWin from functions which may need to call method
