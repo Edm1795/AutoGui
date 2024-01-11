@@ -1,5 +1,5 @@
 # Change timings to variables, also possibly make global function controlling timings which can set the whole programs
-
+# I think browser needs to be at 120%
 import pyautogui as ag
 import time
 import datetime
@@ -10,7 +10,8 @@ class TaskSet:
     '''
     def __init__(self):
 
-        pass
+        self.LA = (478,335)  # set x,y coordinates of LA in Filter Drop Down menu
+        self.Page = (406, 412) # set x,y coordinates of Page in Filter Drop Down menu
     def moveMouse(self,horiz,vert,time,click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
@@ -58,6 +59,7 @@ class TaskSet:
         ag.write(letters)
 
         if enter == 'y':
+            time.sleep(0.5) # used to add gap between text input and pressing enter
             ag.press('enter')
 
     def moveMouseNEW(self, time, shift, duration=1):
@@ -168,6 +170,9 @@ class TaskSet:
         print(x, y)
         self.moveMouse(x,y,1,'y')
 
+    def getLACoord(self):
+        return self.LA
+
 class CheckForElem:
 
     '''
@@ -264,7 +269,7 @@ class TimeValues:
 
 def main():
 
-    print('\nEnsure bookmarks bar is on')
+    print('\nEnsure bookmarks bar is on','\nAlso browser probably needs to be at 120%')
 
     taskSet1=TaskSet() # Scheduling for LA and Pages
     taskSet2=TaskSet() # Sharepoint calendar
@@ -284,13 +289,13 @@ def main():
     taskSet1.moveMouse(1226, 737, timeVal.getMed(), 'y')  # go to Login
     if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
         taskSet1.moveMouse(915, 548, timeVal.getMed(), 'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet1.moveMouse(1007, 660, timeVal.getMed(), 'y')  # click next (on small box)
+    taskSet1.moveMouse(1007, 660, timeVal.getFast(), 'y')  # click next (on small box)
     if checkForElem.confirmImage('Schedules.png','n',1007,370,1113,397):
         taskSet1.moveMouse(1056, 337, timeVal.getMed(), 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet1.moveMouse(246, 223, timeVal.getMed(), 'y')  # click Filter button
     taskSet1.moveMouse(376,261,timeVal.getFast(),'y') # click filter input bar
-    taskSet1.moveMouse(410,310,timeVal.getFast(),'y') # select LA
+    taskSet1.moveMouse(taskSet1.getLACoord()[0], taskSet1.getLACoord()[1],timeVal.getFast(),'y') # select LA
     taskSet1.moveMouse(1629,301,timeVal.getFast(),'y') # click Apply button
     taskSet1.moveMouse(1087, 188, timeVal.getSlow(), 'y')  # open calendar
 
@@ -308,14 +313,14 @@ def main():
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet1.moveMouse(246, 223, 0.2, 'y')  # click Filter button
     taskSet1.moveMouse(376, 261, 0.2, 'y')  # click filter input bar
-    taskSet1.moveMouse(396, 390, 0.2, 'y')  # select Page
+    taskSet1.moveMouse(476, 411, 0.2, 'y')  # select Page
     taskSet1.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
     taskSet1.moveMouse(1087, 188, 0.5, 'y')  # open calendar
 
     # Open Sharepoint
     taskSet2.pressKeys('ctrl', 't')  # open new tab
     taskSet2.moveMouse(53, 97, 0.2, 'y')  # click Sharepoint (on bookmarks tab)
-    if checkForElem.confirmColour(215, 133, (56, 00, 00)): # Original vals: (215, 133, (56, 00, 00)); consider using hover colour on menu button instead new vals (37, 133, (30, 00, 1))
+    if checkForElem.confirmColour(215, 133, (56, 00, 00)):
         taskSet2.moveMouse(21, 134, 0.2, 'y')  # click Sharepoint menu button (left side)
     if checkForElem.confirmImage('Calendar.png', 'n', 25, 428, 65, 467):
         taskSet2.moveMouse(88, 447, 0.2, 'y')  # open calendar
@@ -349,7 +354,7 @@ def main():
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet4.moveMouse(246, 223, 0.2, 'y')  # click Filter button
     taskSet4.moveMouse(376, 261, 0.2, 'y')  # click filter input bar
-    taskSet4.moveMouse(410, 310, 0.2, 'y')  # select LA
+    taskSet4.moveMouse(taskSet4.getLACoord()[0], taskSet4.getLACoord()[1], 0.2, 'y')  # select LA
     taskSet4.moveMouse(1629, 301, 0.2, 'y')  # click Apply button
     taskSet4.moveMouse(1087, 188, 0.5, 'y')  # open calendar
     taskSet4.clickDate()  # find the current date on the calendar and click it
