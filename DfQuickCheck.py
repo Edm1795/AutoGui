@@ -8,6 +8,8 @@ class TaskSet:
     '''
     Class for a single unified set of automated GUI movements and actions
     '''
+    # Coords for LA role in drop down filter menu
+    self.LA=(478,309)
 
     def __init__(self):
 
@@ -60,6 +62,7 @@ class TaskSet:
         ag.write(letters)
 
         if enter == 'y':
+            time.sleep(0.5) # used to add gap between text input and pressing enter
             ag.press('enter')
 
     def moveMouseNEW(self, time, shift, duration=1):
@@ -167,8 +170,8 @@ class TaskSet:
         print(week())
         yDiff = 32  # number of pixels between adjacent rows (eg week 1 - week 2) (work 32, home 37)
         xDiff = 36  # number of pixels between immediately adjacent days of week (eg:mon-tues) (work 36, home 44)
-        xDefault = 851  # 36 pixel difference (home com 857, work 851)
-        yDefault = 301  # (home com 381, work 301)
+        xDefault = 851  # 36 pixel difference (work 851, home com 857)
+        yDefault = 301  # (work 301, home com 381)
 
         x = xDefault + (day * xDiff)
 
@@ -177,7 +180,7 @@ class TaskSet:
         else:  # if needing other weeks, subtract 1 and mulitply by the yDiff (pixel difference) week 2 = (2-1)*yDiff
             y = yDefault + ((week() - 1) * yDiff)
         print(x, y)
-        self.moveMouse(x,y,1,'y')
+        self.moveMouse(x,y,0.5,'y')
 
 class CheckForElem:
 
@@ -283,7 +286,7 @@ def main():
     if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet4.moveMouse(246, 223, timeVal.getFast(), 'y')  # click Filter button
     taskSet4.moveMouse(376, 261, timeVal.getMed(), 'y')  # click filter input bar
-    taskSet4.moveMouse(410, 310, timeVal.getMed(), 'y')  # select LA
+    taskSet4.moveMouse(478, 309, timeVal.getMed(), 'y')  # select LA was 335 (vert)
     taskSet4.moveMouse(1629, 301, timeVal.getFast(), 'y')  # click Apply button
     taskSet4.moveMouse(1087, 188, timeVal.getMed(), 'y')  # open calendar
     taskSet4.clickDate() # find the current date on the calendar and click it
@@ -292,4 +295,3 @@ def main():
         56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
 
 
-main()
