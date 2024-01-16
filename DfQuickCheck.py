@@ -8,13 +8,14 @@ class TaskSet:
     '''
     Class for a single unified set of automated GUI movements and actions
     '''
-    # Coords for LA role in drop down filter menu
-    self.LA=(478,309)
+    
 
     def __init__(self):
 
         self.progressDict = {}  # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
 
+        # Coords for LA role in drop down filter menu
+        self.LA=(478,309)
     def moveMouse(self, horiz, vert, time, click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
