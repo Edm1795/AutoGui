@@ -1,3 +1,5 @@
+# alt shift e runs the single line the cursor is on
+
 # opens a single instance of dayforce for quick check
 import pyautogui as ag
 import time
@@ -8,14 +10,14 @@ class TaskSet:
     '''
     Class for a single unified set of automated GUI movements and actions
     '''
-    
 
     def __init__(self):
 
         self.progressDict = {}  # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
 
         # Coords for LA role in drop down filter menu
-        self.LA=(478,309)
+        self.LA = (553, 391) # vals for work com: (478, 309)
+
     def moveMouse(self, horiz, vert, time, click):
         '''
         Inputs: int: horizontal and vertical position where the mouse must end up
@@ -63,7 +65,7 @@ class TaskSet:
         ag.write(letters)
 
         if enter == 'y':
-            time.sleep(0.5) # used to add gap between text input and pressing enter
+            time.sleep(0.5)  # used to add gap between text input and pressing enter
             ag.press('enter')
 
     def moveMouseNEW(self, time, shift, duration=1):
@@ -110,6 +112,14 @@ class TaskSet:
         action = str(action)
         self.progressDict[action] = value
         print(self.progressDict.items())
+
+    def getLA(self):
+        '''
+        Returns coordinates for LA role in drop down filter menu.
+        Returns: tuple(x cor, y cor)
+        '''
+
+        return self.LA
 
     def clickDate(self):
 
@@ -158,7 +168,7 @@ class TaskSet:
             # Calculate the week number within the month
             first_day_of_month = dateObj.replace(day=1)  # Get the first day of the month
             offset = (
-                                 first_day_of_month.weekday() - 6) % 7  # Calculate the offset for Sunday as the first day of the week
+                             first_day_of_month.weekday() - 6) % 7  # Calculate the offset for Sunday as the first day of the week
             adjusted_date = first_day_of_month - datetime.timedelta(days=offset)  # Adjust the date to start on a Sunday
             week_number = (dateObj - adjusted_date).days // 7 + 1  # Calculate the week number
 
@@ -181,7 +191,8 @@ class TaskSet:
         else:  # if needing other weeks, subtract 1 and mulitply by the yDiff (pixel difference) week 2 = (2-1)*yDiff
             y = yDefault + ((week() - 1) * yDiff)
         print(x, y)
-        self.moveMouse(x,y,0.5,'y')
+        self.moveMouse(x, y, 0.5, 'y')
+
 
 class CheckForElem:
 
