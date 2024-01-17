@@ -62,12 +62,19 @@ schedList2=rawSched.splitlines() # split at new lines -- This one looks better
 
 csList=[]
 
-for item in schedList2:
 
+#this causes a double print for anything that contains both C and Library, better to search according to a database 
+# of possible names
+for item in schedList2:
+    if item.find('Library')>-1:
+        csList.append(item)
+        print(item)
     if item[0]=='C':
         csList.append(item)
+        print(item)
 
 
 print(schedList2)
 
-print(csList)
+print('List of CS times: ',csList)
+
