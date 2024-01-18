@@ -10,7 +10,7 @@ class TaskSet:
     '''
     def __init__(self):
 
-        self.LA = (478,335)  # set x,y coordinates of LA in Filter Drop Down menu
+        self.LA = (478, 309) # vals for work com: (478, 309); vals for home (553, 391) set x,y coordinates of LA in Filter Drop Down menu
         self.Page = (406, 412) # set x,y coordinates of Page in Filter Drop Down menu
     def moveMouse(self,horiz,vert,time,click):
         '''
