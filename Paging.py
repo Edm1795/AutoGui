@@ -61,10 +61,44 @@ class TaskSet:
 
         if enter == 'y':
             ag.press('enter')
+class TimeValues:
+    '''
+    A class which holds a variety of time values to use for moving the mouse accross the screen.
+    This standardizes the timings for automation and allows for easy alteration of timings across
+    the whole program. Upon instantiation you can choose a speed range such as 'f' for fast where all
+    values are set to shorter (and thus faster) timings.
+
+    Note: Values have to be calibrated carefully so as to be quick but also not too fast otherwise websites can't handle the speed.
+
+    Inputs: str: 'f' gives all fastest values; 'm' gives medium values; 's' gives slow values
+    '''
+
+    def __init__(self, speed):
+        if speed == 'f':
+            self.fast = 0.1
+            self.med = 0.2
+            self.slow = 0.3
+        if speed == 'm':
+            self.fast = 0.2
+            self.med = 0.3
+            self.slow = 0.4
+        if speed == 's':
+            self.fast = 0.5
+            self.med = 1
+            self.slow = 2
+
+    def getFast(self):
+        return self.fast
+
+    def getMed(self):
+        return self.med
+
+    def getSlow(self):
+        return self.slow
 
 
 def main():
-    taskSet4 = TaskSet()
+    # taskSet4 = TaskSet()
 
     # taskSet1.moveMouse(1142,505,1,'y')
     # taskSet1.pressKeys('ctrl', 't')  # open new tab
@@ -81,6 +115,7 @@ def main():
 
     print('\nset screen zoom to 120% for this program to work! You have 5 seconds. Press ctrl +\nAlso turn off bookmarks bar')
     taskSet1=TaskSet()
+    timeVal=TimeValues('s')
     time.sleep(5)
 
     taskSet1.moveMouse(29, 463, 0.5, 'y')  # click activity button, left side pane
@@ -90,10 +125,10 @@ def main():
         taskSet1.pressKeys('ctrl', str(num))
 
         taskSet1.moveMouse(630, 406, 1, 'n')  # go to 8 am top shift
-        taskSet1.drag(735, 405, 2, 'l')  # drag lists to 9:30 am
+        taskSet1.drag(772, 405, 2, 'l')  # drag lists to 10:00 am
 
-        taskSet1.moveMouse(737, 405, 1, 'l')  # shift previous 9:30 am end over slightly to start new block
-        taskSet1.drag(772, 405, 2, 'l')  # input Lists 9:30 am - 10 am
+        # taskSet1.moveMouse(737, 405, 1, 'l')  # shift previous 9:30 am end over slightly to start new block
+        # taskSet1.drag(772, 405, 2, 'l')  # input Lists 9:30 am - 10 am ( no longer needing 30 min block, changing to full 2 hr block given above)
 
         # Input 2 hour Lists block on 2nd shift
         taskSet1.moveMouse(701, 466, 1, 'n')
