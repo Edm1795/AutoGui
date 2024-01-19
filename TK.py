@@ -1,5 +1,6 @@
 # colour picker crtl shift a, Type in colour
 import DFQuickCheck
+import TimeLine
 from tkinter import *
 from ctypes import windll  # used for fixing blurry fonts on win 10 and 11 (also  windll.shcore.SetProcessDpiAwareness(1))
 #from tkinter import ttk
@@ -13,7 +14,7 @@ class MainWindow:
         self.master = master
         self.master.title('AutoGui Ver. 0.0')
         self.master.geometry("+150+500")  # position of the window in the screen (200x300)
-        self.master.geometry("1000x400")  # set initial size of the root window (master) (1500x700);
+        self.master.geometry("500x400")  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
         # self.master.attributes('-fullscreen', True)
         screenWidth = self.master.winfo_screenwidth()
@@ -70,15 +71,20 @@ class MainWindow:
 
     def schedule(self):
         DFQuickCheck.main()
+        TimeLine.main()
+
 
     def createNew(self):
+
+        def click():
+            pass
 
         text = Text(self.frame2, height=1)
         text.pack()
 
         text.insert('1.0', 'Set up click or text?')
 
-        self.button = Button(self.frame2, text="Click", width=12, command=self.schedule)
+        self.button = Button(self.frame2, text="Click", width=12, command=click)
         self.button.pack()
 
         self.addItemButton = Button(self.frame2, text="Text", width=12, command=self.createNew)
