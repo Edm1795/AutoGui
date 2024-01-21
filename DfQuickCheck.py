@@ -35,8 +35,20 @@ class TaskSet:
             self.applyButt=(1553, 380) # coords of Apply button on filter menu
             self.monthlyCal=(990, 240) # coords for opening monthly calendar for choosing day to view on screen
 
-        if computer == 'w':
-            pass
+        if computer == 'w': # Initialize values for your work computer
+            self.logo = (665, 575)  # coordinates of huge "D" on main screen
+            self.loginButt = (1226, 737)  # coord. of main Login button on main screen
+            self.schedRadButt = (915, 548)  # coord of Scheduler radio button on first pop up before entering main program
+            self.nextButt = (1007, 660)  # coord of Next button on scheduler pop up window just above
+            self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
+            self.filterIcon = (227, 223)  # coord of small Filter icon top left for colour check
+            self.filterButt = (246, 223)  # coord of filter button
+            self.filterInputBar = (376, 261)  # coord of bar for choosing which positions to filter out for viewing on schedule
+            self.LA = (410, 310)  # vals for work com: (478, 309) # Coords for LA role in drop down filter menu
+            self.applyButt = (1629, 301)  # coords of Apply button on filter menu
+            self.monthlyCal = (1087, 188)  # coords for opening monthly calendar for choosing day to view on screen
+
+
 
 
 
