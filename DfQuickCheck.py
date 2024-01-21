@@ -11,12 +11,34 @@ class TaskSet:
     Class for a single unified set of automated GUI movements and actions
     '''
 
-    def __init__(self):
+    def __init__(self,computer):
+
+        '''
+        initialize values, mostly coordinates of locations on the screen according to what computer you are running the
+        program on. Each screen will display important elements of the website in different areas and so the values
+        foe each computer must be seperated
+        :param computer: str: 'h' for home computer; 'w' for work computer
+        '''
 
         self.progressDict = {}  # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
 
-        # Coords for LA role in drop down filter menu
-        self.LA = (553, 391) # vals for work com: (478, 309)
+        if computer == 'h': # Initialize values for your home computer
+            self.logo=(688, 592) # coordinates of huge "D" on main screen
+            self.loginButt=(1315, 917) # coord. of main Login button on main screen
+            self.schedRadButt=(938, 547) # coord of Scheduler radio button on first pop up before entering main program
+            self.nextButt=(1048,685) # coord of Next button on scheduler pop up window just above
+            self.schedIcon=(1116, 422) # largish Schedules icon on top right of screen
+            self.filterIcon=(353, 286) # coord of small Filter icon top left for colour check
+            self.filterButt=(373, 286) # coord of filter button
+            self.filterInputBar=(553, 332) # coord of bar for choosing which positions to filter out for viewing on schedule
+            self.LA = (553, 391)  # vals for work com: (478, 309) # Coords for LA role in drop down filter menu
+            self.applyButt=(1553, 380) # coords of Apply button on filter menu
+            self.monthlyCal=(990, 240) # coords for opening monthly calendar for choosing day to view on screen
+
+        if computer == 'w':
+            pass
+
+
 
     def moveMouse(self, horiz, vert, time, click):
         '''
@@ -113,13 +135,37 @@ class TaskSet:
         self.progressDict[action] = value
         print(self.progressDict.items())
 
-    def getLA(self):
+    def get(self,value):
         '''
-        Returns coordinates for LA role in drop down filter menu.
+        A master getter method. Input an argument to specify which values you want.
         Returns: tuple(x cor, y cor)
+        input: value (str): ex: 'logo'
+        return: tuple (x coord,ycoord) for the coords needed for the given parameter. Ex. 'logo' return position of the logo on screen
         '''
 
-        return self.LA
+        if value == 'logo':
+            return self.logo # coordinates of huge "D" on main screen
+        if value == 'loginButt':
+            return self.loginButt  # coord. of main Login button on main screen
+        if value == 'schedRadButt':
+            return self.schedRadButt # coord of Scheduler radio button on first pop up before entering main program
+        if value == 'nextButt':
+            return self.nextButt  # coord of Next button on scheduler pop up window just above
+        if value == 'schedIcon':
+            return self.schedIcon  # largish Schedules icon on top right of screen
+        if value == 'filterIcon':
+            return self.filterIcon # coord of small Filter icon top left for colour check
+        if value == 'filterButt':
+            return self.filterButt # coord of filter button
+        if value == 'filterInputBar':
+            return self.filterInputBar # coord of bar for choosing which positions to filter out for viewing on schedule
+        if value == 'LA':
+            return self.LA # vals for work com: (478, 309) # Coords for LA role in drop down filter menu
+        if value == 'applyButt':
+            return self.applyButt   # coords of Apply button on filter menu
+        if value == 'monthlyCal':
+            return self.monthlyCal   # coords for opening monthly calendar for choosing day to view on screen
+
 
     def clickDate(self):
 
@@ -138,11 +184,11 @@ class TaskSet:
 
             day = curDate.weekday()  # extract the weekday int from the datetime object
 
-            if day == 6:
-                return 0
-            if day == 5:
+            if day == 6: # Sunday
+                return 0 # convert to 0 as Sunday
+            if day == 5: # Sat
                 return 6
-            if day == 4:
+            if day == 4: # Fri
                 return 5
             if day == 3:
                 return 4
@@ -177,12 +223,12 @@ class TaskSet:
         curDate = datetime.date.today()  # get date object for current day; datetime.date.today() gives all three values ymd
         day = weekdayConver(
             curDate)  # extract the weekday from the current date object as an int 0-6 for Mon-Sat. This is done with a helper func.
-        print(day)
-        print(week())
+        # print(day)
+        # print(week())
         yDiff = 32  # number of pixels between adjacent rows (eg week 1 - week 2) (work 32, home 37)
         xDiff = 36  # number of pixels between immediately adjacent days of week (eg:mon-tues) (work 36, home 44)
-        xDefault = 851  # 36 pixel difference (work 851, home com 857)
-        yDefault = 301  # (work 301, home com 381)
+        xDefault = 857  # 36 pixel difference (work 851, home com 857)
+        yDefault = 381  # (work 301, home com 381) (x=857, y=378)
 
         x = xDefault + (day * xDiff)
 
@@ -196,9 +242,13 @@ class TaskSet:
 
 class CheckForElem:
 
-    def __init__(self, taskSet):
+    '''
+    Class for checking given elements are present on the screen. For example checks if a certain word is present
+    or a certain colour of pixel
+    '''
 
-        self.taskSet = taskSet  # Take in a given taskSet so as to run functions from taskSet ie logProgress()
+    def __init__(self):
+        pass
 
     def confirmImage(self, image, sector, topLeftx=0, topLefty=0, bottomRightx=0, bottomRighty=0):
 
@@ -212,7 +262,7 @@ class CheckForElem:
 
         if sector == 'c':  # Centre Section: set screenshot region for small box in centre of the screen
             regValues = (756, 410, 400, 400)
-        if sector == 'cr':  # Screenshot for centre right
+        if sector == 'cr': # Screenshot for centre right
             regValues = (1000, 380, 500, 500)
         if sector == 'n':  # If no sector is used, load in exact values of box to check for element
             regValues = (topLeftx, topLefty, bottomRightx, bottomRighty)
@@ -244,9 +294,9 @@ class CheckForElem:
                 continue
             else:
                 loop = False
-        self.taskSet.logProgress('colour', 'true')
         time.sleep(0.1)
         return True
+
 
 
 class TimeValues:
@@ -276,34 +326,42 @@ class TimeValues:
     def getSlow(self):
         return self.slow
 
-# Open last instance of Dayforce for current day
-
 def main():
-    taskSet4 = TaskSet()
-    checkForElem = CheckForElem(taskSet4)
-    timeVal=TimeValues('f') # Instantiate times to fast values
 
-    taskSet4.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
-    taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
-    taskSet4.type('dayforcehcm.com', 'y')  # Go to site
-    # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-    if checkForElem.confirmColour(665, 575, (48, 103, 219)):
-        taskSet4.moveMouse(1226, 640, timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet4.moveMouse(1226, 737, timeVal.getMed(), 'y')  # go to Login
-    if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-        taskSet4.moveMouse(915, 548, timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet4.moveMouse(1007, 660, timeVal.getMed(), 'y')  # click next (on small box)
-    if checkForElem.confirmImage('Schedules.png', 'n', 1007, 370, 1113, 397):
-        taskSet4.moveMouse(1056, 337, timeVal.getMed(), 'y')  # click schedule (main button to load sched)
-    if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
-        taskSet4.moveMouse(246, 223, timeVal.getFast(), 'y')  # click Filter button
-    taskSet4.moveMouse(376, 261, timeVal.getMed(), 'y')  # click filter input bar
-    taskSet4.moveMouse(478, 309, timeVal.getMed(), 'y')  # select LA was 335 (vert)
-    taskSet4.moveMouse(1629, 301, timeVal.getFast(), 'y')  # click Apply button
-    taskSet4.moveMouse(1087, 188, timeVal.getMed(), 'y')  # open calendar
-    taskSet4.clickDate() # find the current date on the calendar and click it
+    print('\nEnsure bookmarks bar is on')
 
-    print(ag.pixelMatchesColor(215, 133, (
-        56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
+    ts1=TaskSet('h')
+    checkForElem=CheckForElem()
+    timeVal=TimeValues('f')
+
+    ts1.moveMouse(541, 1048, 0.5, 'y') # click Opera
+    ts1.pressKeys('ctrl', 't')  # open new tab
+
+    ts1.type('dayforcehcm.com', 'y')  # Go to site  ts1.type('dayforcehcm.com', 'y')  # Go to site (consider adding click to addre. bar to ensure cursor)
+    if checkForElem.confirmColour(ts1.get('logo')[0], ts1.get('logo')[1], (78, 103, 211)): # Confirm colour of big logo is present
+        ts1.moveMouse(ts1.get('loginButt')[0], ts1.get('loginButt')[1], timeVal.getSlow()+0.5, 'y')  # click login
+    if checkForElem.confirmImage('SelectRole.png','c'):
+        ts1.moveMouse(938, 547,timeVal.getFast(), 'y')  # Select 'Scheduler' on small window
+    ts1.moveMouse(1048,685,timeVal.getFast(),'y') # Click next button
+    # bbox coordinates are the top-left X, Y coordinates (called X1 and Y1) and bottom-right X, Y coordinates (called X2 and Y2)
+    if checkForElem.confirmImage('Schedules.png','n',1058,458,1196,498): # Confirm "Schedules" icon is present
+        ts1.moveMouse(1116, 422,timeVal.getSlow(), 'y')  # Click Schedules
+
+    if checkForElem.confirmColour(353, 286, (51, 68, 150)):  # Check for filter button by colour of icon
+        ts1.moveMouse(373, 286, timeVal.getMed(), 'y')  # click Filter button
+    ts1.moveMouse(553, 332, timeVal.getFast(), 'y')  # click filter input bar
+    ts1.moveMouse(ts1.get('LA')[0],ts1.get('LA')[1], timeVal.getFast(), 'y')  # select LA
+    ts1.moveMouse(1553, 380, timeVal.getFast(), 'y')  # click Apply button
+    # ts1.moveMouse(1087, 188, timeVal.getSlow(), 'y')  # open calendar
+    ts1.moveMouse(990, 240, timeVal.getSlow(), 'y')  # Open Monthly Schedule day chooser
+    ts1.clickDate()
+
+
+
+
+
+
+
+
 
 
