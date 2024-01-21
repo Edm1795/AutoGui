@@ -371,8 +371,8 @@ def main():
 
 # work
 def main():
-    taskSet4 = TaskSet()
-    checkForElem = CheckForElem(taskSet4)
+    taskSet4 = TaskSet('w')
+    checkForElem = CheckForElem()
     timeVal=TimeValues('f') # Instantiate times to fast values
 
     taskSet4.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
