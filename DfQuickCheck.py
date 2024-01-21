@@ -390,9 +390,9 @@ def main():
     if checkForElem.confirmColour(taskSet4.get('filterIcon')[0], taskSet4.get('filterIcon')[1], (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet4.moveMouse(taskSet4.get('filterButt')[0], taskSet4.get('filterButt')[1], timeVal.getFast(), 'y')  # click Filter button
     taskSet4.moveMouse(taskSet4.get('filterInputBar')[0], taskSet4.get('filterInputBar')[1], timeVal.getMed(), 'y')  # click filter input bar
-    taskSet4.moveMouse(410, 310, timeVal.getMed(), 'y')  # select LA
-    taskSet4.moveMouse(1629, 301, timeVal.getFast(), 'y')  # click Apply button
-    taskSet4.moveMouse(1087, 188, timeVal.getMed(), 'y')  # open calendar
+    taskSet4.moveMouse(taskSet4.get('LA')[0], taskSet4.get('LA')[1], timeVal.getMed(), 'y')  # select LA
+    taskSet4.moveMouse(taskSet4.get('applyButt')[0], taskSet4.get('applyButt')[1], timeVal.getFast(), 'y')  # click Apply button
+    taskSet4.moveMouse(taskSet4.get('monthlyCal')[0], taskSet4.get('monthlyCal')[1], timeVal.getMed(), 'y')  # open calendar
     taskSet4.clickDate() # find the current date on the calendar and click it
 
     print(ag.pixelMatchesColor(215, 133, (
