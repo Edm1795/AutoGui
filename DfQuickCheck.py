@@ -338,7 +338,8 @@ class TimeValues:
     def getSlow(self):
         return self.slow
 
-def main():
+# home version
+def main(): 
 
     print('\nEnsure bookmarks bar is on')
 
@@ -368,9 +369,34 @@ def main():
     ts1.moveMouse(990, 240, timeVal.getSlow(), 'y')  # Open Monthly Schedule day chooser
     ts1.clickDate()
 
+# work
+def main():
+    taskSet4 = TaskSet()
+    checkForElem = CheckForElem(taskSet4)
+    timeVal=TimeValues('f') # Instantiate times to fast values
 
+    taskSet4.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
+    taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
+    taskSet4.type('dayforcehcm.com', 'y')  # Go to site
+    # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
+    if checkForElem.confirmColour(taskSet4.get('logo')[0], taskSet4.get('logo')[1], (48, 103, 219)):
+        taskSet4.moveMouse(1226, 640, timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
+    taskSet4.moveMouse(taskSet4.get('loginButt')[0], taskSet4.get('loginButt')[1], timeVal.getMed(), 'y')  # go to Login
+    if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
+        taskSet4.moveMouse(915, 548, timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
+    taskSet4.moveMouse(1007, 660, timeVal.getMed(), 'y')  # click next (on small box)
+    if checkForElem.confirmImage('Schedules.png', 'n', 1007, 370, 1113, 397):
+        taskSet4.moveMouse(1056, 337, timeVal.getMed(), 'y')  # click schedule (main button to load sched)
+    if checkForElem.confirmColour(227, 223, (28, 68, 156)):  # Check for filter button by colour of icon
+        taskSet4.moveMouse(246, 223, timeVal.getFast(), 'y')  # click Filter button
+    taskSet4.moveMouse(376, 261, timeVal.getMed(), 'y')  # click filter input bar
+    taskSet4.moveMouse(410, 310, timeVal.getMed(), 'y')  # select LA
+    taskSet4.moveMouse(1629, 301, timeVal.getFast(), 'y')  # click Apply button
+    taskSet4.moveMouse(1087, 188, timeVal.getMed(), 'y')  # open calendar
+    taskSet4.clickDate() # find the current date on the calendar and click it
 
-
+    print(ag.pixelMatchesColor(215, 133, (
+        56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
 
 
 
