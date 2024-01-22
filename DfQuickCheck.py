@@ -339,11 +339,11 @@ class TimeValues:
         return self.slow
 
 # home version
-def main(): 
+def main():
 
     print('\nEnsure bookmarks bar is on')
 
-    ts1=TaskSet('h')
+    ts1=TaskSet('h') # arg: 'h' for home computer; 'w' for work computer
     checkForElem=CheckForElem()
     timeVal=TimeValues('f')
 
@@ -354,19 +354,19 @@ def main():
     if checkForElem.confirmColour(ts1.get('logo')[0], ts1.get('logo')[1], (78, 103, 211)): # Confirm colour of big logo is present
         ts1.moveMouse(ts1.get('loginButt')[0], ts1.get('loginButt')[1], timeVal.getSlow()+0.5, 'y')  # click login
     if checkForElem.confirmImage('SelectRole.png','c'):
-        ts1.moveMouse(938, 547,timeVal.getFast(), 'y')  # Select 'Scheduler' on small window
-    ts1.moveMouse(1048,685,timeVal.getFast(),'y') # Click next button
+        ts1.moveMouse(ts1.get('schedRadButt')[0], ts1.get('schedRadButt')[1],timeVal.getFast(), 'y')  # Select 'Scheduler' on small window
+    ts1.moveMouse(ts1.get('nextButt')[0],ts1.get('nextButt')[1],timeVal.getFast(),'y') # Click next button
     # bbox coordinates are the top-left X, Y coordinates (called X1 and Y1) and bottom-right X, Y coordinates (called X2 and Y2)
     if checkForElem.confirmImage('Schedules.png','n',1058,458,1196,498): # Confirm "Schedules" icon is present
-        ts1.moveMouse(1116, 422,timeVal.getSlow(), 'y')  # Click Schedules
+        ts1.moveMouse(ts1.get('schedIcon')[0], ts1.get('schedIcon')[1],timeVal.getSlow(), 'y')  # Click Schedules
 
     if checkForElem.confirmColour(353, 286, (51, 68, 150)):  # Check for filter button by colour of icon
-        ts1.moveMouse(373, 286, timeVal.getMed(), 'y')  # click Filter button
-    ts1.moveMouse(553, 332, timeVal.getFast(), 'y')  # click filter input bar
+        ts1.moveMouse(ts1.get('filterButt')[0], ts1.get('filterButt')[1], timeVal.getMed(), 'y')  # click Filter button
+    ts1.moveMouse(ts1.get('filterInputBar')[0], ts1.get('filterInputBar')[1], timeVal.getFast(), 'y')  # click filter input bar
     ts1.moveMouse(ts1.get('LA')[0],ts1.get('LA')[1], timeVal.getFast(), 'y')  # select LA
-    ts1.moveMouse(1553, 380, timeVal.getFast(), 'y')  # click Apply button
+    ts1.moveMouse(ts1.get('applyButt')[0], ts1.get('applyButt')[1], timeVal.getFast(), 'y')  # click Apply button
     # ts1.moveMouse(1087, 188, timeVal.getSlow(), 'y')  # open calendar
-    ts1.moveMouse(990, 240, timeVal.getSlow(), 'y')  # Open Monthly Schedule day chooser
+    ts1.moveMouse(ts1.get('monthlyCal')[0], ts1.get('monthlyCal')[1], timeVal.getSlow(), 'y')  # Open Monthly Schedule day chooser
     ts1.clickDate()
 
 # work
