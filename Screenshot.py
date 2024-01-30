@@ -258,12 +258,12 @@ ts1=TaskSet('w')
 ts1.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
 path="C:/Users/aswitzer/Downloads/" # this does not work. the default location is the scratches folder
 
-for num in range(1, 8):
+for num in range(1, 8): # cycle through days of the week from sun to sat
+    ts1.pressKeys('ctrl', str(num))
     screenshot = ImageGrab.grab()  # Take the screenshot
     screenshot.save(path+str(num)+".png", 'PNG') # saves to the scratches folder as default if only a file name is given image.png
     print(str(num),'completed')
     time.sleep(1)
-    ts1.pressKeys('ctrl', str(num))
-    
+
 time.sleep(1)
 screenshot.save(path+str(8)+".png", 'PNG')
