@@ -1,3 +1,4 @@
+from datetime import datetime
 
 import time
 from PIL import ImageGrab
@@ -5,6 +6,9 @@ import pyautogui as ag
 
 screenshot = ImageGrab.grab()  # Take the screenshot
 
+
+rawNow = datetime.now()
+currTime = rawNow.strftime("%m-%d-%Y--%H:%M:%S")
 
 # ag.screenshot('my_screenshot.png')
 
@@ -257,11 +261,11 @@ ts1=TaskSet('w')
 
 ts1.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
 path="C:/Users/aswitzer/Downloads/" # this does not work. the default location is the scratches folder
-
+pathAndName=path+currTime
 for num in range(1, 8): # cycle through days of the week from sun to sat
     ts1.pressKeys('ctrl', str(num))
     screenshot = ImageGrab.grab()  # Take the screenshot
-    screenshot.save(path+str(num)+".png", 'PNG') # saves to the scratches folder as default if only a file name is given image.png
+    screenshot.save(pathAndName+str(num)+".png", 'PNG') # saves to the scratches folder as default if only a file name is given image.png
     print(str(num),'completed')
     time.sleep(1)
 
