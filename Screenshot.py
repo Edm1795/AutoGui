@@ -1,3 +1,7 @@
+# This script cycles through the days of the week of dayforce and takes a screenshot of each day and saved them to the downloads folder
+# with a file name of numOfWeek_Mon-Day_Year--Hour-Min-Sec. it onyl grabs the time once though so the same time is used for all files
+
+
 from datetime import datetime
 
 import time
@@ -8,7 +12,7 @@ screenshot = ImageGrab.grab()  # Take the screenshot
 
 
 rawNow = datetime.now()
-currTime = rawNow.strftime("%m-%d-%Y--%H:%M:%S")
+currTime = rawNow.strftime("%m-%d-%Y--%H-%M-%S")
 
 # ag.screenshot('my_screenshot.png')
 
@@ -258,16 +262,23 @@ class TaskSet:
         self.moveMouse(x, y, 0.5, 'y')
 
 ts1=TaskSet('w')
+ts1.moveMouse(391, 179, 0.2, 'y')  # (home com:) click on blank area of browser to focus the browser
+# ts1.moveMouse(173, 68, 0.2, 'y')  # (work com) click on blank area of browser to focus the browser
+path="C:/Users/aswitzer/Downloads/" # the default location is the scratches folder. # Use 'r' in front if using '\': r"C:\Users\aswit\Downloads\Preliminary.ext"
+# path2="C:/Users/aswit/Downloads/" # used for home com
 
-ts1.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
-path="C:/Users/aswitzer/Downloads/" # this does not work. the default location is the scratches folder
-pathAndName=path+currTime
+
+
+
+
 for num in range(1, 8): # cycle through days of the week from sun to sat
-    ts1.pressKeys('ctrl', str(num))
+    ts1.pressKeys('ctrl', str(num)) # press keys to go to correct day of week in schedule on screen
+    # Create the path and name of file: C:/Users/aswitzer/Downloads/1_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
+    pathAndName = path + str(num)+"_"+currTime 
     screenshot = ImageGrab.grab()  # Take the screenshot
-    screenshot.save(pathAndName+str(num)+".png", 'PNG') # saves to the scratches folder as default if only a file name is given image.png
-    print(str(num),'completed')
+    screenshot.save(pathAndName+".png", 'PNG') # saves to the scratches folder as default if only a file name is given image.png
+    print(str(num),currTime,'completed') # print to screen as images are saved
     time.sleep(1)
 
-time.sleep(1)
-screenshot.save(path+str(8)+".png", 'PNG')
+# screenshot = ImageGrab.grab()  # Take the screenshot
+# screenshot.save(pathAndName+".png", 'PNG') # saves to the scratches folder as default if only a file name is given image.png
