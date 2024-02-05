@@ -261,40 +261,57 @@ class TaskSet:
         print(x, y)
         self.moveMouse(x, y, 0.5, 'y')
 
-ts1=TaskSet('w')
-ts1.moveMouse(391, 179, 0.2, 'y')  # (home com:) click on blank area of browser to focus the browser
-# ts1.moveMouse(173, 68, 0.2, 'y')  # (work com) click on blank area of browser to focus the browser
-path="C:/Users/aswitzer/Downloads/" # the default location is the scratches folder. # Use 'r' in front if using '\': r"C:\Users\aswit\Downloads\Preliminary.ext"
-# path2="C:/Users/aswit/Downloads/" # used for home com
+# ts1=TaskSet('w')
+# ts1.moveMouse(391, 179, 0.2, 'y')  # (home com:) click on blank area of browser to focus the browser
+# # ts1.moveMouse(173, 68, 0.2, 'y')  # (work com) click on blank area of browser to focus the browser
+# path="C:/Users/aswitzer/Downloads/" # the default location is the scratches folder. # Use 'r' in front if using '\': r"C:\Users\aswit\Downloads\Preliminary.ext"
+# # path2="C:/Users/aswit/Downloads/" # used for home com
 
 
-def runScreenShotCycle(breadth,position,week):
+class ScreenShot:
     '''
-    Func for setting parameters and running the screen shots
-    breadth
-    position
-    week: str : 2 values 'Month_Number of full week'. ex: Feb_1 (first full week of Feb)
+            Class for setting parameters and running the screen shots
+            breadth: str: 'f'; how much of the week to cycle through. f=full week sat to sun
+            position: str: 'LA', or 'p': determines what word is used in the file name
+            week: str : 2 values 'Month_Number of full week'. ex: Feb_1 (first full week of Feb)
+            com: str: 'h' or 'w' sets certain values for home or work com.
     '''
-    if breadth == 'f': # Set range of days to screenshot. f=full range (1,8) Sun to Sat
-        startDay=1
-        endDay=8
-    if position == 'LA': # set which position name to put into the saved file title
-        position='LA'
-    if position == 'p': # set which position name to put into the saved file title
-        position = 'Page'
+    def __init__(self,breadth,position,week,com):
 
-    # Loop for takign screen shots
-    for day in range(startDay, endDay):  # cycle through days of the week from sun to sat
-        ts1.pressKeys('ctrl', str(day))  # press keys to go to correct day of week in schedule on screen
-        # Create the path and name of file: C:/Users/aswitzer/Downloads/1_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
-        pathAndName = path + str(day) + '_' + position + '_' + week + '_' + "_" + currTime # set path and name of file to be saved
-        screenshot = ImageGrab.grab()  # Take the screenshot
-        screenshot.save(pathAndName + ".png",
-                        'PNG')  # saves to the scratches folder as default if only a file name is given image.png
-        print(str(day), currTime, 'completed')  # print to screen as images are saved
-        time.sleep(1)
+        if breadth == 'f': # Set range of days to screenshot. f=full range (1,8) Sun to Sat. 1=sun;2=mon...
+            self.startDay=1
+            self.endDay=8
+        if position == 'LA': # set which position name (LA or Page) to put into the saved file title
+            self.position='LA'
+        if position == 'p': # set which position name (LA or Page) to put into the saved file title
+            self.position = 'Page'
+        if com == 'w': # coordiantes for focusing the browser on work com (clicking on blank spot of browser)
+            self.focusCord=(173,68)
+            self.path = "C:/Users/aswitzer/Downloads/" # path for saving files at work com
+        if com == 'h': # coordiantes for focusing the browser on home com (clicking on blank spot of browser)
+            self.focusCord=(391,179)
+            self.path = "C:/Users/aswit/Downloads/" # path fr saving files on home com
+        self.week=week
 
-runScreenShotCycle('f','p','Feb_1')
+    def takeShot(self):
+
+        ts1=TaskSet('w')
+        ts1.moveMouse(self.focusCord[0], self.focusCord[1], 0.2, 'y')  # (home com:391,179) click on blank area of browser to focus the browser
+        # (173, 68)  # (work com) click on blank area of browser to focus the browser
+
+
+        # Loop for takign screen shots
+        for day in range(self.startDay, self.endDay):  # cycle through days of the week from sun to sat
+            ts1.pressKeys('ctrl', str(day))  # press keys to go to correct day of week in schedule on screen
+            # Create the path and name of file: C:/Users/aswitzer/Downloads/1_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
+            pathAndName = self.path + str(day) + '_' + self.position + '_' + self.week + '_' + "_" + currTime # set path and name of file to be saved
+            screenshot = ImageGrab.grab()  # Take the screenshot
+            screenshot.save(pathAndName + ".png",
+                            'PNG')  # saves to the scratches folder as default if only a file name is given image.png
+            print(str(day), currTime, 'completed')  # print to screen as images are saved
+            time.sleep(1)
+
+# runScreenShotCycle('f','p','Feb_1')
 
 
 # screenshot = ImageGrab.grab()  # Take the screenshot
