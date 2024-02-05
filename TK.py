@@ -2,6 +2,7 @@
 import DFQuickCheck
 import TimeLine
 from tkinter import *
+from ScreenShot import *
 from ctypes import windll  # used for fixing blurry fonts on win 10 and 11 (also  windll.shcore.SetProcessDpiAwareness(1))
 #from tkinter import ttk
 
@@ -58,6 +59,15 @@ class MainWindow:
         self.button = Button(self.frame1, text="Schedule", width=12, command=self.schedule)
         self.button.pack()
 
+        self.button = Button(self.frame1, text="Screen Shot", width=12, command=self.screenShot)
+        self.button.pack()
+
+        self.selected = StringVar() # selected is a fucntion with methods, use selected.get() to get the string val
+        self.rad1 = Radiobutton(self.frame2, text='LAs', value='1', variable=self.selected) # ret 1 if desiring LAs
+        self.rad2 = Radiobutton(self.frame2, text='Pages', value='2', variable=self.selected) # ret 2 if desiring Pages
+        self.rad1.pack()
+        self.rad2.pack()
+
         self.addItemButton = Button(self.frame1, text="Create New", width=12, command=self.createNew)
         self.addItemButton.pack()
         #
@@ -74,6 +84,15 @@ class MainWindow:
         TimeLine.main()
 
 
+
+    def screenShot(self):
+
+        if mainWin.selected.get() == '1':
+            screenShot=ScreenShot('f','LA','Feb_1','h')
+            screenShot.takeShot()
+        if mainWin.selected.get() == '2':
+            screenShot = ScreenShot('f', 'p', 'Feb_1','h')
+            screenShot.takeShot()
     def createNew(self):
 
         def click():
