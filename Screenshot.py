@@ -326,7 +326,7 @@ class ScreenShot:
         # Loop for takign screen shots
         for day in range(self.startDay, self.endDay):  # cycle through days of the week from sun to sat
             ts1.pressKeys('ctrl', str(day))  # press keys to go to correct day of week in schedule on screen
-            # Create the path and name of file: C:/Users/aswitzer/Downloads/1_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
+            # Create the path and name of file: C:/Users/aswitzer/Downloads/1_Mon_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
             pathAndName = self.path + str(day) + '_' + self.getDay(day) + '_' + self.position + '_' + self.week + '_' + "_" + currTime # set path and name of file to be saved
             screenshot = ImageGrab.grab()  # Take the screenshot
             screenshot.save(pathAndName + ".png",
