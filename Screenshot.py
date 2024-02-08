@@ -293,18 +293,41 @@ class ScreenShot:
             self.path = "C:/Users/aswit/Downloads/" # path fr saving files on home com
         self.week=week
 
+    def getDay(self, count):
+
+        '''
+        This function converts the counter values from the for loop into days of the week.
+        ex: 1 = sun, 2 = Mon
+        inputs: int 1-7
+        output 3 letter str: day of week corresponding to int,ex 'Mon'. 'Tue'
+        '''
+
+        if count == 1:
+            return 'Sun'
+        if count == 2:
+            return 'Mon'
+        if count == 3:
+            return 'Tue'
+        if count == 4:
+            return 'Wed'
+        if count == 5:
+            return 'Thr'
+        if count == 6:
+            return 'Fri'
+        if count == 7:
+            return 'Sat'
+
     def takeShot(self):
 
         ts1=TaskSet('w')
         ts1.moveMouse(self.focusCord[0], self.focusCord[1], 0.2, 'y')  # (home com:391,179) click on blank area of browser to focus the browser
         # (173, 68)  # (work com) click on blank area of browser to focus the browser
 
-
         # Loop for takign screen shots
         for day in range(self.startDay, self.endDay):  # cycle through days of the week from sun to sat
             ts1.pressKeys('ctrl', str(day))  # press keys to go to correct day of week in schedule on screen
             # Create the path and name of file: C:/Users/aswitzer/Downloads/1_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
-            pathAndName = self.path + str(day) + '_' + self.position + '_' + self.week + '_' + "_" + currTime # set path and name of file to be saved
+            pathAndName = self.path + str(day) + '_' + self.getDay(day) + '_' + self.position + '_' + self.week + '_' + "_" + currTime # set path and name of file to be saved
             screenshot = ImageGrab.grab()  # Take the screenshot
             screenshot.save(pathAndName + ".png",
                             'PNG')  # saves to the scratches folder as default if only a file name is given image.png
