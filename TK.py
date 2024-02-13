@@ -62,6 +62,9 @@ class MainWindow:
         self.button = Button(self.frame1, text="Screen Shot", width=12, command=self.screenShot)
         self.button.pack()
 
+        self.button = Button(self.frame1, text="Close Timeline", width=12, command=self.closeTimeLine)
+        self.button.pack()
+
         self.selected = StringVar() # selected is a fucntion with methods, use selected.get() to get the string val
         self.rad1 = Radiobutton(self.frame2, text='LAs', value='1', variable=self.selected) # ret 1 if desiring LAs
         self.rad2 = Radiobutton(self.frame2, text='Pages', value='2', variable=self.selected) # ret 2 if desiring Pages
@@ -84,7 +87,8 @@ class MainWindow:
         TimeLine.main()
 
 
-
+    def closeTimeLine(self):
+        TimeLine.close()
     def screenShot(self):
 
         if mainWin.selected.get() == '1':
@@ -93,6 +97,8 @@ class MainWindow:
         if mainWin.selected.get() == '2':
             screenShot = ScreenShot('f', 'p', 'Feb_1','h')
             screenShot.takeShot()
+
+
     def createNew(self):
 
         def click():
