@@ -16,6 +16,10 @@ class TimeValues:
             self.fast = 0.2
             self.med = 0.4
             self.slow = 0.5
+         if speed == 's':
+            self.fast = 0.4
+            self.med = 0.5
+            self.slow = 0.8
 
     def getFast(self):
         return self.fast
