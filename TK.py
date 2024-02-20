@@ -1,4 +1,6 @@
 # colour picker crtl shift a, Type in colour
+import time
+
 import DFQuickCheck
 import TimeLine
 from tkinter import *
@@ -14,7 +16,7 @@ class MainWindow:
         # Master Window
         self.master = master
         self.master.title('AutoGui Ver. 0.0')
-        self.master.geometry("+150+500")  # position of the window in the screen (200x300) ("-3300+600")
+        self.master.geometry("+150+500")  # position of the window in the screen (200x300)
         self.master.geometry("500x400")  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
         # self.master.attributes('-fullscreen', True)
@@ -43,6 +45,9 @@ class MainWindow:
         self.frame1.grid_propagate(0)  # When adding widgets maintain weighting of frames
         self.frame2.grid_propagate(0)
 
+        # sundries
+        self.counter=0 # counter used for determining state of toggle switch used in transparency button
+
         frameWidth = 10  # Units are in characters not pixels
 
         windll.shcore.SetProcessDpiAwareness(1)  # used for fixing blurry fonts on win 10 and 11
@@ -63,6 +68,9 @@ class MainWindow:
         self.button.pack()
 
         self.button = Button(self.frame1, text="Close Timeline", width=12, command=self.closeTimeLine)
+        self.button.pack()
+
+        self.button = Button(self.frame1, text="Transparent", width=12, command=self.makeWinTrans)
         self.button.pack()
 
         self.selected = StringVar() # selected is a fucntion with methods, use selected.get() to get the string val
@@ -86,9 +94,30 @@ class MainWindow:
         DFQuickCheck.main()
         TimeLine.main()
 
+    def setCount(self):
+        self.counter+=1
 
     def closeTimeLine(self):
         TimeLine.close()
+
+    def makeWinTrans(self):
+        # this function turn the main window transparent and solid in alternation; it is a toggle function which uses
+        # self.counter to know if the window needs to be opaque or solid
+        if self.counter%2==0: # if pressing button to mke transparent
+            opacIntList=[] # create empty list for holding opacity float values
+            for num in range(4,10): # loop for filling list with needed opacity float values
+                opacInt = num / 10 # eg: 4/10 = 0.4
+                opacIntList.append(opacInt) # append to list [0.4,0.5,0.6...]
+            # self.master.wm_attributes('-transparentcolor', '#2a2b2b')
+            # self.master.wm_attributes('-transparentcolor', '#7E050C')
+            for num in range(1,6): # loop for incrementally increasing opacity
+                # pop values from list thus getting values from high to low
+                self.master.attributes('-alpha', opacIntList.pop()) # attributes with alpha on the main window changes opacity of whole window
+                time.sleep(0.1)
+            self.setCount()
+        else: # if pressing the same button to go back to regular solid colour
+            self.master.attributes('-alpha', 1.0)
+            self.setCount()
     def screenShot(self):
 
         if mainWin.selected.get() == '1':
