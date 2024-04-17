@@ -239,8 +239,8 @@ class TaskSet:
         # print(week())
         yDiff = 32  # number of pixels between adjacent rows (eg week 1 - week 2) (work 32, home 37)
         xDiff = 36  # number of pixels between immediately adjacent days of week (eg:mon-tues) (work 36, home 44)
-        xDefault = 857  # 36 pixel difference (work 851, home com 857)
-        yDefault = 381  # (work 301, home com 381) (x=857, y=378)
+        xDefault = 851  # 36 pixel difference (work 851, home com 857)
+        yDefault = 301  # (work 301, home com 381) (x=857, y=378)
 
         x = xDefault + (day * xDiff)
 
@@ -342,46 +342,16 @@ class TimeValues:
     def getSlow(self):
         return self.slow
 
-# home version
-def main():
+# Open last instance of Dayforce for current day
 
-    print('\nEnsure bookmarks bar is on')
-
-    ts1=TaskSet('h') # arg: 'h' for home computer; 'w' for work computer
-    checkForElem=CheckForElem()
-    timeVal=TimeValues('f')
-
-    ts1.moveMouse(541, 1048, 0.5, 'y') # click Opera
-    ts1.pressKeys('ctrl', 't')  # open new tab
-
-    ts1.type('dayforcehcm.com', 'y')  # Go to site  ts1.type('dayforcehcm.com', 'y')  # Go to site (consider adding click to addre. bar to ensure cursor)
-    if checkForElem.confirmColour(ts1.get('logo')[0], ts1.get('logo')[1], (78, 103, 211)): # Confirm colour of big logo is present
-        ts1.moveMouse(ts1.get('loginButt')[0], ts1.get('loginButt')[1], timeVal.getSlow()+0.5, 'y')  # click login
-    if checkForElem.confirmImage('SelectRole.png','c'):
-        ts1.moveMouse(ts1.get('schedRadButt')[0], ts1.get('schedRadButt')[1],timeVal.getFast(), 'y')  # Select 'Scheduler' on small window
-    ts1.moveMouse(ts1.get('nextButt')[0],ts1.get('nextButt')[1],timeVal.getFast(),'y') # Click next button
-    # bbox coordinates are the top-left X, Y coordinates (called X1 and Y1) and bottom-right X, Y coordinates (called X2 and Y2)
-    if checkForElem.confirmImage('Schedules.png','n',1058,458,1196,498): # Confirm "Schedules" icon is present
-        ts1.moveMouse(ts1.get('schedIcon')[0], ts1.get('schedIcon')[1],timeVal.getSlow(), 'y')  # Click Schedules
-
-    if checkForElem.confirmColour(353, 286, (51, 68, 150)):  # Check for filter button by colour of icon
-        ts1.moveMouse(ts1.get('filterButt')[0], ts1.get('filterButt')[1], timeVal.getMed(), 'y')  # click Filter button
-    ts1.moveMouse(ts1.get('filterInputBar')[0], ts1.get('filterInputBar')[1], timeVal.getFast(), 'y')  # click filter input bar
-    ts1.moveMouse(ts1.get('LA')[0],ts1.get('LA')[1], timeVal.getFast(), 'y')  # select LA
-    ts1.moveMouse(ts1.get('applyButt')[0], ts1.get('applyButt')[1], timeVal.getFast(), 'y')  # click Apply button
-    # ts1.moveMouse(1087, 188, timeVal.getSlow(), 'y')  # open calendar
-    ts1.moveMouse(ts1.get('monthlyCal')[0], ts1.get('monthlyCal')[1], timeVal.getSlow(), 'y')  # Open Monthly Schedule day chooser
-    ts1.clickDate()
-
-# work
 def main():
     taskSet4 = TaskSet('w')
     checkForElem = CheckForElem()
-    timeVal=TimeValues('f') # Instantiate times to fast values
+    timeVal=TimeValues('m') # Instantiate times to fast values
 
     taskSet4.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
     taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
-    taskSet4.type('dayforcehcm.com', 'y')  # Go to site
+    taskSet4.type('https://can232.dayforcehcm.com/MyDayforce/Mydayforce.aspx', 'y')  # Go to site (updated website address)
     # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
     if checkForElem.confirmColour(taskSet4.get('logo')[0], taskSet4.get('logo')[1], (48, 103, 219)):
         taskSet4.moveMouse(1226, 640, timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
@@ -401,9 +371,6 @@ def main():
 
     print(ag.pixelMatchesColor(215, 133, (
         56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
-
-
-
 
 
 
