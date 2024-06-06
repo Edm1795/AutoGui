@@ -38,13 +38,14 @@ class TaskSet:
         if computer == 'w': # Initialize values for your work computer
             self.logo = (951,271) #((665, 575)(old numbers of huge d))  # coordinates of one letter of small "dayforce" on top main screen
             self.loginButt = (953,717) #(1226, 737)(old loginbutt coord)  # coord. of main Login button on main screen
+            self.userName = (951,613) # coordinates of autofill user name in browser
             self.schedRadButt = (915, 548)  # coord of Scheduler radio button on first pop up before entering main program
             self.nextButt = (1007, 660)  # coord of Next button on scheduler pop up window just above
             self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
             self.filterIcon = (227, 223)  # coord of small Filter icon top left for colour check
             self.filterButt = (246, 223)  # coord of filter button
-            self.filterInputBar = (376, 261)  # coord of bar for choosing which positions to filter out for viewing on schedule
-            self.LA = (410, 310)  # vals for work com: (478, 309) # Coords for LA role in drop down filter menu
+            self.filterInputBar = (442, 261)  # coord of bar for choosing which positions to filter out for viewing on schedule
+            self.LA = (442, 310)  # vals for work com: (478, 309) # Coords for LA role in drop down filter menu
             self.applyButt = (1629, 301)  # coords of Apply button on filter menu
             self.monthlyCal = (1087, 188)  # coords for opening monthly calendar for choosing day to view on screen
 
@@ -159,6 +160,8 @@ class TaskSet:
             return self.logo # coordinates of huge "D" on main screen
         if value == 'loginButt':
             return self.loginButt  # coord. of main Login button on main screen
+        if value == 'userName':
+            return self.userName
         if value == 'schedRadButt':
             return self.schedRadButt # coord of Scheduler radio button on first pop up before entering main program
         if value == 'nextButt':
@@ -354,7 +357,7 @@ def main():
     taskSet4.type('https://can232.dayforcehcm.com/MyDayforce/Mydayforce.aspx', 'y')  # Go to site (updated website address)
     # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
     if checkForElem.confirmColour(taskSet4.get('logo')[0], taskSet4.get('logo')[1], (48, 103, 219)):
-        taskSet4.moveMouse(1226, 640, timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
+        taskSet4.moveMouse(taskSet4.get('userName')[0],taskSet4.get('userName')[1], timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet4.moveMouse(taskSet4.get('loginButt')[0], taskSet4.get('loginButt')[1], timeVal.getMed(), 'y')  # go to Login
     if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
         taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
