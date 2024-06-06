@@ -36,8 +36,8 @@ class TaskSet:
             self.monthlyCal=(990, 240) # coords for opening monthly calendar for choosing day to view on screen
 
         if computer == 'w': # Initialize values for your work computer
-            self.logo = (665, 575)  # coordinates of huge "D" on main screen
-            self.loginButt = (1226, 737)  # coord. of main Login button on main screen
+            self.logo = (951,271) #((665, 575)(old numbers of huge d))  # coordinates of one letter of small "dayforce" on top main screen
+            self.loginButt = (953,717) #(1226, 737)(old loginbutt coord)  # coord. of main Login button on main screen
             self.schedRadButt = (915, 548)  # coord of Scheduler radio button on first pop up before entering main program
             self.nextButt = (1007, 660)  # coord of Next button on scheduler pop up window just above
             self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
