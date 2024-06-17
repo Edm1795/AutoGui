@@ -4,7 +4,7 @@ import time
 import DFQuickCheck
 import TimeLine
 from tkinter import *
-from ScreenShot import *
+# from ScreenShot import * # This does not seem neccessary and also causes problems; rather install PIL into Pycharm, and uninstall pyscreeze, and then install v.1.29 of pyscreeze into pycharm
 from ctypes import windll  # used for fixing blurry fonts on win 10 and 11 (also  windll.shcore.SetProcessDpiAwareness(1))
 #from tkinter import ttk
 
