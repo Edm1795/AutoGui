@@ -111,7 +111,7 @@ class TaskSet:
         shift = shift - 1  # decrement by one to get correct results
         shiftDiff = 52  # pixel distance between shifts (adjust this if mouse is not accurante
         tBase = 524  # base value for time which is 8 am (horizontal axis)
-        sBase = 351  # base value for shift which is the top shift showing on screen (vertical axis)
+        sBase = 381  # base value for shift which is the top shift showing on screen (vertical axis)
 
         timeUnit = 30  # number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
 
