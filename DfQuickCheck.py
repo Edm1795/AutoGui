@@ -103,6 +103,19 @@ class TaskSet:
             time.sleep(0.5)  # used to add gap between text input and pressing enter
             ag.press('enter')
 
+    def timeSteps(self,desiredTime):
+
+        '''
+        method returns the number of time steps between basetime (8am) and desired time
+        input: desiredTime int, the time you want to go to
+        output: int, number of units from basetime (8am) to desired time measured in 30 min incr.
+        eg: 9 am is two time steps forward from basetime (8am) (two half hour units)
+        '''
+
+        baseTime=8
+
+        return (desiredTime-baseTime)*2
+    
     def moveMouseNEW(self, time, shift, duration=1):
         # This cool function simple takes the time (time of day eg, 3 pm) and the shift (eg: 1st shift) and
         # duration of mouse move, and the mouse will go to that spot. No more need to specify pixels
