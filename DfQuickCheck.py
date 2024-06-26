@@ -39,8 +39,8 @@ class TaskSet:
             self.logo = (951,271) #((665, 575)(old numbers of huge d))  # coordinates of one letter of small "dayforce" on top main screen
             self.loginButt = (953,717) #(1226, 737)(old loginbutt coord)  # coord. of main Login button on main screen
             self.userName = (951,613) # coordinates of autofill user name in browser
-            self.schedRadButt = (915, 548)  # coord of Scheduler radio button on first pop up before entering main program
-            self.nextButt = (1007, 660)  # coord of Next button on scheduler pop up window just above
+            self.schedRadButt = (817,540)  # coord of Scheduler radio button on first pop up before entering main program. Old screen vals: (915, 548)
+            self.nextButt = (959,660)  # coord of Next button on scheduler pop up window just above. Old screen vals: (1007, 660)
             self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
             self.filterIcon = (227, 223)  # coord of small Filter icon top left for colour check
             self.filterButt = (246, 223)  # coord of filter button
@@ -103,19 +103,6 @@ class TaskSet:
             time.sleep(0.5)  # used to add gap between text input and pressing enter
             ag.press('enter')
 
-    def timeSteps(self,desiredTime):
-
-        '''
-        method returns the number of time steps between basetime (8am) and desired time
-        input: desiredTime int, the time you want to go to
-        output: int, number of units from basetime (8am) to desired time measured in 30 min incr.
-        eg: 9 am is two time steps forward from basetime (8am) (two half hour units)
-        '''
-
-        baseTime=8
-
-        return (desiredTime-baseTime)*2
-    
     def moveMouseNEW(self, time, shift, duration=1):
         # This cool function simple takes the time (time of day eg, 3 pm) and the shift (eg: 1st shift) and
         # duration of mouse move, and the mouse will go to that spot. No more need to specify pixels
@@ -124,7 +111,7 @@ class TaskSet:
         shift = shift - 1  # decrement by one to get correct results
         shiftDiff = 52  # pixel distance between shifts (adjust this if mouse is not accurante
         tBase = 524  # base value for time which is 8 am (horizontal axis)
-        sBase = 381  # base value for shift which is the top shift showing on screen (vertical axis)
+        sBase = 351  # base value for shift which is the top shift showing on screen (vertical axis)
 
         timeUnit = 30  # number of pixels for a time unit (set at 30 mins;ie 38px = 30 mins of time)
 
@@ -372,7 +359,7 @@ def main():
     if checkForElem.confirmColour(taskSet4.get('logo')[0], taskSet4.get('logo')[1], (48, 103, 219)):
         taskSet4.moveMouse(taskSet4.get('userName')[0],taskSet4.get('userName')[1], timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet4.moveMouse(taskSet4.get('loginButt')[0], taskSet4.get('loginButt')[1], timeVal.getMed(), 'y')  # go to Login
-    if checkForElem.confirmImage('SelectRole.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
+    if checkForElem.confirmImage('SelectRoleN.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
         taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet4.moveMouse(taskSet4.get('nextButt')[0], taskSet4.get('nextButt')[1], timeVal.getMed(), 'y')  # click next (on small box)
     if checkForElem.confirmImage('Schedules.png', 'n', 1007, 370, 1113, 397):
@@ -387,6 +374,5 @@ def main():
 
     print(ag.pixelMatchesColor(215, 133, (
         56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
-
 
 
