@@ -1,8 +1,3 @@
-# This program contains a new method in the Taskset Class called newDrag(). NewDrag() takes keyboard input for the start time and the shift number for which to add any activity preselected by the user; it adds one hour of that activity 
-# to the shift given. For example 9 am shift 3, will add whatever activity is selected for 9 am to 10 am in the third shift on the screen. You do have to ensure the sBase and tBase values are correctly set inside newDrag and moveMouseNew()
-# both those methods take the same values for those two constants.
-
-
 # alt shift e runs the single line the cursor is on
 
 # opens a single instance of dayforce for quick check
@@ -172,6 +167,32 @@ class TaskSet:
 
         time.sleep(0.5)
         ag.dragTo(horiz, vert, button=button, duration=duration)
+
+    def activitySelector(self,activity):
+
+        '''
+        This method manages the selection of any activity for scheduling. input the name of the activity as an argument according to the terms in
+        the listofActivities and it will select that activity from the sidebar popout. It returns a calculated coordinate of the activity asked for
+        based on the position that activity is in the list.
+        :param activity: str of the name of the desired activity; for ex: cs.
+        :return: tuple of x and y coordinates of the activity asked for
+        '''
+
+        xCoordConst=75 # fixed x coordinate of all items in the list (as a vertical up down list all items have the same x coord)
+        firstInListYCoord=365 # Y coord of first item in list used as measuring point for all other items
+        yCoordDiff=28 # difference in pixels between adjacent items in the list
+
+        listofActivities=['$','$box','2hom','book','chat','clss','cs','fab','greet','holds','in','inv','lists','mtg','n/a','open','otf','outr','shelf','sick','sr','task','weed'] # list of all activities on the activity side bar popout in order of the actual items from top to bottom
+        activityPos=None # initialize activityPos
+
+        for item in listofActivities:
+            if item == activity:
+                activityPos=listofActivities.index(item) # no need to add or subtract one, values will work out
+
+        yCoord=firstInListYCoord+(yCoordDiff*activityPos)
+
+        return xCoordConst,yCoord # calculate pixel coord of desired activity; x is a constant; y is the base value * number of steps down
+
 
     def eraser(self):
         '''
@@ -402,5 +423,8 @@ def main():
 
     # taskSet4.moveMouseNEW(9,3)
 
-    taskSet4.newDrag()
+    #taskSet4.newDrag()
+    activity=taskSet4.activitySelector('otf')
+    taskSet4.moveMouse(activity[0], activity[1],1,'n')
+
 main()
