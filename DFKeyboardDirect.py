@@ -1,3 +1,8 @@
+# This program contains a new method in the Taskset Class called newDrag(). NewDrag() takes keyboard input for the start time and the shift number for which to add any activity preselected by the user; it adds one hour of that activity 
+# to the shift given. For example 9 am shift 3, will add whatever activity is selected for 9 am to 10 am in the third shift on the screen. You do have to ensure the sBase and tBase values are correctly set inside newDrag and moveMouseNew()
+# both those methods take the same values for those two constants.
+
+
 # alt shift e runs the single line the cursor is on
 
 # opens a single instance of dayforce for quick check
@@ -133,6 +138,14 @@ class TaskSet:
         ag.moveTo(horiz, vert, duration)
 
     def newDrag(self, duration=1, button='l'):
+
+        '''
+        This method takes input from the user for the start time and shift number and then adds 1 hour of whatever activity has been preselected to the shift
+        given by the user. For example if you input 9 am and shift 3, it will add one hour of (CS for example) starting at 9 am in the 3rd shift on the screen
+        :param duration: int, time for completing the mouse drag
+        :param button: str l or r, setting which button is held down for the drag
+        :return: None
+        '''
 
         if button == 'l':
             button = 'left'
