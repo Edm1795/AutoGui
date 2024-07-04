@@ -39,8 +39,8 @@ class TaskSet:
             self.logo = (951,271) #((665, 575)(old numbers of huge d))  # coordinates of one letter of small "dayforce" on top main screen
             self.loginButt = (953,717) #(1226, 737)(old loginbutt coord)  # coord. of main Login button on main screen
             self.userName = (951,613) # coordinates of autofill user name in browser
-            self.schedRadButt = (817,540)  # coord of Scheduler radio button on first pop up before entering main program. Old screen vals: (915, 548)
-            self.nextButt = (959,660)  # coord of Next button on scheduler pop up window just above. Old screen vals: (1007, 660)
+            self.schedRadButt = (815,541) #(915, 548)  # coord of Scheduler radio button on first pop up before entering main program
+            self.nextButt = (959,655) # (1007, 660)  # coord of Next button on scheduler pop up window just above
             self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
             self.filterIcon = (227, 223)  # coord of small Filter icon top left for colour check
             self.filterButt = (246, 223)  # coord of filter button
@@ -359,7 +359,7 @@ def main():
     if checkForElem.confirmColour(taskSet4.get('logo')[0], taskSet4.get('logo')[1], (48, 103, 219)):
         taskSet4.moveMouse(taskSet4.get('userName')[0],taskSet4.get('userName')[1], timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet4.moveMouse(taskSet4.get('loginButt')[0], taskSet4.get('loginButt')[1], timeVal.getMed(), 'y')  # go to Login
-    if checkForElem.confirmImage('SelectRoleN.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
+    if checkForElem.confirmImage('SelectRole2.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
         taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet4.moveMouse(taskSet4.get('nextButt')[0], taskSet4.get('nextButt')[1], timeVal.getMed(), 'y')  # click next (on small box)
     if checkForElem.confirmImage('Schedules.png', 'n', 1007, 370, 1113, 397):
