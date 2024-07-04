@@ -97,6 +97,7 @@ class TaskSet:
         secondKey:  str second key to press eg, a
         '''
         ag.keyDown(holdKey)  # hold down the shift key
+        time.sleep(0.25)
         ag.press(secondKey)  # press the left arrow key
         ag.keyUp(holdKey)
 
@@ -286,7 +287,7 @@ class ScreenShot:
         if position == 'p': # set which position name (LA or Page) to put into the saved file title
             self.position = 'Page'
         if com == 'w': # coordiantes for focusing the browser on work com (clicking on blank spot of browser)
-            self.focusCord=(173,68)
+            self.focusCord=(260,410) # (286,137) Seems best to focus screen through clicking the actual schedule grid
             self.path = "C:/Users/aswitzer/Downloads/" # path for saving files at work com
         if com == 'h': # coordiantes for focusing the browser on home com (clicking on blank spot of browser)
             self.focusCord=(391,179)
@@ -321,13 +322,16 @@ class ScreenShot:
 
         ts1=TaskSet('w')
         ts1.moveMouse(self.focusCord[0], self.focusCord[1], 0.2, 'y')  # (home com:391,179) click on blank area of browser to focus the browser
+        time.sleep(0.25)
+        # ts1.click()
         # (173, 68)  # (work com) click on blank area of browser to focus the browser
 
         # Loop for takign screen shots
         for day in range(self.startDay, self.endDay):  # cycle through days of the week from sun to sat
+            time.sleep(0.5)
             ts1.pressKeys('ctrl', str(day))  # press keys to go to correct day of week in schedule on screen
             # Create the path and name of file: C:/Users/aswitzer/Downloads/1_Mon_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
-            pathAndName = self.path + str(day) + '_' + self.getDay(day) + '_' + self.position + '_' + self.week + '_' + "_" + currTime # set path and name of file to be saved
+            pathAndName = self.path + str(day) + '_' + self.getDay(day) + '_' + self.position + '_' + self.week + '_' + "_" + 'Time_Stamp'+'_'+ currTime # set path and name of file to be saved
             screenshot = ImageGrab.grab()  # Take the screenshot
             screenshot.save(pathAndName + ".png",
                             'PNG')  # saves to the scratches folder as default if only a file name is given image.png
