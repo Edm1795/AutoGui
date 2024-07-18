@@ -97,7 +97,7 @@ class TaskSet:
         secondKey:  str second key to press eg, a
         '''
         ag.keyDown(holdKey)  # hold down the shift key
-        time.sleep(0.25)
+        time.sleep(0.25) # delay time between key presses (essential to getting desired result for shortcut keys, without this delay odd results occur)
         ag.press(secondKey)  # press the left arrow key
         ag.keyUp(holdKey)
 
