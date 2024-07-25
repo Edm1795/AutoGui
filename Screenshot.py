@@ -11,8 +11,7 @@ import pyautogui as ag
 screenshot = ImageGrab.grab()  # Take the screenshot
 
 
-rawNow = datetime.now()
-currTime = rawNow.strftime("%m-%d-%Y--%H-%M-%S")
+
 
 # ag.screenshot('my_screenshot.png')
 
@@ -319,6 +318,9 @@ class ScreenShot:
             return 'Sat'
 
     def takeShot(self):
+
+        rawNow = datetime.now() # get time
+        currTime = rawNow.strftime("%m-%d-%Y--%H-%M-%S") # format time
 
         ts1=TaskSet('w')
         ts1.moveMouse(self.focusCord[0], self.focusCord[1], 0.2, 'y')  # (home com:391,179) click on blank area of browser to focus the browser
