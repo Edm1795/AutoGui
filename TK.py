@@ -4,7 +4,7 @@ import time
 import DFQuickCheck
 import TimeLine
 from tkinter import *
-from ScreenShot import * 
+from ScreenShot import *
 from ctypes import windll  # used for fixing blurry fonts on win 10 and 11 (also  windll.shcore.SetProcessDpiAwareness(1))
 #from tkinter import ttk
 
@@ -18,9 +18,9 @@ class MainWindow:
 
         # Master Window
         self.master = master
-        self.master.title('AutoGui Ver. 0.0')
+        self.master.title('AutoGui Ver. 1.0')
         self.master.geometry("+150+500")  # position of the window in the screen (200x300) ("-3300+500")
-        self.master.geometry("500x400")  # set initial size of the root window (master) (1500x700);
+        self.master.geometry("400x200")  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
         # self.master.attributes('-fullscreen', True)
         screenWidth = self.master.winfo_screenwidth()
@@ -70,6 +70,9 @@ class MainWindow:
         self.button = Button(self.frame1, text="Screen Shot", width=12, command=self.screenShot)
         self.button.pack()
 
+        self.button = Button(self.frame1, text="Show Timeline", width=12, command=self.openTimeLine)
+        self.button.pack()
+
         self.button = Button(self.frame1, text="Close Timeline", width=12, command=self.closeTimeLine)
         self.button.pack()
 
@@ -101,7 +104,19 @@ class MainWindow:
         self.counter+=1
 
     def closeTimeLine(self):
-        TimeLine.close()
+        try:
+            TimeLine.close()
+        except:
+            pass
+
+    def openTimeLine(self):
+        # Closes the currently showing timeline and re-runs timeline for the current time (the updated time)
+        try:
+            TimeLine.close()
+        except:
+            TimeLine.main()
+        else:
+            TimeLine.main()
 
     def makeWinTrans(self):
         # this function turn the main window transparent and solid in alternation; it is a toggle function which uses
