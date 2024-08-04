@@ -287,7 +287,7 @@ class ScreenShot:
             self.position = 'Page'
         if com == 'w': # coordiantes for focusing the browser on work com (clicking on blank spot of browser)
             self.focusCord=(260,410) # (286,137) Seems best to focus screen through clicking the actual schedule grid
-            self.path = "C:/Users/aswitzer/Downloads/" # path for saving files at work com
+            self.path = "C:/Users/aswitzer/OneDrive - Edmonton Public Library/2 Scheduling/Back up Images/LAs/" # Original path:"C:/Users/aswitzer/Downloads/" # path for saving files at work com
         if com == 'h': # coordiantes for focusing the browser on home com (clicking on blank spot of browser)
             self.focusCord=(391,179)
             self.path = "C:/Users/aswit/Downloads/" # path fr saving files on home com
