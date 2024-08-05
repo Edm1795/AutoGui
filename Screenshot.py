@@ -8,12 +8,6 @@ import time
 from PIL import ImageGrab
 import pyautogui as ag
 
-screenshot = ImageGrab.grab()  # Take the screenshot
-
-
-
-
-# ag.screenshot('my_screenshot.png')
 
 class TaskSet:
     '''
@@ -25,13 +19,13 @@ class TaskSet:
         '''
         initialize values, mostly coordinates of locations on the screen according to what computer you are running the
         program on. Each screen will display important elements of the website in different areas and so the values
-        foe each computer must be seperated
+        for each computer must be separated.
         :param computer: str: 'h' for home computer; 'w' for work computer
         '''
 
         self.progressDict = {}  # Instantiate dictionary which hold keys and values about state of checks on the screen . Eg: {colour: true}
 
-        if computer == 'h': # Initialize values for your home computer
+        if computer == 'h': # Initialize values for your home computer of the location of elements on the screen (update these values if elements are move)
             self.logo=(688, 592) # coordinates of huge "D" on main screen
             self.loginButt=(1315, 917) # coord. of main Login button on main screen
             self.schedRadButt=(938, 547) # coord of Scheduler radio button on first pop up before entering main program
@@ -113,10 +107,15 @@ class TaskSet:
             ag.press('enter')
 
     def moveMouseNEW(self, time, shift, duration=1):
-        # This cool function simple takes the time (time of day eg, 3 pm) and the shift (eg: 1st shift) and
-        # duration of mouse move, and the mouse will go to that spot. No more need to specify pixels
-        # Vertical pixel difference between shifts: 50px
-
+        '''
+        This cool function simply takes the time (time of day eg, 3 pm) and the shift (eg: 1st shift) and
+        duration of mouse move, and the mouse will go to that spot. No more need to specify pixels
+        Vertical pixel difference between shifts: 50px
+        :param time: start time to add a task to the schedule eg: 9 am
+        :param shift: which shift on the screen to add the task to starting from 1 at the top shift, eg: 3 (third shift down)
+        :param duration: length of activity to add (in hours)
+        :return: none
+        '''
         shift = shift - 1  # decrement by one to get correct results
         shiftDiff = 52  # pixel distance between shifts (adjust this if mouse is not accurante
         tBase = 524  # base value for time which is 8 am (horizontal axis)
@@ -131,6 +130,19 @@ class TaskSet:
         horiz = tBase + (timeSteps * timeUnit)
 
         ag.moveTo(horiz, vert, duration)
+
+    def timeSteps(self, desiredTime):
+
+        '''
+        method returns the number of time steps between basetime (8am) and desired time
+        input: desiredTime int, the time you want to go to
+        output: int, number of units from basetime (8am) to desired time measured in 30 min incr.
+        eg: 9 am is two time steps forward from basetime (8am) (two half hour units)
+        '''
+
+        baseTime = 8
+
+        return (desiredTime - baseTime) * 2
 
     def eraser(self):
         '''
@@ -261,21 +273,20 @@ class TaskSet:
         print(x, y)
         self.moveMouse(x, y, 0.5, 'y')
 
-# ts1=TaskSet('w')
-# ts1.moveMouse(391, 179, 0.2, 'y')  # (home com:) click on blank area of browser to focus the browser
-# # ts1.moveMouse(173, 68, 0.2, 'y')  # (work com) click on blank area of browser to focus the browser
-# path="C:/Users/aswitzer/Downloads/" # the default location is the scratches folder. # Use 'r' in front if using '\': r"C:\Users\aswit\Downloads\Preliminary.ext"
-# # path2="C:/Users/aswit/Downloads/" # used for home com
 
 
 class ScreenShot:
     '''
-            Class for setting parameters and running the screen shots
+            Class for setting parameters and running the screen shots. General idea is to screen shot each day of a given week to store as
+            back up images of the schedule. Images are stored in folders specified by self.path according to the position eg: page
+            Update self.path (in the desired position and computer (in the init) if you want to change the file location
+
             breadth: str: 'f'; how much of the week to cycle through. f=full week sat to sun
             position: str: 'LA', or 'p': determines what word is used in the file name
             week: str : 2 values 'Month_Number of full week'. ex: Feb_1 (first full week of Feb)
             com: str: 'h' or 'w' sets certain values for home or work com.
     '''
+
     def __init__(self,breadth,position,week,com):
 
         if breadth == 'f': # Set range of days to screenshot. f=full range (1,8) Sun to Sat. 1=sun;2=mon...
@@ -322,6 +333,12 @@ class ScreenShot:
 
     def takeShot(self):
 
+        '''
+        This is the main method of the class which gets the date and time at the moment of running the takeShot() method, then
+        runs a loop taking 7 screen shots, one for each day of the week. It automatically goes to each day using shortcut keys
+        :return: none
+        '''
+
         rawNow = datetime.now() # get time
         currTime = rawNow.strftime("%m-%d-%Y--%H-%M-%S") # format time
 
@@ -342,8 +359,3 @@ class ScreenShot:
             print(str(day), currTime, 'completed')  # print to screen as images are saved
             time.sleep(1)
 
-# runScreenShotCycle('f','p','Feb_1')
-
-
-# screenshot = ImageGrab.grab()  # Take the screenshot
-# screenshot.save(pathAndName+".png", 'PNG') # saves to the scratches folder as default if only a file name is given image.png
