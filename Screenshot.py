@@ -287,7 +287,10 @@ class ScreenShot:
             self.position = 'Page'
         if com == 'w': # coordiantes for focusing the browser on work com (clicking on blank spot of browser)
             self.focusCord=(260,410) # (286,137) Seems best to focus screen through clicking the actual schedule grid
-            self.path = "C:/Users/aswitzer/OneDrive - Edmonton Public Library/2 Scheduling/Back up Images/LAs/" # Original path:"C:/Users/aswitzer/Downloads/" # path for saving files at work com
+            if position=='LA':
+                self.path = "C:/Users/aswitzer/OneDrive - Edmonton Public Library/2 Scheduling/Back up Images/LAs/" # Original path:"C:/Users/aswitzer/Downloads/" # path for saving files at work com
+            if position=='p':
+                self.path = "C:/Users/aswitzer/OneDrive - Edmonton Public Library/2 Scheduling/Back up Images/pages/"
         if com == 'h': # coordiantes for focusing the browser on home com (clicking on blank spot of browser)
             self.focusCord=(391,179)
             self.path = "C:/Users/aswit/Downloads/" # path fr saving files on home com
@@ -328,15 +331,14 @@ class ScreenShot:
         # ts1.click()
         # (173, 68)  # (work com) click on blank area of browser to focus the browser
 
-        # Loop for takign screen shots
+        # Loop for taking screen shots
         for day in range(self.startDay, self.endDay):  # cycle through days of the week from sun to sat
             time.sleep(0.5)
             ts1.pressKeys('ctrl', str(day))  # press keys to go to correct day of week in schedule on screen
             # Create the path and name of file: C:/Users/aswitzer/Downloads/1_Mon_02-01-2024--10-05-51.png (the first digit gives the number of the file saved eg 1= first screenshot
             pathAndName = self.path + str(day) + '_' + self.getDay(day) + '_' + self.position + '_' + self.week + '_' + "_" + 'Time_Stamp'+'_'+ currTime # set path and name of file to be saved
             screenshot = ImageGrab.grab()  # Take the screenshot
-            screenshot.save(pathAndName + ".png",
-                            'PNG')  # saves to the scratches folder as default if only a file name is given image.png
+            screenshot.save(pathAndName + ".png",'PNG')  # saves to the scratches folder as default if only a file name is given image.png
             print(str(day), currTime, 'completed')  # print to screen as images are saved
             time.sleep(1)
 
