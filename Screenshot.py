@@ -301,7 +301,7 @@ class ScreenShot:
             if position=='LA':
                 self.path = "C:/Users/aswitzer/OneDrive - Edmonton Public Library/2 Scheduling/Back up Images/LAs/" # Original path:"C:/Users/aswitzer/Downloads/" # path for saving files at work com
             if position=='p':
-                self.path = "C:/Users/aswitzer/OneDrive - Edmonton Public Library/2 Scheduling/Back up Images/pages/"
+                self.path = "C:/Users/aswitzer/OneDrive - Edmonton Public Library/2 Scheduling/Back up Images/Pages/"
         if com == 'h': # coordiantes for focusing the browser on home com (clicking on blank spot of browser)
             self.focusCord=(391,179)
             self.path = "C:/Users/aswit/Downloads/" # path fr saving files on home com
