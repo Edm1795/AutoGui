@@ -336,6 +336,8 @@ class ScreenShot:
         '''
         This is the main method of the class which gets the date and time at the moment of running the takeShot() method, then
         runs a loop taking 7 screen shots, one for each day of the week. It automatically goes to each day using shortcut keys
+        Special note: There has to be a slight delay between the two keys pressed in a two-key hot key; eg: hold ctrl (pause), then
+        press 't'. Without the pause inbetween, the result will be incorrect.
         :return: none
         '''
 
