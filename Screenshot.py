@@ -278,8 +278,8 @@ class TaskSet:
 class ScreenShot:
     '''
             Class for setting parameters and running the screen shots. General idea is to screen shot each day of a given week to store as
-            back up images of the schedule. Images are stored in folders specified by self.path according to the position eg: page
-            Update self.path (in the desired position and computer (in the init) if you want to change the file location
+            back up images of the schedule. Images are stored in folders specified by self.path according to the employee's position, eg: page, or LA.
+            Update self.path (in the desired position and computer (in the init) if you want to change the file's save location.
 
             breadth: str: 'f'; how much of the week to cycle through. f=full week sat to sun
             position: str: 'LA', or 'p': determines what word is used in the file name
