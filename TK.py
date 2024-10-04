@@ -3,10 +3,13 @@ import time
 
 import DFQuickCheck
 import TimeLine
+from os.path import exists
 from tkinter import *
 from ScreenShot import *
 from ctypes import windll  # used for fixing blurry fonts on win 10 and 11 (also  windll.shcore.SetProcessDpiAwareness(1))
-#from tkinter import ttk
+import yaml
+
+
 
 # Import pyscreeze 1.29 to pycharm, not directly into this module, otherwise another module related to pyscreeze (not sure how) will raise an exception if searching for the image on screen takes a little time
 
@@ -14,13 +17,13 @@ from ctypes import windll  # used for fixing blurry fonts on win 10 and 11 (also
 
 class MainWindow:
 
-    def __init__(self, master):
+    def __init__(self, master,winPosHorVer,winSizeHorVert,mainFrameCol):
 
         # Master Window
         self.master = master
-        self.master.title('AutoGui Ver. 1.0')
-        self.master.geometry("+150+500")  # position of the window in the screen (200x300) ("-3300+500")
-        self.master.geometry("400x200")  # set initial size of the root window (master) (1500x700);
+        self.master.title('AutoGui Ver. 1.1')
+        self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
+        self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
         # self.master.attributes('-fullscreen', True)
         screenWidth = self.master.winfo_screenwidth()
@@ -31,7 +34,7 @@ class MainWindow:
         # Instantiate frames
         self.frame0 = Frame(self.master, bd=5, padx=5, bg='#606266')  # Top long row
         self.frame1 = Frame(self.master, bd=5, padx=5, bg='#2a2b2b')  # Side Column
-        self.frame2 = Frame(self.master, bd=5, padx=5, bg='#7E050C')  # Main frame
+        self.frame2 = Frame(self.master, bd=5, padx=5, bg=mainFrameCol)  # Main frame
 
         # Place frames
         self.frame0.grid(row=0, column=0, columnspan=2, sticky="nsew")
@@ -165,9 +168,49 @@ class MainWindow:
 def main():
     global mainWin  # Global mainWin so as to access the mainWin from functions which may need to call method
     root = Tk()
-    mainWin = MainWindow(root)
+
+
+    # Get configuration settings from external config yaml file
+
+    if exists('config.yaml'):  # Returns True if file exists; if true open file and load into variable
+        with open('config.yaml', 'r') as f:
+            config = yaml.safe_load(f)
+            f.close()
+
+            # set configuration values to variables
+            winPosHorVer = config["winPosHorVert"]
+            winSizeHorVert = config["winSizeHorVert"]
+            mainFrameCol = config["mainFrameCol"]
+
+
+    else:  # If no file exists initialize values to defaults\
+        print("### the config file was not found, default values have been loaded instead ###")
+        winPosHorVer = "+1500+800"
+        winSizeHorVert = "400x200"
+        mainFrameCol = '#7E850C'
+
+
+
+
+    mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol)
 
     root.mainloop()
 
 
 main()
+
+
+#
+# def saveFile(dataToSave, filename):
+#
+#     with open(filename, "wb") as fp:  # Pickling
+#         pickle.dump(dataToSave, fp)
+#         fp.close()
+#
+#  if exists('TKconfig'):  # Returns True if file exists; if true open file and load into list
+#         with open('TKconfig', 'rb') as f:  # use wb mode so if file does not exist, it will create one; use rb if only reading
+#             configDict = pickle.load(f)
+#             f.close()
+#             # print('The speedometer list has been loaded from the config file', *speedometerList)
+#     else:  # If no file exists intialize list as empty
+#         automationObjList = []
