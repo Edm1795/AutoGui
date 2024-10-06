@@ -17,11 +17,14 @@ import yaml
 
 class MainWindow:
 
-    def __init__(self, master,winPosHorVer,winSizeHorVert,mainFrameCol):
+    def __init__(self, master,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth):
+
+        lineColour=lineColour
+        lineWidth=lineWidth
 
         # Master Window
         self.master = master
-        self.master.title('AutoGui Ver. 1.1')
+        self.master.title('AutoGui Ver. 1.2')
         self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
         self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
@@ -73,7 +76,7 @@ class MainWindow:
         self.button = Button(self.frame1, text="Screen Shot", width=12, command=self.screenShot)
         self.button.pack()
 
-        self.button = Button(self.frame1, text="Show Timeline", width=12, command=self.openTimeLine)
+        self.button = Button(self.frame1, text="Show Timeline", width=12, command=lambda : self.openTimeLine(lineColour,lineWidth))
         self.button.pack()
 
         self.button = Button(self.frame1, text="Close Timeline", width=12, command=self.closeTimeLine)
@@ -90,18 +93,11 @@ class MainWindow:
 
         self.addItemButton = Button(self.frame1, text="Create New", width=12, command=self.createNew)
         self.addItemButton.pack()
-        #
-        # self.clearFramesButton = Button(self.frame1, text="Clear Frames", width=12,
-        #                                 command=self.clearSpeedoFrame)  # Clears frame2, the speedometer frame of all widgets
-        # self.clearFramesButton.pack()
-        #
-        # self.showHistoryButton = Button(self.frame1, text="History", width=12,
-        #                                 command=showHistory)  # Clears frame2, the speedometer frame of all widgets
-        # self.showHistoryButton.pack()
 
-    def schedule(self):
+
+    def schedule(self,lineColour,lineWidth):
         DFQuickCheck.main()
-        TimeLine.main()
+        TimeLine.main(lineColour,lineWidth)
 
     def setCount(self):
         self.counter+=1
@@ -112,14 +108,15 @@ class MainWindow:
         except:
             pass
 
-    def openTimeLine(self):
+    def openTimeLine(self,lineColour,lineWidth):
         # Closes the currently showing timeline and re-runs timeline for the current time (the updated time)
+        print(lineColour)
         try:
             TimeLine.close()
         except:
-            TimeLine.main()
+            TimeLine.main(lineColour,lineWidth)
         else:
-            TimeLine.main()
+            TimeLine.main(lineColour,lineWidth)
 
     def makeWinTrans(self):
         # this function turn the main window transparent and solid in alternation; it is a toggle function which uses
@@ -181,6 +178,8 @@ def main():
             winPosHorVer = config["winPosHorVert"]
             winSizeHorVert = config["winSizeHorVert"]
             mainFrameCol = config["mainFrameCol"]
+            lineColour = config["timeLineCol"]
+            lineWidth = config["timeLineWidth"]
 
 
     else:  # If no file exists initialize values to defaults\
@@ -188,29 +187,16 @@ def main():
         winPosHorVer = "+1500+800"
         winSizeHorVert = "400x200"
         mainFrameCol = '#7E850C'
+        lineColour="green"
+        lineWidth="1"
 
 
 
 
-    mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol)
+    mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth)
 
     root.mainloop()
 
 
 main()
 
-
-#
-# def saveFile(dataToSave, filename):
-#
-#     with open(filename, "wb") as fp:  # Pickling
-#         pickle.dump(dataToSave, fp)
-#         fp.close()
-#
-#  if exists('TKconfig'):  # Returns True if file exists; if true open file and load into list
-#         with open('TKconfig', 'rb') as f:  # use wb mode so if file does not exist, it will create one; use rb if only reading
-#             configDict = pickle.load(f)
-#             f.close()
-#             # print('The speedometer list has been loaded from the config file', *speedometerList)
-#     else:  # If no file exists intialize list as empty
-#         automationObjList = []
