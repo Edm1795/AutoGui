@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Books at Riverbend</title>
+    <style>
+        body {
+            background-color: #c2c2d6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height of the viewport */
+            margin: 0; /* Remove default margin */
+            font-family: Arial, sans-serif; /* Set a default font */
+        }
+
+        h1 {
+            margin-bottom: 10px; /* Space between title and input */
+            font-size: 60px;
+        }
+
+        h2 {
+          margin-top: 10px;
+            margin-bottom: 10px; /* Space between title and input */
+            font-size: 30px;
+        }
+        .search-container {
+            position: relative; /* Relative positioning for the button */
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            padding-right: 30px; /* Space for the clear icon */
+            width: 300px; /* Set width of the input */
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+        }
+
+        .clear-icon {
+            position: absolute;
+            right: 10px; /* Positioning of the clear icon */
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px; /* Font size for the clear icon */
+            color: #888; /* Color for the clear icon */
+            display: none; /* Initially hidden */
+        }
+
+        .clear-icon:hover {
+            color: #000; /* Darker color on hover */
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px; /* Space above the button */
+            border: none; /* Remove border */
+            border-radius: 4px; /* Rounded corners */
+            background-color: #007BFF; /* Bootstrap primary color */
+            color: white; /* White text */
+            font-size: 16px; /* Font size */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        button:hover {
+            background-color: #ff0000; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Show Books at Riverbend and Whole System</h1>
+    <h2>First Tab: Riverbend</h2>
+    <h2>Second Tab: Whole System</h2>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Enter search terms">
+        <span class="clear-icon" id="clearIcon">&times;</span> <!-- Clear icon -->
+    </div>
+    <button id="searchButton">Search</button>
+
+    <script>
+        const previousSearches = JSON.parse(localStorage.getItem('searches')) || [];
+
+        function openSearchUrls() {
+            const searchTerms = document.getElementById('searchInput').value.trim();
+            if (searchTerms) {
+                // Save the search if it doesn't already exist
+                if (!previousSearches.includes(searchTerms)) {
+                    previousSearches.push(searchTerms);
+                    localStorage.setItem('searches', JSON.stringify(previousSearches)); // Save to local storage
+                }
+                const encodedTerms = encodeURIComponent(searchTerms);
+                const searchUrl1 = 'https://epl.bibliocommons.com/v2/search?query=' + encodedTerms + '&searchType=keyword&locale=en-CA&f_STATUS=EPLRIV&f_FORMAT=BK';
+                const searchUrl2 = 'https://epl.bibliocommons.com/v2/search?query=' + encodedTerms ;
+                const win1 = window.open(searchUrl1, '_blank');
+                const win2 = window.open(searchUrl2, '_blank');
+                if (win1) {
+                    win1.focus();
+                }
+                if (win2) {
+                    win2.focus();
+                }
+            } else {
+                alert("Please enter a search term."); // Alert if no search term is entered
+            }
+        }
+
+        function clearSearchInput() {
+            document.getElementById('searchInput').value = ''; // Clear the input field
+            document.getElementById('clearIcon').style.display = 'none'; // Hide the clear icon
+            document.getElementById('searchInput').focus(); // Set focus back to the input
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const clearIcon = document.getElementById('clearIcon');
+
+        searchInput.addEventListener('input', function() {
+            clearIcon.style.display = searchInput.value ? 'block' : 'none'; // Show or hide the clear icon
+        });
+
+        clearIcon.addEventListener('click', clearSearchInput); // Add event listener for clear icon
+        document.getElementById('searchButton').addEventListener('click', openSearchUrls);
+
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                openSearchUrls();
+            }
+        });
+    </script>
+</body>
+</html>
