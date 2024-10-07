@@ -70,13 +70,13 @@ class MainWindow:
         #self.master.iconphoto(False, self.photo)
 
 
-        self.button = Button(self.frame1, text="Schedule", width=12, command=lambda: self.schedule(lineColour,lineWidth))
+        self.button = Button(self.frame1, text="Schedule", width=12, command=self.schedule)
         self.button.pack()
 
         self.button = Button(self.frame1, text="Screen Shot", width=12, command=self.screenShot)
         self.button.pack()
 
-        self.button = Button(self.frame1, text="Show Timeline", width=12, command=lambda: self.openTimeLine(lineColour,lineWidth))
+        self.button = Button(self.frame1, text="Show Timeline", width=12, command=lambda : self.openTimeLine(lineColour,lineWidth))
         self.button.pack()
 
         self.button = Button(self.frame1, text="Close Timeline", width=12, command=self.closeTimeLine)
@@ -162,6 +162,23 @@ class MainWindow:
         self.addItemButton = Button(self.frame2, text="Text", width=12, command=self.createNew)
         self.addItemButton.pack()
 
+def message(titleOfWin,message):
+    """
+    This function opens up a popup window, which displays a message
+    inputs:
+    titleOfWin: str
+    message: str: the message you want to display
+    """
+    top = Toplevel()  # add bg="#373738" for colour.  Appears that the root (self.master) is not needed to run this window
+    top.geometry("400x150")
+    top.title(titleOfWin)
+
+    # input for new item in stock
+    messageLabel = Label(top, text=message, font=('Cambria 12'),wraplength=300)  # Label(top, text="Add New Item", font=('Mistral 18 bold')).place(x=150, y=80)
+    messageLabel.pack()
+
+
+
 def main():
     global mainWin  # Global mainWin so as to access the mainWin from functions which may need to call method
     root = Tk()
@@ -182,7 +199,7 @@ def main():
             lineWidth = config["timeLineWidth"]
 
 
-    else:  # If no file exists initialize values to defaults\
+    else:  # If no file exists initialize values to defaults
         print("### the config file was not found, default values have been loaded instead ###")
         winPosHorVer = "+1500+800"
         winSizeHorVert = "400x200"
@@ -190,8 +207,8 @@ def main():
         lineColour="green"
         lineWidth="1"
 
-
-
+        # Post message to screen if configuration file could not be found
+        message('Message', 'The configuration file could not be found, and so the program is loaded with default settings.')
 
     mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth)
 
@@ -199,3 +216,19 @@ def main():
 
 
 main()
+
+
+#
+# def saveFile(dataToSave, filename):
+#
+#     with open(filename, "wb") as fp:  # Pickling
+#         pickle.dump(dataToSave, fp)
+#         fp.close()
+#
+#  if exists('TKconfig'):  # Returns True if file exists; if true open file and load into list
+#         with open('TKconfig', 'rb') as f:  # use wb mode so if file does not exist, it will create one; use rb if only reading
+#             configDict = pickle.load(f)
+#             f.close()
+#             # print('The speedometer list has been loaded from the config file', *speedometerList)
+#     else:  # If no file exists intialize list as empty
+#         automationObjList = []
