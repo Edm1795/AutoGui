@@ -156,10 +156,15 @@ def main():
     root = Tk()
 
     if exists('DFHelperAutomations.pickle'):  # Returns True if file exists; if true open file and load into list
-        with open('DFHelperAutomations.pickle', 'rb') as f:  # use wb mode so if file does not exist, it will create one; use rb if only reading
-            automationObjList = pickle.load(f)
-            f.close()
-            # print('The speedometer list has been loaded from the config file', *speedometerList)
+
+        try:
+            with open('DFHelperAutomations.pickle', 'rb') as f:  # use wb mode so if file does not exist, it will create one; use rb if only reading
+                automationObjList = pickle.load(f)
+                f.close()
+                # print('The speedometer list has been loaded from the config file', *speedometerList)
+        except: # If file exists but it is empty it throws an EOF error, in that case initialize the needed list and pass through the error
+            automationObjList = []
+            pass
     else:  # If no file exists intialize list as empty
         automationObjList = []
 
