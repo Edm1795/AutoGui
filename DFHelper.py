@@ -7,17 +7,17 @@ from tkinter import *
 from ctypes import windll  # used for fixing blurry fonts on win 10 and 11 (also  windll.shcore.SetProcessDpiAwareness(1))
 from DFbuttonsFuncs import *
 from os.path import exists
-
+import yaml
 
 class MainWindow:
 
-    def __init__(self, master, automationObjList,deletedAutomations):
+    def __init__(self, master, automationObjList,deletedAutomations,winPosHorVer,winSizeHorVert,mainFrameCol,):
 
         # Master Window
         self.master = master
         self.master.title('DF Helper v.0')
-        self.master.geometry("+2+118")  # position of the window in the screen (200x300) ("-3300+500")
-        self.master.geometry("1800x45")  # set initial size of the root window (master) (1500x700);
+        self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
+        self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
         # self.master.attributes('-fullscreen', True)
         screenWidth = self.master.winfo_screenwidth()
@@ -30,7 +30,7 @@ class MainWindow:
         # Instantiate frames
         self.frame0 = Frame(self.master, bd=5, padx=5, bg='#606266')  # Top long row
         self.frame1 = Frame(self.master, bd=5, padx=5, bg='#2a2b2b')  # Side Column
-        self.frame2 = Frame(self.master, bd=5, padx=5, bg='#FFC642')  # Main frame
+        self.frame2 = Frame(self.master, bd=5, padx=5, bg=mainFrameCol)  # Main frame
 
         # Place frames
         self.frame0.grid(row=0, column=0, columnspan=2, sticky="nsew")
@@ -141,10 +141,20 @@ class MainWindow:
         print("Mini-event loop finished!")
         return x
 
+def message(titleOfWin, message):
+    """
+    This function opens up a popup window, which displays a message
+    inputs:
+    titleOfWin: str
+    message: str: the message you want to display
+    """
+    top = Toplevel()  # add bg="#373738" for colour.  Appears that the root (self.master) is not needed to run this window
+    top.geometry("400x150")
+    top.title(titleOfWin)
 
-
-
-
+    # input for new item in stock
+    messageLabel = Label(top, text=message, font=('Cambria 12'), wraplength=300)  # Label(top, text="Add New Item", font=('Mistral 18 bold')).place(x=150, y=80)
+    messageLabel.pack()
 
     def print1(self):
         print('works')
@@ -155,6 +165,7 @@ def main():
     global mainWin  # Global mainWin so as to access the mainWin from functions which may need to call method
     root = Tk()
 
+    # Load automations
     if exists('DFHelperAutomations.pickle'):  # Returns True if file exists; if true open file and load into list
 
         try:
@@ -168,7 +179,31 @@ def main():
     else:  # If no file exists intialize list as empty
         automationObjList = []
 
-    mainWin = MainWindow(root, automationObjList,deletedAutomations)  # Instantiate TK Window with access to automation object list
+    # Load Configurations
+    if exists('DFHelperConfig.yaml'):  # Returns True if file exists; if true open file and load into variable
+        with open('DFHelperConfig.yaml', 'r') as f:
+            config = yaml.safe_load(f)
+            f.close()
+
+            # set configuration values to variables
+            winPosHorVer = config["winPosHorVert"]
+            winSizeHorVert = config["winSizeHorVert"]
+            mainFrameCol = config["mainFrameCol"]
+
+
+
+    else:  # If no file exists initialize values to defaults
+        print("### the config file was not found, default values have been loaded instead ###")
+        winPosHorVer = "+2+118"
+        winSizeHorVert = "1800x45"
+        mainFrameCol = '#FFC642'
+
+
+
+        # Post message to screen if configuration file could not be found
+        message('Message', 'The configuration file could not be found, and so the program is loaded with default settings.')
+
+    mainWin = MainWindow(root, automationObjList,deletedAutomations,winPosHorVer,winSizeHorVert,mainFrameCol,)  # Instantiate TK Window with access to automation object list
 
     root.mainloop()
 
