@@ -21,7 +21,7 @@ class MainWindow:
 
         # Master Window
         self.master = master
-        self.master.title('AutoGui Ver. 1.2')
+        self.master.title('AutoGui Ver. 1.3')
         self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
         self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
