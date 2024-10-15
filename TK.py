@@ -17,14 +17,11 @@ import yaml
 
 class MainWindow:
 
-    def __init__(self, master,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth):
-
-        lineColour=lineColour
-        lineWidth=lineWidth
+    def __init__(self, master,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth,breadth,position,week,computer):
 
         # Master Window
         self.master = master
-        self.master.title('AutoGui Ver. 1.2')
+        self.master.title('AutoGui Ver. 1.3')
         self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
         self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
@@ -62,6 +59,7 @@ class MainWindow:
         windll.shcore.SetProcessDpiAwareness(1)  # used for fixing blurry fonts on win 10 and 11
 
 
+
         #  Entry widgets
         self.entry = Entry(self.frame0, width=10)
         self.entry.pack()
@@ -70,7 +68,7 @@ class MainWindow:
         #self.master.iconphoto(False, self.photo)
 
 
-        self.button = Button(self.frame1, text="Schedule", width=12, command=lambda : self.schedule(lineColour,lineWidth))
+        self.button = Button(self.frame1, text="Schedule", width=12, command=self.schedule)
         self.button.pack()
 
         self.button = Button(self.frame1, text="Screen Shot", width=12, command=self.screenShot)
@@ -90,6 +88,15 @@ class MainWindow:
         self.rad2 = Radiobutton(self.frame2, text='Pages', value='2', variable=self.selected) # ret 2 if desiring Pages
         self.rad1.pack()
         self.rad2.pack()
+
+        # Labels
+
+        # Display Screen shot information on screen, Computer, full week, position (eg:LA or p), week of month to be captured eg: first week of Feb)
+        rawScreenShotText=formatScreenShotText(breadth,computer) # format the strings for use on the screen
+        ScreenShotText='Screen shot: '+rawScreenShotText[0]+', '+rawScreenShotText[1]+', '+ position+', '+week # construct string displaying information about screenshot
+
+        self.screenShotLab = Label(self.frame2, text=ScreenShotText,font=16)
+        self.screenShotLab.pack(side='left')
 
         self.addItemButton = Button(self.frame1, text="Create New", width=12, command=self.createNew)
         self.addItemButton.pack()
@@ -136,13 +143,13 @@ class MainWindow:
         else: # if pressing the same button to go back to regular solid colour
             self.master.attributes('-alpha', 1.0)
             self.setCount()
-    def screenShot(self):
+    def screenShot(self,breadth,position,week,computer):
 
         if mainWin.selected.get() == '1':
-            screenShot=ScreenShot('f','LA','Feb_1','h')
+            screenShot=ScreenShot(breadth,position,week,computer)
             screenShot.takeShot()
         if mainWin.selected.get() == '2':
-            screenShot = ScreenShot('f', 'p', 'Feb_1','h')
+            screenShot = ScreenShot(breadth,position,week,computer)
             screenShot.takeShot()
 
 
@@ -177,6 +184,17 @@ def message(titleOfWin,message):
     messageLabel = Label(top, text=message, font=('Cambria 12'),wraplength=300)  # Label(top, text="Add New Item", font=('Mistral 18 bold')).place(x=150, y=80)
     messageLabel.pack()
 
+def formatScreenShotText(breadth,computer):
+
+    if computer == 'h':
+        computer = 'Home'
+    if computer == 'w':
+        computer = 'Work'
+
+    if breadth == 'f':
+        breadth = 'Full'
+
+    return(computer,breadth)
 
 
 def main():
@@ -197,6 +215,11 @@ def main():
             mainFrameCol = config["mainFrameCol"]
             lineColour = config["timeLineCol"]
             lineWidth = config["timeLineWidth"]
+            breadth = config["breadth"]
+            position = config["position"]
+            week = config["week"]
+            computer = config["computer"]
+
 
 
     else:  # If no file exists initialize values to defaults
@@ -206,11 +229,14 @@ def main():
         mainFrameCol = '#7E850C'
         lineColour="green"
         lineWidth="1"
+        breadth = 'f'
+        position = 'unknown'
+        week = 'unknown'
+        computer = 'w'   # Post message to screen if configuration file could not be found
 
-        # Post message to screen if configuration file could not be found
         message('Message', 'The configuration file could not be found, and so the program is loaded with default settings.')
 
-    mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth)
+    mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth,breadth,position,week,computer)
 
     root.mainloop()
 
@@ -218,17 +244,3 @@ def main():
 main()
 
 
-#
-# def saveFile(dataToSave, filename):
-#
-#     with open(filename, "wb") as fp:  # Pickling
-#         pickle.dump(dataToSave, fp)
-#         fp.close()
-#
-#  if exists('TKconfig'):  # Returns True if file exists; if true open file and load into list
-#         with open('TKconfig', 'rb') as f:  # use wb mode so if file does not exist, it will create one; use rb if only reading
-#             configDict = pickle.load(f)
-#             f.close()
-#             # print('The speedometer list has been loaded from the config file', *speedometerList)
-#     else:  # If no file exists intialize list as empty
-#         automationObjList = []
