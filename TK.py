@@ -21,7 +21,7 @@ class MainWindow:
 
         # Master Window
         self.master = master
-        self.master.title('AutoGui Ver. 1.3')
+        self.master.title('AutoGui Ver. 1.2')
         self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
         self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
         # if not set, the frames will fill the master window
@@ -93,7 +93,7 @@ class MainWindow:
 
         # Display Screen shot information on screen, Computer, full week, position (eg:LA or p), week of month to be captured eg: first week of Feb)
         rawScreenShotText=formatScreenShotText(breadth,computer) # format the strings for use on the screen
-        ScreenShotText='Screen shot: '+rawScreenShotText[0]+', '+rawScreenShotText[1]+', '+ position+', '+week # construct string displaying information about screenshot
+        ScreenShotText='Screen shot: '+rawScreenShotText[0]+', '+rawScreenShotText[1]+', '+week # construct string displaying information about screenshot
 
         self.screenShotLab = Label(self.frame2, text=ScreenShotText,font=16)
         self.screenShotLab.pack(side='left')
@@ -143,13 +143,13 @@ class MainWindow:
         else: # if pressing the same button to go back to regular solid colour
             self.master.attributes('-alpha', 1.0)
             self.setCount()
-    def screenShot(self,breadth,position,week,computer):
+    def screenShot(self,breadth,week,computer):
 
         if mainWin.selected.get() == '1':
-            screenShot=ScreenShot(breadth,position,week,computer)
+            screenShot=ScreenShot(breadth,'LA',week,computer)
             screenShot.takeShot()
         if mainWin.selected.get() == '2':
-            screenShot = ScreenShot(breadth,position,week,computer)
+            screenShot = ScreenShot(breadth,'p',week,computer)
             screenShot.takeShot()
 
 
