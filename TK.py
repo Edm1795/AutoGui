@@ -93,10 +93,12 @@ class MainWindow:
 
         # Display Screen shot information on screen, Computer, full week, position (eg:LA or p), week of month to be captured eg: first week of Feb)
         rawScreenShotText=formatScreenShotText(breadth,computer) # format the strings for use on the screen
-        ScreenShotText='Screen shot: '+rawScreenShotText[0]+', '+rawScreenShotText[1]+', '+week # construct string displaying information about screenshot
+        ScreenShotText=rawScreenShotText[0]+', '+rawScreenShotText[1]+', '+week # construct string displaying information about screenshot
 
-        self.screenShotLab = Label(self.frame2, text=ScreenShotText,font=16)
-        self.screenShotLab.pack(side='left')
+        self.screenShotLabTitle = Label(self.frame2, text='Screen Shot:',font=('Arial',14))
+        self.screenShotLabTitle.pack(side='left')
+        self.screenShotLab = Label(self.frame2, text=ScreenShotText,font=('arial',12))
+        self.screenShotLab.pack(side='right')
 
         self.addItemButton = Button(self.frame1, text="Create New", width=12, command=self.createNew)
         self.addItemButton.pack()
