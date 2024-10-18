@@ -83,22 +83,25 @@ class MainWindow:
         self.button = Button(self.frame1, text="Transparent", width=12, command=self.makeWinTrans)
         self.button.pack()
 
+        self.positionLabel=Label(self.frame2,text='Position: ')
         self.selected = StringVar() # selected is a fucntion with methods, use selected.get() to get the string val
-        self.rad1 = Radiobutton(self.frame2, text='LAs', value='1', variable=self.selected) # ret 1 if desiring LAs
-        self.rad2 = Radiobutton(self.frame2, text='Pages', value='2', variable=self.selected) # ret 2 if desiring Pages
-        self.rad1.pack()
-        self.rad2.pack()
+        self.rad1 = Radiobutton(self.frame2, text='LAs', value='1',variable=self.selected) # ret 1 if desiring LAs
+        self.rad2 = Radiobutton(self.frame2, text='Pages',value='2', variable=self.selected) # ret 2 if desiring Pages
+        self.positionLabel.grid(row=0, column=0,sticky='w')
+        self.rad1.grid(row=1,column=0,sticky='w')
+        self.rad2.grid(row=2,column=0,sticky='w')
 
+      
         # Labels
 
         # Display Screen shot information on screen, Computer, full week, position (eg:LA or p), week of month to be captured eg: first week of Feb)
         rawScreenShotText=formatScreenShotText(breadth,computer) # format the strings for use on the screen
         ScreenShotText=rawScreenShotText[0]+', '+rawScreenShotText[1]+', '+week # construct string displaying information about screenshot
 
-        self.screenShotLabTitle = Label(self.frame2, text='Screen Shot:',font=('Arial',14))
-        self.screenShotLabTitle.pack(side='left')
-        self.screenShotLab = Label(self.frame2, text=ScreenShotText,font=('arial',12))
-        self.screenShotLab.pack(side='right')
+        self.screenShotLabTitle = Label(self.frame2, text='Screen Shot:',font=(14))
+        self.screenShotLabTitle.grid(row=3,column=0,sticky='w')
+        self.screenShotLab = Label(self.frame2, text=ScreenShotText,font=(12))
+        self.screenShotLab.grid(row=4,column=0,sticky='w')
 
         self.addItemButton = Button(self.frame1, text="Create New", width=12, command=self.createNew)
         self.addItemButton.pack()
