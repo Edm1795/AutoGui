@@ -71,7 +71,7 @@ class MainWindow:
         self.button = Button(self.frame1, text="Schedule", width=12, command=lambda : self.schedule(lineColour,lineWidth))
         self.button.pack()
 
-        self.button = Button(self.frame1, text="Screen Shot", width=12, command=self.screenShot)
+        self.button = Button(self.frame1, text="Screen Shot", width=12, command=lambda : self.screenShot(breadth,week,computer))
         self.button.pack()
 
         self.button = Button(self.frame1, text="Show Timeline", width=12, command=lambda : self.openTimeLine(lineColour,lineWidth))
