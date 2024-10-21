@@ -1,8 +1,12 @@
 
+winPosHorVert : "+3500+800"
+winSizeHorVert : "320x200"
+mainFrameCol : '#c62402'
+timeLineCol : "green"
+timeLineWidth : "2"
 
 
-winPosHorVert : +1500+800 # horizontal and vertical position of main window on the screen
-winSizeHorVert : 400x200 # default size of main window
-mainFrameCol : '#7E850C' # Colour of the main frame (large frame) of the window
-timeLineCol: "green" # Colour of timeline vertical running on screen of schedule
-timeLineWidth : '2 ' # width of timeline in pixels on screen
+breadth : 'f'
+position : 'unknown'
+week : 'Oct_3'
+computer : 'w'   # Post message to screen if configuration file could not be found
