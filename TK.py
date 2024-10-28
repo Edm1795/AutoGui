@@ -24,6 +24,8 @@ class MainWindow:
         self.master.title('AutoGui Ver. 1.3')
         self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
         self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
+        # self.master.iconbitmap("")
+        self.master.iconphoto(False, PhotoImage(file="oneClick.png"))
         # if not set, the frames will fill the master window
         # self.master.attributes('-fullscreen', True)
         screenWidth = self.master.winfo_screenwidth()
@@ -247,5 +249,4 @@ def main():
 
 
 main()
-
 
