@@ -17,11 +17,11 @@ import yaml
 
 class MainWindow:
 
-    def __init__(self, master,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth,breadth,position,week,computer):
+    def __init__(self, master,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth,breadth,position,week,computer,pixelsPerMinute,eightAMline):
 
         # Master Window
         self.master = master
-        self.master.title('AutoGui Ver. 1.3')
+        self.master.title('AutoGui Ver. 1.4')
         self.master.geometry(winPosHorVer)  # position of the window in the screen (200x300) ("-3300+500")
         self.master.geometry(winSizeHorVert)  # set initial size of the root window (master) (1500x700);
         # self.master.iconbitmap("")
@@ -76,7 +76,7 @@ class MainWindow:
         self.button = Button(self.frame1, text="Screen Shot", width=12, command=lambda : self.screenShot(breadth,week,computer))
         self.button.pack()
 
-        self.button = Button(self.frame1, text="Show Timeline", width=12, command=lambda : self.openTimeLine(lineColour,lineWidth))
+        self.button = Button(self.frame1, text="Show Timeline", width=12, command=lambda : self.openTimeLine(lineColour,lineWidth,pixelsPerMinute,eightAMline))
         self.button.pack()
 
         self.button = Button(self.frame1, text="Close Timeline", width=12, command=self.closeTimeLine)
@@ -122,15 +122,15 @@ class MainWindow:
         except:
             pass
 
-    def openTimeLine(self,lineColour,lineWidth):
+    def openTimeLine(self,lineColour,lineWidth,pixelsPerMinute,eightAMline):
         # Closes the currently showing timeline and re-runs timeline for the current time (the updated time)
         print(lineColour)
         try:
             TimeLine.close()
         except:
-            TimeLine.main(lineColour,lineWidth)
+            TimeLine.main(lineColour,lineWidth,pixelsPerMinute,eightAMline)
         else:
-            TimeLine.main(lineColour,lineWidth)
+            TimeLine.main(lineColour,lineWidth,pixelsPerMinute,eightAMline)
 
     def makeWinTrans(self):
         # this function turn the main window transparent and solid in alternation; it is a toggle function which uses
@@ -226,6 +226,8 @@ def main():
             position = config["position"]
             week = config["week"]
             computer = config["computer"]
+            pixelsPerMinute = config["pixelsPerMinute"]
+            eightAMline = config["eightAMline"]
 
 
 
@@ -240,10 +242,12 @@ def main():
         position = 'unknown'
         week = 'unknown'
         computer = 'w'   # Post message to screen if configuration file could not be found
+        pixelsPerMinute = 1.0
+        eightAMline = 500
 
         message('Message', 'The configuration file could not be found, and so the program is loaded with default settings.')
 
-    mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth,breadth,position,week,computer)
+    mainWin = MainWindow(root,winPosHorVer,winSizeHorVert,mainFrameCol,lineColour,lineWidth,breadth,position,week,computer,pixelsPerMinute,eightAMline)
 
     root.mainloop()
 
