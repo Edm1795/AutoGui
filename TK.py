@@ -111,7 +111,7 @@ class MainWindow:
 
     def schedule(self,lineColour,lineWidth):
         DFQuickCheck.main()
-        TimeLine.main(lineColour,lineWidth)
+        TimeLine.main(lineColour,lineWidth,pixelsPerMinute,eightAMline)
 
     def setCount(self):
         self.counter+=1
