@@ -109,7 +109,7 @@ class MainWindow:
         self.addItemButton.pack()
 
 
-    def schedule(self,lineColour,lineWidth):
+    def schedule(self,lineColour,lineWidth,pixelsPerMinute,eightAMline):
         DFQuickCheck.main()
         TimeLine.main(lineColour,lineWidth,pixelsPerMinute,eightAMline)
 
