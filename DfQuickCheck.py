@@ -1,6 +1,8 @@
 # alt shift e runs the single line the cursor is on
 
 # opens a single instance of dayforce for quick check
+
+##### This is an insertion version which fixes a problem in the latest DF update which effects the Select Role step of logging in.  If this gets fixed by DF, follow the instructions in the main() below #####
 import pyautogui as ag
 import time
 import datetime
@@ -39,8 +41,8 @@ class TaskSet:
             self.logo = (951,271) #((665, 575)(old numbers of huge d))  # coordinates of one letter of small "dayforce" on top main screen
             self.loginButt = (953,717) #(1226, 737)(old loginbutt coord)  # coord. of main Login button on main screen
             self.userName = (951,613) # coordinates of autofill user name in browser
-            self.schedRadButt = (815,541) #(915, 548)  # coord of Scheduler radio button on first pop up before entering main program
-            self.nextButt = (959,655) # (1007, 660)  # coord of Next button on scheduler pop up window just above
+            self.schedRadButt = (817,540)  # coord of Scheduler radio button on first pop up before entering main program. Old screen vals: (915, 548)
+            self.nextButt = (959,660)  # coord of Next button on scheduler pop up window just above. Old screen vals: (1007, 660)
             self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
             self.filterIcon = (227, 223)  # coord of small Filter icon top left for colour check
             self.filterButt = (246, 223)  # coord of filter button
@@ -48,6 +50,7 @@ class TaskSet:
             self.LA = (442, 310)  # vals for work com: (478, 309) # Coords for LA role in drop down filter menu
             self.applyButt = (1629, 301)  # coords of Apply button on filter menu
             self.monthlyCal = (1087, 188)  # coords for opening monthly calendar for choosing day to view on screen
+            self.refreshBrow = (96,60) # Coord. for refreshing the browser
 
 
 
@@ -180,6 +183,8 @@ class TaskSet:
             return self.applyButt   # coords of Apply button on filter menu
         if value == 'monthlyCal':
             return self.monthlyCal   # coords for opening monthly calendar for choosing day to view on screen
+        if value == 'refreshBrow':
+            return self.refreshBrow   # coords for refreshing browser
 
 
     def clickDate(self):
@@ -359,10 +364,23 @@ def main():
     if checkForElem.confirmColour(taskSet4.get('logo')[0], taskSet4.get('logo')[1], (48, 103, 219)):
         taskSet4.moveMouse(taskSet4.get('userName')[0],taskSet4.get('userName')[1], timeVal.getFast(), 'y')  # go to autofill user name; Firefox should auto pop this up
     taskSet4.moveMouse(taskSet4.get('loginButt')[0], taskSet4.get('loginButt')[1], timeVal.getMed(), 'y')  # go to Login
-    if checkForElem.confirmImage('SelectRole2.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
+
+    # First round of select role choice
+    if checkForElem.confirmImage('SelectRoleN.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
         taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet4.moveMouse(taskSet4.get('nextButt')[0], taskSet4.get('nextButt')[1], timeVal.getMed(), 'y')  # click next (on small box)
-    if checkForElem.confirmImage('Schedules.png', 'n', 1007, 370, 1113, 397):
+
+    ############ If DF fixes the bug causing the Select Role not needing to clicks then delete 1. Refresh Brow, 2, Second round of Select Role ###########
+    ###### refresh the browser (so as to do a second round of Select Role)
+    time.sleep(2) # Pause to allow Select screen to load before refreshing
+    taskSet4.moveMouse(taskSet4.get('refreshBrow')[0], taskSet4.get('refreshBrow')[1], timeVal.getMed(), 'y')
+
+    ###### Second round of select role choice (this second round is needed due to an error in a dayforce update which now requires us to slect the role twice)
+    if checkForElem.confirmImage('SelectRoleN.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
+        taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getFast(),'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
+    taskSet4.moveMouse(taskSet4.get('nextButt')[0], taskSet4.get('nextButt')[1], timeVal.getMed(), 'y')  # click next (on small box)
+
+    if checkForElem.confirmImage('Schedules2.png', 'n', 1007, 370, 1113, 397):
         taskSet4.moveMouse(taskSet4.get('schedIcon')[0], taskSet4.get('schedIcon')[1], timeVal.getMed(), 'y')  # click schedule (main button to load sched)
     if checkForElem.confirmColour(taskSet4.get('filterIcon')[0], taskSet4.get('filterIcon')[1], (28, 68, 156)):  # Check for filter button by colour of icon
         taskSet4.moveMouse(taskSet4.get('filterButt')[0], taskSet4.get('filterButt')[1], timeVal.getFast(), 'y')  # click Filter button
@@ -374,5 +392,4 @@ def main():
 
     print(ag.pixelMatchesColor(215, 133, (
         56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
-
 
