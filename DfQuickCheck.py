@@ -41,15 +41,16 @@ class TaskSet:
             self.monthlyCal = (990, 240)  # coords for opening monthly calendar for choosing day to view on screen
 
         if computer == 'w':  # Initialize values for your work computer
-            self.logo = (951,
-                         271)  # ((665, 575)(old numbers of huge d))  # coordinates of one letter of small "dayforce" on top main screen
-            self.loginButt = (
-            953, 717)  # (1226, 737)(old loginbutt coord)  # coord. of main Login button on main screen
-            self.userName = (951, 613)  # coordinates of autofill user name in browser
-            self.schedRadButt = (817,
-                                 540)  # coord of Scheduler radio button on first pop up before entering main program. Old screen vals: (915, 548)
-            self.nextButt = (
-            959, 660)  # coord of Next button on scheduler pop up window just above. Old screen vals: (1007, 660)
+            self.emptySpace = (487,520) # empty spot beside login block
+            self.logo = (951,271)  # ((665, 575)(old numbers of huge d))  # coordinates of one letter of small "dayforce" on top main screen
+            self.finalLoginButt = (936,593)  # coord. of actual final login button on main screen (third step of login)
+            self.userName = (863,499) # coordinates of autofill user name in browser
+            self.passField = (994,525) # pass field for input
+            self.userNameLogin = (948,593) # location of username login
+            self.browDropDown = (937,544) # Location of first item in browser drop down saved username and password
+            self.companyLoginButt = (830,583) #coord of login stage showing company
+            self.schedRadButt = (817, 540)  # coord of Scheduler radio button on first pop up before entering main program. Old screen vals: (915, 548)
+            self.nextButt = (959, 660)  # coord of Next button on scheduler pop up window just above. Old screen vals: (1007, 660)
             self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
             self.filterIcon = (227, 223)  # coord of small Filter icon top left for colour check
             self.filterButt = (246, 223)  # coord of filter button
@@ -172,12 +173,24 @@ class TaskSet:
 
         if value == 'logo':
             return self.logo  # coordinates of huge "D" on main screen
+        if value == 'emptySpace':
+            return self.emptySpace
         if value == 'loginButt':
             return self.loginButt  # coord. of main Login button on main screen
         if value == 'userName':
             return self.userName
+        if value == 'passField':
+            return self.passField
+        if value == 'companyLoginButt':
+            return self.companyLoginButt
+        if value == 'finalLoginButt':
+            return self.finalLoginButt
+        if value == 'userNameLogin':
+            return self.userNameLogin
         if value == 'schedRadButt':
             return self.schedRadButt  # coord of Scheduler radio button on first pop up before entering main program
+        if value == 'loginButt':
+            return self.loginButt
         if value == 'nextButt':
             return self.nextButt  # coord of Next button on scheduler pop up window just above
         if value == 'schedIcon':
@@ -385,10 +398,38 @@ def main():
     taskSet4.type('https://can232.dayforcehcm.com/MyDayforce/Mydayforce.aspx',
                   'y')  # Go to site (updated website address)
     # if taskSet4.confirmElement('Company.png','cr') == True: # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button)
-    if checkForElem.confirmColour(taskSet4.get('logo')[0], taskSet4.get('logo')[1], (48, 103, 219)):
-        taskSet4.moveMouse(taskSet4.get('userName')[0], taskSet4.get('userName')[1], timeVal.getFast(),
-                           'y')  # go to autofill user name; Firefox should auto pop this up
-    taskSet4.moveMouse(taskSet4.get('loginButt')[0], taskSet4.get('loginButt')[1], timeVal.getMed(), 'y')  # go to Login
+
+    # Login Step 1 Company ( add typer to delete field and input company for more solid results)
+    if checkForElem.confirmColour(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], (59,152,231)): # check for empty space on login screen when company code shows. Master getter gets the x, then the y coord.
+        taskSet4.moveMouse(taskSet4.get('companyLoginButt')[0], taskSet4.get('companyLoginButt')[1], timeVal.getSlow(), 'y')  # go to Login
+
+    # Login step 2 Username
+    if checkForElem.confirmColour(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], (59,152,231)): # check for empty space on login screen. Master getter gets the x, then the y coord.
+        taskSet4.moveMouse(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], timeVal.getSlow(), 'y')  # click on empty space to clear browser password drop down
+    taskSet4.moveMouse(taskSet4.get('userName')[0], taskSet4.get('userName')[1], timeVal.getSlow(),'y')  # go to username box
+    taskSet4.type('andswi','n') # enter username
+
+    taskSet4.moveMouse(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], timeVal.getSlow(), 'y')
+    taskSet4.moveMouse(taskSet4.get('userNameLogin')[0], taskSet4.get('userNameLogin')[1], timeVal.getSlow(), 'y')
+
+
+    # Login step 3 pass
+    if checkForElem.confirmColour(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], (59,152,231)): # check for empty space on login screen. Master getter gets the x, then the y coord.
+        taskSet4.moveMouse(taskSet4.get('passField')[0], taskSet4.get('passField')[1], timeVal.getSlow(),'y')  # go to username box and click
+        taskSet4.type('17SchEro33', 'n')
+
+    taskSet4.moveMouse(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], timeVal.getSlow(),'y')  # click on empty space to clear
+
+    taskSet4.moveMouse(taskSet4.get('finalLoginButt')[0], taskSet4.get('finalLoginButt')[1], timeVal.getSlow(),'y')  # go to Login
+
+
+    if checkForElem.confirmColour(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], (59,152,231)): # check for empty space on login screen. Master getter gets the x, then the y coord.
+        taskSet4.moveMouse(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], timeVal.getSlow(), 'y') # Clock on empty space to clear brwoser drop down
+
+    taskSet4.moveMouse(taskSet4.get('userName')[0], taskSet4.get('userName')[1], timeVal.getSlow(),'y')  # go to username box (same as password)
+    taskSet4.type('17SchEro33','y') # enter username
+
+
 
     # First round of select role choice
     if checkForElem.confirmImage('SelectRoleN.png',
@@ -429,4 +470,3 @@ def main():
 
     print(ag.pixelMatchesColor(215, 133, (
         56, 00, 00)))  # use eyedroper in Firefox browser options to get colour then convert to rgb
-
