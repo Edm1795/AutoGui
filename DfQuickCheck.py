@@ -49,7 +49,7 @@ class TaskSet:
             self.userNameLogin = (948,593) # location of username login
             self.browDropDown = (937,544) # Location of first item in browser drop down saved username and password
             self.companyLoginButt = (830,583) #coord of login stage showing company
-            self.schedRadButt = (817, 540)  # coord of Scheduler radio button on first pop up before entering main program. Old screen vals: (915, 548)
+            self.schedRadButt = (816, 540)  # (x was 817 in old version) coord of Scheduler radio button on first pop up before entering main program. Old screen vals: (915, 548)
             self.nextButt = (959, 660)  # coord of Next button on scheduler pop up window just above. Old screen vals: (1007, 660)
             self.schedIcon = (1056, 337)  # largish Schedules icon on top right of screen
             self.filterIcon = (227, 223)  # coord of small Filter icon top left for colour check
@@ -393,7 +393,7 @@ def main():
     checkForElem = CheckForElem()
     timeVal = TimeValues('m')  # Instantiate times to fast values
 
-    taskSet4.moveMouse(173, 68, 0.2, 'y')  # click on blank area of browser to focus the browser
+    taskSet4.moveMouse(173, 68, 0.5, 'y')  # click on blank area of browser to focus the browser
     taskSet4.pressKeys('ctrl', 't')  # open new tab (try to add delay here)
     taskSet4.type('https://can232.dayforcehcm.com/MyDayforce/Mydayforce.aspx',
                   'y')  # Go to site (updated website address)
@@ -413,31 +413,23 @@ def main():
     taskSet4.moveMouse(taskSet4.get('userNameLogin')[0], taskSet4.get('userNameLogin')[1], timeVal.getSlow(), 'y')
 
 
-    # Login step 3 pass
-    if checkForElem.confirmColour(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], (59,152,231)): # check for empty space on login screen. Master getter gets the x, then the y coord.
-        taskSet4.moveMouse(taskSet4.get('passField')[0], taskSet4.get('passField')[1], timeVal.getSlow(),'y')  # go to username box and click
-        taskSet4.type('17SchEro33', 'n')
+    # Login step 3 pass ( turn on next 3 lines for pass input)
+    # if checkForElem.confirmColour(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], (59,152,231)): # check for empty space on login screen. Master getter gets the x, then the y coord.
+    #     taskSet4.moveMouse(taskSet4.get('passField')[0], taskSet4.get('passField')[1], timeVal.getSlow(),'y')  # go to username box and click
+    #     taskSet4.type('17SchEro33', 'n')
 
     taskSet4.moveMouse(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], timeVal.getSlow(),'y')  # click on empty space to clear
 
     taskSet4.moveMouse(taskSet4.get('finalLoginButt')[0], taskSet4.get('finalLoginButt')[1], timeVal.getSlow(),'y')  # go to Login
 
 
-    if checkForElem.confirmColour(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], (59,152,231)): # check for empty space on login screen. Master getter gets the x, then the y coord.
-        taskSet4.moveMouse(taskSet4.get('emptySpace')[0], taskSet4.get('emptySpace')[1], timeVal.getSlow(), 'y') # Clock on empty space to clear brwoser drop down
-
-    taskSet4.moveMouse(taskSet4.get('userName')[0], taskSet4.get('userName')[1], timeVal.getSlow(),'y')  # go to username box (same as password)
-    taskSet4.type('17SchEro33','y') # enter username
-
-
-
     # First round of select role choice
-    if checkForElem.confirmImage('SelectRoleN.png',
-                                 'c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
-        taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getFast(),
+    if checkForElem.confirmImage('SelectRoleN.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
+        taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getSlow(),
                            'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
     taskSet4.moveMouse(taskSet4.get('nextButt')[0], taskSet4.get('nextButt')[1], timeVal.getMed(),
                        'y')  # click next (on small box)
+
 
     ############ If DF fixes the bug causing the Select Role not needing two clicks then delete 1. Refresh Brow, 2, Second round of Select Role ###########
     ###### refresh the browser (so as to do a second round of Select Role)
@@ -445,12 +437,10 @@ def main():
     taskSet4.moveMouse(taskSet4.get('refreshBrow')[0], taskSet4.get('refreshBrow')[1], timeVal.getMed(), 'y')
 
     ###### Second round of select role choice (this second round is needed due to an error in a dayforce update which now requires us to slect the role twice)
-    if checkForElem.confirmImage('SelectRoleN.png',
-                                 'c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
+    if checkForElem.confirmImage('SelectRoleN.png','c'):  # monitor for when Select Role box displays then select Daily Scheduler (tiny radio button) (changed for new selection screen)
         taskSet4.moveMouse(taskSet4.get('schedRadButt')[0], taskSet4.get('schedRadButt')[1], timeVal.getFast(),
                            'y')  # select Daily Scheduler (small box before sched loaded) !if this is missed the next function will not be available (shedule button)
-    taskSet4.moveMouse(taskSet4.get('nextButt')[0], taskSet4.get('nextButt')[1], timeVal.getMed(),
-                       'y')  # click next (on small box)
+    taskSet4.moveMouse(taskSet4.get('nextButt')[0], taskSet4.get('nextButt')[1], timeVal.getMed(),'y')  # click next (on small box)
 
     if checkForElem.confirmImage('Schedules2.png', 'n', 1007, 370, 1113, 397):
         taskSet4.moveMouse(taskSet4.get('schedIcon')[0], taskSet4.get('schedIcon')[1], timeVal.getMed(),
