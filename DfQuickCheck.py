@@ -77,6 +77,10 @@ class TaskSet:
         else:
             pass
 
+    def backspace(self,numOfPresses):
+
+        ag.press('backspace',presses=int(numOfPresses))
+        
     def getGlobalOffSet(self):
 
         return self.globalHorVert
