@@ -1,4 +1,4 @@
-
+globalHorVert : [0,0] # global mouse offset, use to move all mouse positions by equal amount
 
 
 winPosHorVert : +1500+500 # horizontal and vertical position of main window on the screen
