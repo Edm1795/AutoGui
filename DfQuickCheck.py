@@ -330,6 +330,8 @@ class CheckForElem:
             except ag.ImageNotFoundException:
                 time.sleep(0.2)
 
+        return True
+
     def confirmColour(self, x, y, colour):
 
         '''
