@@ -8,6 +8,7 @@ from os.path import exists
 import yaml
 
 
+
 class TaskSet:
     '''
     Class for a single unified set of automated GUI movements and actions
@@ -299,7 +300,9 @@ class CheckForElem:
     def confirmImage(self, image, sector, topLeftx=0, topLefty=0, bottomRightx=0, bottomRighty=0):
 
         '''
-        Confirms if a given element is present on the screen.
+        Note: this is a new version made to deal with the fact that if the locate function
+        does not find an image on thei first try it will throw an error rather than return None
+        hence the try except block to keep the loo going.Confirms if a given element is present on the screen.
         input: image: str of image to search for in the screen ('image.png')
         inputs: sector: str defining which sector of screen to search for desired element
             Exact values of box to check for element (if not using a general sector of the screen
@@ -308,20 +311,24 @@ class CheckForElem:
 
         if sector == 'c':  # Centre Section: set screenshot region for small box in centre of the screen
             regValues = (756, 410, 400, 400)
-        if sector == 'cr':  # Screenshot for centre right
+        elif sector == 'cr':  # Screenshot for centre right
             regValues = (1000, 380, 500, 500)
-        if sector == 'n':  # If no sector is used, load in exact values of box to check for element
+        elif sector == 'n':  # If no sector is used, load in exact values of box to check for element
             regValues = (topLeftx, topLefty, bottomRightx, bottomRighty)
+
+        # print("image =", image) #import os if using this block
+        # print("cwd =", os.getcwd())
+        # print("exists =", os.path.exists(image))
 
         loop = True
         while loop:
 
-            if ag.locateOnScreen(image, region=regValues) == None:
-                continue
-            else:
+            try:
+                ag.locateOnScreen(image, region=regValues)
                 loop = False
 
-        return True
+            except ag.ImageNotFoundException:
+                time.sleep(0.2)
 
     def confirmColour(self, x, y, colour):
 
